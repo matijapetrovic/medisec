@@ -15,10 +15,8 @@ import java.math.BigInteger;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
-@NoArgsConstructor
 public class CertificateGenerator {
-
-    public X509Certificate generateCertificate(SubjectData subjectData, IssuerData issuerData) throws CertificateException, OperatorCreationException {
+    public static X509Certificate generateCertificate(SubjectData subjectData, IssuerData issuerData) throws CertificateException, OperatorCreationException {
         // Posto klasa za generisanje sertifiakta ne moze da primi direktno privatni kljuc pravi se builder za objekat
         // Ovaj objekat sadrzi privatni kljuc izdavaoca sertifikata i koristiti se za potpisivanje sertifikata
         // Parametar koji se prosledjuje je algoritam koji se koristi za potpisivanje sertifiakta

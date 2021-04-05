@@ -13,8 +13,6 @@ import java.security.PrivateKey;
 @Getter
 @Setter
 public class IssuerData {
-
-	private X500Name x500name;
 	private PrivateKey privateKey;
-
+	private X500Name x500name;
 }
