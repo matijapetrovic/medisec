@@ -1,5 +1,6 @@
 package com.medisec.adminservice.crypto.pki.keystores;
 
+import com.medisec.adminservice.CertificateResponse;
 import com.medisec.adminservice.crypto.pki.data.IssuerData;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
@@ -13,6 +14,8 @@ import java.security.*;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.Enumeration;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -79,5 +82,27 @@ public class KeyStoreReader {
 
         PrivateKey pk = (PrivateKey) keyStore.getKey(alias, keyPass.toCharArray());
         return Optional.of(pk);
+    }
+
+    public List<CertificateResponse> readAllCertificates() {
+
+        return null;
+    }
+
+    public Certificate[] readCertificateChain(String alias) throws CertificateException, NoSuchAlgorithmException, IOException, KeyStoreException {
+        BufferedInputStream in = new BufferedInputStream(new FileInputStream(keyStoreFile));
+        keyStore.load(in, storePass.toCharArray());
+
+        if (!keyStore.isKeyEntry(alias)) {
+            return null;
+        }
+        return keyStore.getCertificateChain(alias);
+    }
+
+    public Enumeration<String> getAllAliases() throws CertificateException, NoSuchAlgorithmException, IOException, KeyStoreException {
+        BufferedInputStream in = new BufferedInputStream(new FileInputStream(keyStoreFile));
+        keyStore.load(in, storePass.toCharArray());
+
+        return keyStore.aliases();
     }
 }
