@@ -1,4 +1,5 @@
 export interface Certificate {
+  serialNumber: number,
   name: string,
   surname: string,
   countryCode: string,

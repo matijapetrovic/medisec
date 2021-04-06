@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigInteger;
 import java.security.PublicKey;
 import java.util.Date;
 
@@ -12,6 +13,7 @@ import java.util.Date;
 @Getter
 @AllArgsConstructor
 public class CertificateResponse {
+    BigInteger serialNumber;
     String name;
     String surname;
     String countryCode;
@@ -27,6 +29,7 @@ public class CertificateResponse {
     boolean revoked;
 
     public static CertificateResponse of(
+            BigInteger serialNumber,
             String name,
             String surname,
             String countryCode,
@@ -38,6 +41,7 @@ public class CertificateResponse {
             Date endDate,
             boolean revoked) {
         return new CertificateResponse(
+                serialNumber,
                 name,
                 surname,
                 countryCode,

@@ -1,6 +1,7 @@
 <p-table [value]="certificates">
   <ng-template pTemplate="header">
       <tr>
+        <th>Serial Number</th>
           <th>Name</th>
           <th>Surname</th>
           <th>CountryCode</th>
@@ -13,6 +14,7 @@
   </ng-template>
   <ng-template pTemplate="body" let-certificate>
       <tr>
+        <td>{{ certificate.serialNumber }}</td>
           <td>{{certificate.name}}</td>
           <td>{{certificate.surname}}</td>
           <td>{{certificate.countryCode}}</td>
@@ -21,7 +23,7 @@
           <td>{{certificate.startDate | date}}</td>
           <td>{{certificate.endDate | date}}</td>
           <td >
-              <button *ngIf="!certificate.revoked" (click)="revokeCertificate(certificate.email)" pButton label="Revoke">
+              <button *ngIf="!certificate.revoked" (click)="revokeCertificate(certificate.serialNumber)" pButton label="Revoke">
               </button>
             <p *ngIf="certificate.revoked">Certificate revoked!</p>
         </td>

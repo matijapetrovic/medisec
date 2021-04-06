@@ -21,8 +21,8 @@ export class CertificatesComponent implements OnInit {
     this.service.getCertificates().subscribe(certificates => this.certificates = certificates);
   }
 
-  revokeCertificate(alias: string) {
-    this.service.revokeCertificate("1", alias).subscribe(() => this.getCertificates());
+  revokeCertificate(serialNumber: string) {
+    this.service.revokeCertificate(serialNumber, "bongcloud").subscribe(() => this.getCertificates());
   }
 
 }
