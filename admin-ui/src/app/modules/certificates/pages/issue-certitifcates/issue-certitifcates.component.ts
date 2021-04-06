@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { CertificateRequest } from '../../certificate-request';
 import { CertificateService } from '../../certificate.service';
+import { IssueCertificateData } from '../certificates/certificate';
 
 @Component({
   selector: 'app-issue-certitifcates',
@@ -22,21 +22,41 @@ export class IssueCertitifcatesComponent implements OnInit {
       organization: '',
       organizationUnit: '',
       countryCode: '',
-      email: ''
+      email: '',
+      startDate: '',
+      endDate: ''
     });
   }
 
   ngOnInit(): void {
     this.csrId = +this.route.snapshot.params.csrId;
-    this.certificateService.getCsr(this.csrId).subscribe((csr) => {
-      this.form['commonName'] = csr.commonName;
-      this.form['surname'] = csr.surname;
-      this.form['givenName'] = csr.givenName;
-      this.form['organization'] = csr.organization;
-      this.form['organizationUnit'] = csr.organizationUnit;
-      this.form['countryCode'] = csr.countryCode;
-      this.form['email'] = csr.email;
-    });
+    // this.certificateService.getCsr(this.csrId).subscribe((csr) => {
+    //   this.form['commonName'] = csr.commonName;
+    //   this.form['surname'] = csr.surname;
+    //   this.form['givenName'] = csr.givenName;
+    //   this.form['organization'] = csr.organization;
+    //   this.form['organizationUnit'] = csr.organizationUnit;
+    //   this.form['countryCode'] = csr.countryCode;
+    //   this.form['email'] = csr.email;
+    // });
+  }
+
+  get f(): any { return this.form.controls; }
+
+  onSubmit(): void {
+    const certificateData: IssueCertificateData = {
+      csrId: this.csrId,
+      commonName: this.f.commonName.value,
+      surname: this.f.surname.value,
+      givenName: this.f.givenName.value,
+      organization: this.f.organization.value,
+      organizationUnitName: this.f.organizationUnit.value,
+      countryCode: this.f.countryCode.value,
+      email: this.f.email.value,
+      startDate: this.f.startDate.value,
+      endDate: this.f.endDate.value,
+    }
+    this.certificateService.addSertificate(certificateData).subscribe();
   }
 
 }

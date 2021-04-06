@@ -23,7 +23,6 @@ public class KeyStoreWriter {
 
     public KeyStoreWriter() throws NoSuchProviderException, KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException {
         keyStore = KeyStore.getInstance("JKS", "SUN");
-        loadKeyStore();
     }
 
     public void loadKeyStore() throws IOException, CertificateException, NoSuchAlgorithmException {

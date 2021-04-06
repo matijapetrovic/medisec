@@ -23,8 +23,6 @@ public class IssueCertificateRequest {
 
     String subjectId;
 
-    PublicKey publicKey;
-
     Date startDate;
     Date endDate;
 

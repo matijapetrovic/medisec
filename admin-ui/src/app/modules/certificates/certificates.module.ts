@@ -9,6 +9,7 @@ import {ButtonModule} from 'primeng/button';
 import { CertificateRequestsComponent } from './pages/certificate-requests/certificate-requests.component';
 import {TableModule} from 'primeng/table';
 import { CertificatesComponent } from './pages/certificates/certificates.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [IssueCertitifcatesComponent, IssueCertificateFormComponent, CertificateRequestsComponent, CertificatesComponent],
@@ -17,7 +18,8 @@ import { CertificatesComponent } from './pages/certificates/certificates.compone
     CertificatesRoutingModule,
     InputTextModule,
     ButtonModule,
-    TableModule
+    TableModule,
+    ReactiveFormsModule
   ]
 })
 export class CertificatesModule { }
