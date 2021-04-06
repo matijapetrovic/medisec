@@ -66,8 +66,8 @@ public class CertificateService {
         Csr csr = csrRepository.findById(request.getCsrId()).orElseThrow(() -> new EntityNotFoundException("CSR Id invalid"));
 
         SubjectData subjectData = generateSubjectData(request, CsrExtractor.extractPK(csr.getRawCsr()));
-        IssuerData issuerData = keyStoreReader.readIssuerFromStore("videcemo");
-        PrivateKey issuerPrivateKey = keyStoreReader.readPrivateKey("isto videcemo")
+        IssuerData issuerData = keyStoreReader.readIssuerFromStore("bongcloud");
+        PrivateKey issuerPrivateKey = keyStoreReader.readPrivateKey("bongcloud")
                 .orElseThrow(MissingPrivateKeyException::new);
 
         X509Certificate cert = CertificateGenerator.generateCertificate(subjectData, issuerData);
@@ -82,13 +82,13 @@ public class CertificateService {
         X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);
         builder.addRDN(BCStyle.CN, request.getFullName());
         builder.addRDN(BCStyle.SURNAME, request.getSurname());
-        builder.addRDN(BCStyle.GIVENNAME, request.getName());
+        builder.addRDN(BCStyle.GIVENNAME, request.getGivenName());
         builder.addRDN(BCStyle.O, request.getOrganization());
         builder.addRDN(BCStyle.OU, request.getOrganizationUnitName());
         builder.addRDN(BCStyle.C, request.getCountryCode());
         builder.addRDN(BCStyle.E, request.getEmail());
 
-        builder.addRDN(BCStyle.UID, request.getSubjectId());
+        //builder.addRDN(BCStyle.UID, request.getSubjectId());
 
         return new SubjectData(publicKey, builder.build(), sn, request.getStartDate(),request.getEndDate());
     }
@@ -104,18 +104,19 @@ public class CertificateService {
         List<CertificateResponse> certificates = new ArrayList<>();
 
         Enumeration<String> aliases = keyStoreReader.getAllAliases();
-        while (aliases.hasMoreElements()) {
+        //while (aliases.hasMoreElements()) {
             String alias = aliases.nextElement();
             Certificate certificate = keyStoreReader.readCertificate(alias).orElseThrow(AliasNotValidException::new);
             JcaX509CertificateHolder certHolder = new JcaX509CertificateHolder((X509Certificate) certificate);
-            CertificateResponse response = X500NameSubjectToCertificateResponse(certHolder.getSubject());
+            CertificateResponse response = X500NameSubjectToCertificateResponse(certHolder);
             certificates.add(response);
-        }
+        //}
 
         return certificates;
     }
 
-    private CertificateResponse X500NameSubjectToCertificateResponse(X500Name subject) {
+    private CertificateResponse X500NameSubjectToCertificateResponse(JcaX509CertificateHolder certHolder) {
+        X500Name subject = certHolder.getSubject();
         String cn = IETFUtils.valueToString(subject.getRDNs(BCStyle.CN)[0].getFirst().getValue());
         String surname = IETFUtils.valueToString(subject.getRDNs(BCStyle.SURNAME)[0].getFirst().getValue());
         String givenName = IETFUtils.valueToString(subject.getRDNs(BCStyle.GIVENNAME)[0].getFirst().getValue());
@@ -123,10 +124,10 @@ public class CertificateService {
         String ou = IETFUtils.valueToString(subject.getRDNs(BCStyle.OU)[0].getFirst().getValue());
         String c = IETFUtils.valueToString(subject.getRDNs(BCStyle.C)[0].getFirst().getValue());
         String e = IETFUtils.valueToString(subject.getRDNs(BCStyle.E)[0].getFirst().getValue());
-        String uid = IETFUtils.valueToString(subject.getRDNs(BCStyle.UID)[0].getFirst().getValue());
+        //String uid = IETFUtils.valueToString(subject.getRDNs(BCStyle.UID)[0].getFirst().getValue());
 
         // TODO: pogledaj sta za start i end date i nullove
-        return new CertificateResponse(givenName, surname, c, e, o, ou, uid, null, null, null, false);
+        return new CertificateResponse(givenName, surname, c, e, o, ou, null, certHolder.getNotBefore(), certHolder.getNotAfter(), false);
     }
     public void revokeCertificate(String serialNumber, Integer reason, String alias) throws IOException, UnrecoverableKeyException, CertificateException, NoSuchAlgorithmException, KeyStoreException, OperatorCreationException {
         File crlFile = new File("src/main/resources/revocationList.crl");

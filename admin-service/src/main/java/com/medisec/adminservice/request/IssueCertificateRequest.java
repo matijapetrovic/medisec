@@ -14,7 +14,7 @@ public class IssueCertificateRequest {
 
     Long csrId;
 
-    String name;
+    String givenName;
     String surname;
     String countryCode;
     String email;
@@ -27,6 +27,6 @@ public class IssueCertificateRequest {
     Date endDate;
 
     public String getFullName() {
-        return name + ' ' + surname;
+        return givenName + ' ' + surname;
     }
 }

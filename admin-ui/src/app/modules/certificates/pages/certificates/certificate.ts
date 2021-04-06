@@ -4,7 +4,9 @@ export interface Certificate {
   countryCode: string,
   email: string,
   organization: string,
-  organizationUnitName: string
+  organizationUnitName: string,
+  startDate: Date,
+  endDate: Date
 }
 
 export interface IssueCertificateData {

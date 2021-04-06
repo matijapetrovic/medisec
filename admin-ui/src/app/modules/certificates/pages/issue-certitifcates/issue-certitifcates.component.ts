@@ -30,15 +30,17 @@ export class IssueCertitifcatesComponent implements OnInit {
 
   ngOnInit(): void {
     this.csrId = +this.route.snapshot.params.csrId;
-    // this.certificateService.getCsr(this.csrId).subscribe((csr) => {
-    //   this.form['commonName'] = csr.commonName;
-    //   this.form['surname'] = csr.surname;
-    //   this.form['givenName'] = csr.givenName;
-    //   this.form['organization'] = csr.organization;
-    //   this.form['organizationUnit'] = csr.organizationUnit;
-    //   this.form['countryCode'] = csr.countryCode;
-    //   this.form['email'] = csr.email;
-    // });
+    this.certificateService.getCsr(this.csrId).subscribe((csr) => {
+      this.form.patchValue({
+        commonName: csr.commonName,
+        surname: csr.surname,
+        givenName: csr.givenName,
+        organization: csr.organization,
+        organizationUnit: csr.organizationUnit,
+        countryCode: csr.countryCode,
+        email: csr.email,
+      });
+    });
   }
 
   get f(): any { return this.form.controls; }

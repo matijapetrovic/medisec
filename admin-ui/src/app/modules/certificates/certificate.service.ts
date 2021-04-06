@@ -14,7 +14,7 @@ export class CertificateService {
   constructor(private http: HttpClient) { }
 
   getCertificateRequests(): Observable<CertificateRequest[]> {
-    return this.http.get<CertificateRequest[]>(` ${environment.apiUrl}/api/crs`);
+    return this.http.get<CertificateRequest[]>(` ${environment.apiUrl}/api/csr`);
   }
 
   getCsr(id: number) {

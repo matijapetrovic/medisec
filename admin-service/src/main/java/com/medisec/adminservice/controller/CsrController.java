@@ -1,5 +1,6 @@
 package com.medisec.adminservice.controller;
 
+import com.medisec.adminservice.csr.Csr;
 import com.medisec.adminservice.csr.CsrService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -25,5 +27,15 @@ public class CsrController {
     public ResponseEntity<Void> verifyCsr(@PathVariable Long id) {
         csrService.verify(id);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping("")
+    public ResponseEntity<List<Csr>> getAllRequests() {
+        return ResponseEntity.ok(csrService.getCsrs());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Csr> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(csrService.findById(id));
     }
 }

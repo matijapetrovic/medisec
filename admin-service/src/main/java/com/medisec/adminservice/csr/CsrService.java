@@ -49,4 +49,8 @@ public class CsrService {
         csrRepository.save(csr);
     }
 
+    public Csr findById(Long id) {
+        return csrRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
+    }
+
 }

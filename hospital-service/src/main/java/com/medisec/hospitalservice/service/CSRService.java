@@ -41,8 +41,8 @@ public class CSRService {
         subjectData.put("O", certificateSigningRequest.getOrganization());
         subjectData.put("OU", certificateSigningRequest.getOrganizationUnit());
         subjectData.put("C", certificateSigningRequest.getCountry());
-        subjectData.put("email", certificateSigningRequest.getEmail());
-        // ? ? ?    subjectData.put("serialNumber", csr.getSerialNumber());
+        subjectData.put("E", certificateSigningRequest.getEmail());
+        //subjectData.put("serialNumber", csr.getSerialNumber());
 
         String mapAsString = subjectData.keySet().stream()
                 .filter(key -> subjectData.get(key) != null && !subjectData.get(key).isEmpty())

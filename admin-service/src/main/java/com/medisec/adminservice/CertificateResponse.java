@@ -2,12 +2,14 @@ package com.medisec.adminservice;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.Setter;
 
 import java.security.PublicKey;
 import java.util.Date;
 
 @Setter
+@Getter
 @AllArgsConstructor
 public class CertificateResponse {
     String name;
@@ -18,8 +20,6 @@ public class CertificateResponse {
     String organizationUnitName;
 
     String subjectId;
-
-    PublicKey publicKey;
 
     Date startDate;
     Date endDate;
@@ -34,7 +34,6 @@ public class CertificateResponse {
             String organization,
             String organizationUnitName,
             String subjectId,
-            PublicKey publicKey,
             Date startDate,
             Date endDate,
             boolean revoked) {
@@ -46,7 +45,6 @@ public class CertificateResponse {
                 organization,
                 organizationUnitName,
                 subjectId,
-                publicKey,
                 startDate,
                 endDate,
                 revoked);
