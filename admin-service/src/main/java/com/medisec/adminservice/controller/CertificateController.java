@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.security.InvalidKeyException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
@@ -29,7 +30,7 @@ public class CertificateController {
     private final CertificateService certificateService;
 
     @PostMapping("")
-    public ResponseEntity<Void> issueCertificate(IssueCertificateRequest request) throws CertificateException, UnrecoverableKeyException, NoSuchAlgorithmException, OperatorCreationException, KeyStoreException, MissingPrivateKeyException, IOException {
+    public ResponseEntity<Void> issueCertificate(IssueCertificateRequest request) throws CertificateException, UnrecoverableKeyException, NoSuchAlgorithmException, OperatorCreationException, KeyStoreException, MissingPrivateKeyException, IOException, InvalidKeyException {
         certificateService.issueCertificate(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -38,5 +39,6 @@ public class CertificateController {
     public ResponseEntity<List<CertificateResponse>> readAllCertificates() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, AliasNotValidException, IOException {
         return ResponseEntity.ok(certificateService.readAllCertificates());
     }
+
 
 }
