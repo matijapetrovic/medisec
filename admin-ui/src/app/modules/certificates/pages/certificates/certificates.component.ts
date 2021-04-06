@@ -14,7 +14,15 @@ export class CertificatesComponent implements OnInit {
   constructor(private service: CertificateService) { }
 
   ngOnInit(): void {
+    this.getCertificates();
+  }
+
+  getCertificates() {
     this.service.getCertificates().subscribe(certificates => this.certificates = certificates);
+  }
+
+  revokeCertificate(alias: string) {
+    this.service.revokeCertificate("1", alias).subscribe(() => this.getCertificates());
   }
 
 }

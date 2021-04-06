@@ -31,4 +31,8 @@ export class CertificateService {
     return this.http.post<void>(url, certificate)
       .pipe();
   }
+
+  revokeCertificate(sn: string, alias: string) {
+    return this.http.post<void>(`${environment.apiUrl}/api/certificates/${sn}/revoke`, {reason: 1, alias});
+  }
 }

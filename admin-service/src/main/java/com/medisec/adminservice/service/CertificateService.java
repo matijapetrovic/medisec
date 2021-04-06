@@ -100,22 +100,23 @@ public class CertificateService {
         return keyGen.generateKeyPair();
     }
 
-    public List<CertificateResponse> readAllCertificates() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException, AliasNotValidException {
+    public List<CertificateResponse> readAllCertificates() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException, AliasNotValidException, CRLException {
         List<CertificateResponse> certificates = new ArrayList<>();
 
         Enumeration<String> aliases = keyStoreReader.getAllAliases();
         //while (aliases.hasMoreElements()) {
             String alias = aliases.nextElement();
             Certificate certificate = keyStoreReader.readCertificate(alias).orElseThrow(AliasNotValidException::new);
+            boolean revoked = isRevoked(certificate);
             JcaX509CertificateHolder certHolder = new JcaX509CertificateHolder((X509Certificate) certificate);
-            CertificateResponse response = X500NameSubjectToCertificateResponse(certHolder);
+            CertificateResponse response = X500NameSubjectToCertificateResponse(certHolder, revoked);
             certificates.add(response);
         //}
 
         return certificates;
     }
 
-    private CertificateResponse X500NameSubjectToCertificateResponse(JcaX509CertificateHolder certHolder) {
+    private CertificateResponse X500NameSubjectToCertificateResponse(JcaX509CertificateHolder certHolder, boolean revoked) {
         X500Name subject = certHolder.getSubject();
         String cn = IETFUtils.valueToString(subject.getRDNs(BCStyle.CN)[0].getFirst().getValue());
         String surname = IETFUtils.valueToString(subject.getRDNs(BCStyle.SURNAME)[0].getFirst().getValue());
@@ -127,7 +128,7 @@ public class CertificateService {
         //String uid = IETFUtils.valueToString(subject.getRDNs(BCStyle.UID)[0].getFirst().getValue());
 
         // TODO: pogledaj sta za start i end date i nullove
-        return new CertificateResponse(givenName, surname, c, e, o, ou, null, certHolder.getNotBefore(), certHolder.getNotAfter(), false);
+        return new CertificateResponse(givenName, surname, c, e, o, ou, null, certHolder.getNotBefore(), certHolder.getNotAfter(), revoked);
     }
     public void revokeCertificate(String serialNumber, Integer reason, String alias) throws IOException, UnrecoverableKeyException, CertificateException, NoSuchAlgorithmException, KeyStoreException, OperatorCreationException {
         File crlFile = new File("src/main/resources/revocationList.crl");

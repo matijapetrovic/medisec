@@ -21,7 +21,7 @@
           <td>{{certificate.startDate | date}}</td>
           <td>{{certificate.endDate | date}}</td>
           <td >
-              <button *ngIf="!certificate.revoked" pButton label="Revoke">
+              <button *ngIf="!certificate.revoked" (click)="revokeCertificate(certificate.email)" pButton label="Revoke">
               </button>
             <p *ngIf="certificate.revoked">Certificate revoked!</p>
         </td>
