@@ -29,13 +29,9 @@ import org.springframework.stereotype.Service;
 import javax.security.auth.Subject;
 import java.io.File;
 import java.io.FileOutputStream;
-=======
 import org.bouncycastle.asn1.x500.style.IETFUtils;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
-import org.bouncycastle.operator.OperatorCreationException;
-import org.springframework.stereotype.Service;
 
->>>>>>> 51963fd8a637e0f469b5949a335493f943a61803
 import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigInteger;
