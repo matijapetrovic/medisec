@@ -8,9 +8,10 @@ import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
 import { CertificateRequestsComponent } from './pages/certificate-requests/certificate-requests.component';
 import {TableModule} from 'primeng/table';
+import { CertificatesComponent } from './pages/certificates/certificates.component';
 
 @NgModule({
-  declarations: [IssueCertitifcatesComponent, IssueCertificateFormComponent, CertificateRequestsComponent],
+  declarations: [IssueCertitifcatesComponent, IssueCertificateFormComponent, CertificateRequestsComponent, CertificatesComponent],
   imports: [
     CommonModule,
     CertificatesRoutingModule,

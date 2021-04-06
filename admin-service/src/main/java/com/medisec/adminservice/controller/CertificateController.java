@@ -40,4 +40,5 @@ public class CertificateController {
         return ResponseEntity.ok(certificateService.readAllCertificates());
     }
 
+
 }
