@@ -19,7 +19,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class CsrService {
-  csrUrl = `${environment.apiUrl}/api/csr`;
+  csrUrl = `${environment.apiUrl}/api/hospital-service`;
   private handleError: HandleError;
 
 
@@ -28,7 +28,8 @@ export class CsrService {
   }
 
   sendCSR(csr: CSR): Observable<void> {
-    const url = `${this.csrUrl}`;
+    const url = `${this.csrUrl}/csr`;
+    console.log(url)
     return this.http.post<void>(url, csr)
       .pipe(
         catchError(this.handleError<void>('sendCsr'))

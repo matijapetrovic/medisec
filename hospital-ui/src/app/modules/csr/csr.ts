@@ -1,7 +1,6 @@
 
 
 export interface CSR {
-  id: number,
   commonName: String,
   givenName: String,
   surname: String,
@@ -9,5 +8,5 @@ export interface CSR {
   organizationUnit: String,
   country: String,
   email: String,
-  uniqueIdentifier: number,
+  uniqueIdentifier: String,
 }

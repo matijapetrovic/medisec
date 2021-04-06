@@ -23,7 +23,7 @@ import java.security.NoSuchProviderException;
 public class CSRController {
     private final CSRService csrService;
 
-    @PostMapping("")
+    @PostMapping("/csr")
     public ResponseEntity<Void> sendCSR(@RequestBody CertificateSigningRequest csr) throws NoSuchAlgorithmException, IOException, NoSuchProviderException, OperatorCreationException {
         csrService.sendCSR(csr);
         return ResponseEntity.status(HttpStatus.CREATED).build();

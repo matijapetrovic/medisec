@@ -18,12 +18,18 @@ export class SendCsrFormComponent implements OnInit {
     private formBuilder: FormBuilder,
   ) { 
     this.form = this.formBuilder.group({
-      name: ['', Validators.required],
+      commonName: ['', Validators.required],
+      givenName: ['', Validators.required],
+      surname: ['', Validators.required],
+      organization: ['', Validators.required],
+      organizationUnit: ['', Validators.required],
+      country: ['', Validators.required],
+      email: ['', Validators.required],
+      uniqueIdentifier: ['', Validators.required],
     });
   }
 
   ngOnInit(): void {
-   
   }
 
   onSubmit(): void {
@@ -36,9 +42,7 @@ export class SendCsrFormComponent implements OnInit {
   }
 
   sendCSR(): void {
-    console.log(this.f)
     const csr: CSR = { 
-      id: NaN,
       commonName: this.f.commonName.value,
       givenName: this.f.givenName.value,
       surname: this.f.surname.value,
@@ -71,7 +75,7 @@ export class SendCsrFormComponent implements OnInit {
       this.f.country.value === '' || this.f.country.value === null ||
       this.f.email.value === '' || this.f.email.value === null ||
       this.f.uniqueIdentifier.value === '' || this.f.uniqueIdentifier.value === null
-      ) {
+    ) {
       return true;
     }
     return false;
