@@ -1,0 +1,100 @@
+
+<div class="p-grid p-mt-6 p-justify-center centered-grid"></div>
+<div class="p-grid p-mt-6 p-justify-center centered-grid"></div>
+<div class="p-grid p-mt-6 p-justify-center centered-grid">
+  <div class="p-col p-sm-5 p-md-6 p-lg-6">
+    <p-card class="flat-card">
+      <div class="p-card-header">
+        <div class="p-grid p-justify-center">
+          <h1>
+            <strong>
+              Certificate Signing Request
+            </strong>
+          </h1>
+        </div>
+      </div>
+      <div class="p-grid p-mt-3 p-justify-center centered-grid"></div>
+      <form id="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="p-grid p-px-6 form-group">
+          <div class="p-px-5"></div>
+          <span class="p-field p-col p-mt-4 p-grid">
+            <label class="p-justify-left p-col-2">
+              Common name:
+            </label>
+            <div>
+              <input type="name" autocomplete="off" pInputText
+                class="form-control " [ngClass]="{ 'is-invalid': submitted && f.commonName.errors }" />
+            </div>
+          </span>
+          <span class="p-field p-col p-mt-4 p-grid">
+            <label class="p-justify-left p-col-2">
+              Given name:
+            </label>
+            <div>
+              <input type="name" autocomplete="off" pInputText
+                class="form-control " [ngClass]="{ 'is-invalid': submitted && f.givenName.errors }" />
+            </div>
+          </span>
+          <span class="p-field p-col p-mt-4 p-grid">
+            <label class="p-justify-left p-col-2">
+              Surname:
+            </label>
+            <div>
+              <input type="name" autocomplete="off" pInputText
+                class="form-control " [ngClass]="{ 'is-invalid': submitted && f.surname.errors }" />
+            </div>
+          </span>
+          <span class="p-field p-col p-mt-4 p-grid">
+            <label class="p-justify-left p-col-2">
+            Organization:
+            </label>
+            <div>
+              <input type="name" autocomplete="off" pInputText
+                class="form-control " [ngClass]="{ 'is-invalid': submitted && f.organization.errors }" />
+            </div>
+          </span>
+          <span class="p-field p-col p-mt-4 p-grid">
+            <label class="p-justify-left p-col-2">
+              Organization unit:
+            </label>
+            <div>
+              <input type="name" autocomplete="off" pInputText
+                class="form-control " [ngClass]="{ 'is-invalid': submitted && f.organizationUnit.errors }" />
+            </div>
+          </span>
+          <span class="p-field p-col p-mt-4 p-grid">
+            <label class="p-justify-left p-col-2">
+              Country:
+            </label>
+            <div>
+              <input type="name" autocomplete="off" pInputText
+                class="form-control " [ngClass]="{ 'is-invalid': submitted && f.country.errors }" />
+            </div>
+          </span>
+          <span class="p-field p-col p-mt-4 p-grid">
+            <label class="p-justify-left p-col-2">
+              Email:
+            </label>
+            <div>
+              <input type="name" autocomplete="off" pInputText
+                class="form-control " [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+            </div>
+          </span>
+          <span class="p-field p-col p-mt-4 p-grid">
+            <label class="p-justify-left p-col-2">
+              Unique identifier:
+            </label>
+            <div>
+              <input type="number" min="0" autocomplete="off" pInputText
+                class="form-control " [ngClass]="{ 'is-invalid': submitted && f.uniqueIdentifier.errors }" />
+            </div>
+          </span>
+        </div>
+        <div class="p-grid p-px-5 p-mt-6 p-justify-center">
+          <button id="send-csr"  type="submit" class="p-button" label="Send"
+            pButton></button>
+        </div>
+      </form>
+    </p-card>
+  </div>
+</div>
