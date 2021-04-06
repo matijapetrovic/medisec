@@ -38,7 +38,14 @@ public class Csr {
     @Column(name="email")
     private String email;
 
+    @Column(name="verified")
+    private boolean verified;
+
     @Lob
     @Column(name="raw_csr", columnDefinition = "BLOB")
     private byte[] rawCsr;
+
+    public void verify() {
+        this.verified = true;
+    }
 }

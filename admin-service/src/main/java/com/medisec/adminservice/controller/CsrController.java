@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CsrController {
     private final CsrService csrService;
 
-    @PostMapping
+    @PostMapping("")
     public ResponseEntity<Void> createCsr(@RequestBody Csr csr) {
         csrService.createCsr(csr);
         return ResponseEntity.status(HttpStatus.CREATED).build();
