@@ -65,7 +65,7 @@ public class CertificateService {
             InvalidKeyException {
         Csr csr = csrRepository.findById(request.getCsrId()).orElseThrow(() -> new EntityNotFoundException("CSR Id invalid"));
 
-        SubjectData subjectData = generateSubjectData(request, CsrExtractor.extractPK(csr));
+        SubjectData subjectData = generateSubjectData(request, CsrExtractor.extractPK(csr.getRawCsr()));
         IssuerData issuerData = keyStoreReader.readIssuerFromStore("videcemo");
         PrivateKey issuerPrivateKey = keyStoreReader.readPrivateKey("isto videcemo")
                 .orElseThrow(MissingPrivateKeyException::new);
