@@ -14,12 +14,28 @@ import org.bouncycastle.asn1.x500.RDN;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
-import org.bouncycastle.asn1.x500.style.IETFUtils;
-import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
+<<<<<<< HEAD
+import org.bouncycastle.asn1.x509.CRLReason;
+import org.bouncycastle.asn1.x509.X509Extensions;
+import org.bouncycastle.cert.X509CRLHolder;
+import org.bouncycastle.cert.X509v2CRLBuilder;
+import org.bouncycastle.operator.ContentSigner;
 import org.bouncycastle.operator.OperatorCreationException;
+import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Service;
 
+import javax.security.auth.Subject;
+import java.io.File;
+import java.io.FileOutputStream;
+import org.bouncycastle.asn1.x500.style.IETFUtils;
+import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
+
 import java.io.IOException;
+import java.io.OutputStream;
+import java.math.BigInteger;
+import java.nio.file.Files;
 import java.security.*;
 import java.security.cert.CRLException;
 import java.security.cert.Certificate;
@@ -99,6 +115,26 @@ public class CertificateService {
         // TODO: pogledaj sta za start i end date i nullove
         return new CertificateResponse(givenName, surname, c, e, o, ou, uid, null, null, null, false);
     }
+    public void revokeCertificate(BigInteger serialNumber, Integer reason, String alias) throws IOException, UnrecoverableKeyException, CertificateException, NoSuchAlgorithmException, KeyStoreException, OperatorCreationException {
+        File crlFile = new File("src/main/resources/revocationList.crl");
+        byte[] fileContent = Files.readAllBytes(crlFile.toPath());
 
-    public void revokeCertificate(String serialNumber){}
+        X509v2CRLBuilder crlBuilder = new X509v2CRLBuilder(new X509CRLHolder(fileContent));
+
+        // Enum CRLReason
+        crlBuilder.addCRLEntry(serialNumber, new Date(), reason);
+
+        JcaContentSignerBuilder contentSignerBuilder = new JcaContentSignerBuilder("SHA256WithRSA");
+        // contentSignerBuilder.setProvider("BC") sta je bre ovo
+
+        //treba mi issuer
+        IssuerData issuerData = keyStoreReader.readIssuerFromStore(alias);
+        X509CRLHolder x509CRLHolder = crlBuilder.build(contentSignerBuilder.build(issuerData.getPrivateKey()));
+
+        OutputStream os = new FileOutputStream("src/main/resources/revocationList.crl");
+        os.write(x509CRLHolder.getEncoded());
+        os.close();
+    }
+//    private boolean isRevoked(BigInteger serialNumber){}
+
 }
