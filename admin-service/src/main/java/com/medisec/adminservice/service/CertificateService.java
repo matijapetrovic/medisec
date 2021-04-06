@@ -6,6 +6,9 @@ import com.medisec.adminservice.crypto.pki.data.IssuerData;
 import com.medisec.adminservice.crypto.pki.data.SubjectData;
 import com.medisec.adminservice.crypto.pki.keystores.KeyStoreReader;
 import com.medisec.adminservice.crypto.pki.keystores.KeyStoreWriter;
+import com.medisec.adminservice.csr.Csr;
+import com.medisec.adminservice.csr.CsrExtractor;
+import com.medisec.adminservice.csr.CsrRepository;
 import com.medisec.adminservice.exception.AliasNotValidException;
 import com.medisec.adminservice.exception.MissingPrivateKeyException;
 import com.medisec.adminservice.request.IssueCertificateRequest;
@@ -26,6 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.security.auth.Subject;
 import java.io.*;
 
@@ -48,8 +52,20 @@ public class CertificateService {
     private final KeyStoreWriter keyStoreWriter;
     private final KeyStoreReader keyStoreReader;
 
-    public void issueCertificate(IssueCertificateRequest request) throws NoSuchAlgorithmException, CertificateException, OperatorCreationException, KeyStoreException, IOException, UnrecoverableKeyException, MissingPrivateKeyException {
-        SubjectData subjectData = generateSubjectData(request);
+    private final CsrRepository csrRepository;
+
+    public void issueCertificate(IssueCertificateRequest request) throws
+            NoSuchAlgorithmException,
+            CertificateException,
+            OperatorCreationException,
+            KeyStoreException,
+            IOException,
+            UnrecoverableKeyException,
+            MissingPrivateKeyException,
+            InvalidKeyException {
+        Csr csr = csrRepository.findById(request.getCsrId()).orElseThrow(() -> new EntityNotFoundException("CSR Id invalid"));
+
+        SubjectData subjectData = generateSubjectData(request, CsrExtractor.extractPK(csr));
         IssuerData issuerData = keyStoreReader.readIssuerFromStore("videcemo");
         PrivateKey issuerPrivateKey = keyStoreReader.readPrivateKey("isto videcemo")
                 .orElseThrow(MissingPrivateKeyException::new);
@@ -58,7 +74,7 @@ public class CertificateService {
         keyStoreWriter.write(request.getEmail(), issuerPrivateKey, cert);
     }
 
-    private SubjectData generateSubjectData(IssueCertificateRequest request) {
+    private SubjectData generateSubjectData(IssueCertificateRequest request, PublicKey publicKey) {
         // TODO Serijski broj sertifikata (generator baza?)
         String sn = "1";
 
@@ -74,7 +90,7 @@ public class CertificateService {
 
         builder.addRDN(BCStyle.UID, request.getSubjectId());
 
-        return new SubjectData(request.getPublicKey(), builder.build(), sn, request.getStartDate(),request.getEndDate());
+        return new SubjectData(publicKey, builder.build(), sn, request.getStartDate(),request.getEndDate());
     }
 
     private KeyPair generateKeyPair() throws NoSuchAlgorithmException, NoSuchProviderException {
