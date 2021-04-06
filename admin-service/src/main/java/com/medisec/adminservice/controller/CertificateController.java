@@ -24,7 +24,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value="/api/admin-service", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value="/api/certificates", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CertificateController {
     private final CertificateService certificateService;
 

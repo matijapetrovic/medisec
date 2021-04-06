@@ -12,6 +12,8 @@ import java.util.Date;
 @NoArgsConstructor
 public class IssueCertificateRequest {
 
+    Long csrId;
+
     String name;
     String surname;
     String countryCode;

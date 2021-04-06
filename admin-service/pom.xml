@@ -52,8 +52,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.bouncycastle</groupId>
-			<artifactId>bcmail-jdk15</artifactId>
-			<version>1.46</version>
+			<artifactId>bcpkix-jdk15on</artifactId>
+			<version>1.68</version>
 		</dependency>
 	</dependencies>
 
