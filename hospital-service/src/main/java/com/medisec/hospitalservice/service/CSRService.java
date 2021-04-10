@@ -1,5 +1,6 @@
 package com.medisec.hospitalservice.service;
 
+import com.medisec.hospitalservice.keypairgenerator.KeyPairGenerator;
 import com.medisec.hospitalservice.request.CertificateSigningRequest;
 import lombok.RequiredArgsConstructor;
 import org.bouncycastle.jce.PKCS10CertificationRequest;
@@ -31,8 +32,21 @@ public class CSRService {
 
 
     public void sendCSR(CertificateSigningRequest certificateSigningRequest) throws NoSuchProviderException, NoSuchAlgorithmException, OperatorCreationException, IOException {
-        KeyPair keyPair = generateKeyPair();
+        KeyPair keyPair = KeyPairGenerator.generateKeyPair();
 
+        HashMap<String, String> subjectData = csrToMap(certificateSigningRequest);
+        String mapAsString = csrAttrMapToString(subjectData);
+        PKCS10CertificationRequestHolder csr = buildCSRHolder(mapAsString, keyPair);
+
+        //TODO save private key
+        //System.out.println("Private key: " + Base64.getEncoder().encodeToString(pair.getPrivate().getEncoded()));
+
+        StringBuilder builder = encodeStringCSR(csr);
+        sendRequest(builder);
+    }
+
+    private HashMap<String, String> csrToMap(CertificateSigningRequest certificateSigningRequest) {
+        // TODO: pogledaj sta ces sa serial numberom
         HashMap<String, String> subjectData = new HashMap<>();
 
         subjectData.put("CN", certificateSigningRequest.getCommonName());
@@ -41,46 +55,48 @@ public class CSRService {
         subjectData.put("O", certificateSigningRequest.getOrganization());
         subjectData.put("OU", certificateSigningRequest.getOrganizationUnit());
         subjectData.put("C", certificateSigningRequest.getCountry());
-        subjectData.put("E", certificateSigningRequest.getEmail());
+        subjectData.put("EmailAddress", certificateSigningRequest.getEmail());
         //subjectData.put("serialNumber", csr.getSerialNumber());
 
-        String mapAsString = subjectData.keySet().stream()
+        return subjectData;
+    }
+
+    private String csrAttrMapToString(HashMap<String, String> subjectData) {
+        String mapToString = subjectData.keySet().stream()
                 .filter(key -> subjectData.get(key) != null && !subjectData.get(key).isEmpty())
                 .map(key -> key + "=" + subjectData.get(key))
                 .collect(Collectors.joining(","));
 
+        return mapToString;
+    }
 
+    private PKCS10CertificationRequestHolder buildCSRHolder(String map, KeyPair keyPair) throws OperatorCreationException {
         PKCS10CertificationRequestBuilder p10Builder = new JcaPKCS10CertificationRequestBuilder(
-                new X500Principal(mapAsString), keyPair.getPublic());
+                new X500Principal(map), keyPair.getPublic());
         JcaContentSignerBuilder csBuilder = new JcaContentSignerBuilder("SHA256withRSA");
         ContentSigner signer = csBuilder.build(keyPair.getPrivate());
-        PKCS10CertificationRequestHolder csr = p10Builder.build(signer);
 
-        //TODO save private key
-        //System.out.println("Private key: " + Base64.getEncoder().encodeToString(pair.getPrivate().getEncoded()));
+        return p10Builder.build(signer);
+    }
 
+
+    private StringBuilder encodeStringCSR(PKCS10CertificationRequestHolder csr) throws IOException {
         StringBuilder builder = new StringBuilder();
 
         builder.append("-----BEGIN CERTIFICATE REQUEST-----\n");
         builder.append(DatatypeConverter.printBase64Binary(csr.getEncoded()));
         builder.append("\n-----END CERTIFICATE REQUEST-----");
 
-        RestTemplate restTemplate = new RestTemplate();
-
-        HttpEntity<String> request = new HttpEntity<>(builder.toString());
-
-        HttpStatus httpStatus = restTemplate.exchange(
-                    requestUrl,
-                    HttpMethod.POST,
-                    request,
-                    String.class).getStatusCode();
+        return builder;
     }
 
-
-    private KeyPair generateKeyPair() throws NoSuchAlgorithmException, NoSuchProviderException {
-        KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
-        SecureRandom random = SecureRandom.getInstance("SHA1PRNG", "SUN");
-        keyGen.initialize(2048, random);
-        return keyGen.generateKeyPair();
+    private void sendRequest(StringBuilder builder) {
+        HttpEntity<String> request = new HttpEntity<>(builder.toString());
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.exchange(
+                requestUrl,
+                HttpMethod.POST,
+                request,
+                String.class).getStatusCode();
     }
 }
