@@ -12,6 +12,7 @@ import com.medisec.adminservice.csr.CsrRepository;
 import com.medisec.adminservice.exception.AliasNotValidException;
 import com.medisec.adminservice.exception.MissingPrivateKeyException;
 import com.medisec.adminservice.request.IssueCertificateRequest;
+import com.medisec.adminservice.util.SerialNumberGenerator;
 import lombok.RequiredArgsConstructor;
 import org.bouncycastle.asn1.x500.RDN;
 import org.bouncycastle.asn1.x500.X500Name;
@@ -76,7 +77,8 @@ public class CertificateService {
 
     private SubjectData generateSubjectData(IssueCertificateRequest request, PublicKey publicKey) {
         // TODO Serijski broj sertifikata (generator baza?)
-        String sn = "1";
+        // TODO: UPDATE
+        String sn = SerialNumberGenerator.generateSerialNumber();
 
         // klasa X500NameBuilder pravi X500Name objekat koji predstavlja podatke o vlasniku
         X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);
@@ -86,7 +88,7 @@ public class CertificateService {
         builder.addRDN(BCStyle.O, request.getOrganization());
         builder.addRDN(BCStyle.OU, request.getOrganizationUnitName());
         builder.addRDN(BCStyle.C, request.getCountryCode());
-        builder.addRDN(BCStyle.E, request.getEmail());
+            builder.addRDN(BCStyle.E, request.getEmail());
 
         //builder.addRDN(BCStyle.UID, request.getSubjectId());
 
@@ -150,6 +152,7 @@ public class CertificateService {
         os.write(x509CRLHolder.getEncoded());
         os.close();
     }
+
     private boolean isRevoked(Certificate certificate) throws IOException, CertificateException, CRLException {
         File crlFile = new File("src/main/resources/revocationList.crl");
         byte[] fileContent = Files.readAllBytes(crlFile.toPath());
