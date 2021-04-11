@@ -14,27 +14,19 @@ import com.medisec.adminservice.exception.CSRNotVerifiedException;
 import com.medisec.adminservice.exception.MissingPrivateKeyException;
 import com.medisec.adminservice.request.IssueCertificateRequest;
 import lombok.RequiredArgsConstructor;
-import org.bouncycastle.asn1.x500.RDN;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
 import org.bouncycastle.asn1.x509.CRLReason;
-import org.bouncycastle.asn1.x509.X509Extensions;
 import org.bouncycastle.cert.X509CRLHolder;
 import org.bouncycastle.cert.X509v2CRLBuilder;
-import org.bouncycastle.cert.jcajce.JcaX509v2CRLBuilder;
-import org.bouncycastle.operator.ContentSigner;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import javax.security.auth.Subject;
 import java.io.*;
 
-import org.bouncycastle.asn1.x500.style.IETFUtils;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
 
 import java.math.BigInteger;
@@ -104,31 +96,32 @@ public class CertificateService {
         List<CertificateResponse> certificates = new ArrayList<>();
 
         Enumeration<String> aliases = keyStoreReader.getAllAliases();
-        //while (aliases.hasMoreElements()) {
+        while (aliases.hasMoreElements()) {
             String alias = aliases.nextElement();
             Certificate certificate = keyStoreReader.readCertificate(alias).orElseThrow(AliasNotValidException::new);
             boolean revoked = isRevoked(certificate);
             JcaX509CertificateHolder certHolder = new JcaX509CertificateHolder((X509Certificate) certificate);
             CertificateResponse response = X500NameSubjectToCertificateResponse(certHolder, revoked);
             certificates.add(response);
-        //}
+        }
 
         return certificates;
     }
 
     private CertificateResponse X500NameSubjectToCertificateResponse(JcaX509CertificateHolder certHolder, boolean revoked) {
         X500Name subject = certHolder.getSubject();
-        String cn = IETFUtils.valueToString(subject.getRDNs(BCStyle.CN)[0].getFirst().getValue());
-        String surname = IETFUtils.valueToString(subject.getRDNs(BCStyle.SURNAME)[0].getFirst().getValue());
-        String givenName = IETFUtils.valueToString(subject.getRDNs(BCStyle.GIVENNAME)[0].getFirst().getValue());
-        String o = IETFUtils.valueToString(subject.getRDNs(BCStyle.O)[0].getFirst().getValue());
-        String ou = IETFUtils.valueToString(subject.getRDNs(BCStyle.OU)[0].getFirst().getValue());
-        String c = IETFUtils.valueToString(subject.getRDNs(BCStyle.C)[0].getFirst().getValue());
-        String e = IETFUtils.valueToString(subject.getRDNs(BCStyle.E)[0].getFirst().getValue());
+        String cn = CsrExtractor.getField(subject, BCStyle.CN);
+        String surname = CsrExtractor.getField(subject, BCStyle.SURNAME);
+        String givenName = CsrExtractor.getField(subject, BCStyle.GIVENNAME);
+        String o = CsrExtractor.getField(subject, BCStyle.O);
+        String ou = CsrExtractor.getField(subject, BCStyle.OU);
+        String c = CsrExtractor.getField(subject, BCStyle.C);
+        String e = CsrExtractor.getField(subject, BCStyle.E);
         //String uid = IETFUtils.valueToString(subject.getRDNs(BCStyle.UID)[0].getFirst().getValue());
 
         return new CertificateResponse(certHolder.getSerialNumber().toString(16), givenName, surname, c, e, o, ou, null, certHolder.getNotBefore(), certHolder.getNotAfter(), revoked);
     }
+
     public void revokeCertificate(String serialNumber, Integer reason, String alias) throws IOException, UnrecoverableKeyException, CertificateException, NoSuchAlgorithmException, KeyStoreException, OperatorCreationException {
         File crlFile = new File("src/main/resources/revocationList.crl");
         byte[] fileContent = Files.readAllBytes(crlFile.toPath());
@@ -159,24 +152,24 @@ public class CertificateService {
         return crl.isRevoked(certificate);
     }
 
-    public void initRevocationList(String serialNumber, String alias) throws UnrecoverableKeyException, CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException, OperatorCreationException {
-        IssuerData issuerData = keyStoreReader.readIssuerFromStore(alias);
-        X500Name issuer = issuerData.getX500name();
-        Date now = new Date();
-        X509v2CRLBuilder builder = new X509v2CRLBuilder(issuer, now);
-        builder.addCRLEntry(new BigInteger(serialNumber), now, CRLReason.cACompromise);
-
-        JcaContentSignerBuilder contentSignerBuilder =
-                new JcaContentSignerBuilder("SHA256WithRSAEncryption");
-
-        contentSignerBuilder.setProvider("BC");
-        PrivateKey privateKey = issuerData.getPrivateKey();
-        X509CRLHolder cRLHolder =
-                builder.build(contentSignerBuilder.build(privateKey));
-
-        OutputStream os = new FileOutputStream("src/main/resources/revocationList.crl");
-        os.write(cRLHolder.getEncoded());
-        os.close();
-
-    }
+//    public void initRevocationList(String serialNumber, String alias) throws UnrecoverableKeyException, CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException, OperatorCreationException {
+//        IssuerData issuerData = keyStoreReader.readIssuerFromStore(alias);
+//        X500Name issuer = issuerData.getX500name();
+//        Date now = new Date();
+//        X509v2CRLBuilder builder = new X509v2CRLBuilder(issuer, now);
+//        builder.addCRLEntry(new BigInteger(serialNumber), now, CRLReason.cACompromise);
+//
+//        JcaContentSignerBuilder contentSignerBuilder =
+//                new JcaContentSignerBuilder("SHA256WithRSAEncryption");
+//
+//        contentSignerBuilder.setProvider("BC");
+//        PrivateKey privateKey = issuerData.getPrivateKey();
+//        X509CRLHolder cRLHolder =
+//                builder.build(contentSignerBuilder.build(privateKey));
+//
+//        OutputStream os = new FileOutputStream("src/main/resources/revocationList.crl");
+//        os.write(cRLHolder.getEncoded());
+//        os.close();
+//
+//    }
 }
