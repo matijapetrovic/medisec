@@ -1,7 +1,7 @@
 <p-table [value]="certificates">
   <ng-template pTemplate="header">
       <tr>
-        <th>Serial Number</th>
+        <th colspan="2">Serial Number</th>
           <th>Name</th>
           <th>Surname</th>
           <th>CountryCode</th>
@@ -14,7 +14,7 @@
   </ng-template>
   <ng-template pTemplate="body" let-certificate>
       <tr>
-        <td>{{ certificate.serialNumber }}</td>
+        <td colspan="2">{{ certificate.serialNumber }}</td>
           <td>{{certificate.name}}</td>
           <td>{{certificate.surname}}</td>
           <td>{{certificate.countryCode}}</td>

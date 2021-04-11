@@ -50,7 +50,7 @@ public class CsrService {
     }
 
     public Csr findById(Long id) {
-        return csrRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
+        return csrRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
 }

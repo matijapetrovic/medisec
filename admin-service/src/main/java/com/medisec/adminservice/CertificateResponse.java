@@ -13,7 +13,7 @@ import java.util.Date;
 @Getter
 @AllArgsConstructor
 public class CertificateResponse {
-    BigInteger serialNumber;
+    String serialNumber;
     String name;
     String surname;
     String countryCode;
@@ -41,7 +41,7 @@ public class CertificateResponse {
             Date endDate,
             boolean revoked) {
         return new CertificateResponse(
-                serialNumber,
+                serialNumber.toString(16),
                 name,
                 surname,
                 countryCode,
