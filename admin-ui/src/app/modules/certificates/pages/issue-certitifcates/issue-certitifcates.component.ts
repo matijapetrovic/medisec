@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CertificateService } from '../../certificate.service';
 import { IssueCertificateData } from '../certificates/certificate';
 
@@ -14,7 +14,11 @@ export class IssueCertitifcatesComponent implements OnInit {
   private csrId: number;
   form: FormGroup;
 
-  constructor(private route: ActivatedRoute, private certificateService: CertificateService, formBuilder: FormBuilder) {
+  constructor(
+    private route: ActivatedRoute, 
+    private certificateService: CertificateService, 
+    private router: Router,
+    formBuilder: FormBuilder) {
     this.form = formBuilder.group({
       commonName: '',
       surname: '',
@@ -58,7 +62,9 @@ export class IssueCertitifcatesComponent implements OnInit {
       startDate: this.f.startDate.value,
       endDate: this.f.endDate.value,
     }
-    this.certificateService.addSertificate(certificateData).subscribe();
+    this.certificateService.addSertificate(certificateData).subscribe(() => {
+      this.router.navigate(['certificates']);
+    });
   }
 
 }

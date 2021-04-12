@@ -2,6 +2,7 @@ package com.medisec.adminservice.controller;
 
 import com.medisec.adminservice.CertificateResponse;
 import com.medisec.adminservice.exception.AliasNotValidException;
+import com.medisec.adminservice.exception.CSRNotVerifiedException;
 import com.medisec.adminservice.exception.MissingPrivateKeyException;
 import com.medisec.adminservice.request.IssueCertificateRequest;
 import com.medisec.adminservice.request.RevokeCertificateRequest;
@@ -29,7 +30,7 @@ public class CertificateController {
     private final CertificateService certificateService;
 
     @PostMapping("")
-    public ResponseEntity<Void> issueCertificate(@RequestBody IssueCertificateRequest request) throws CertificateException, UnrecoverableKeyException, NoSuchAlgorithmException, OperatorCreationException, KeyStoreException, MissingPrivateKeyException, IOException, InvalidKeyException {
+    public ResponseEntity<Void> issueCertificate(@RequestBody IssueCertificateRequest request) throws CertificateException, UnrecoverableKeyException, NoSuchAlgorithmException, OperatorCreationException, KeyStoreException, MissingPrivateKeyException, IOException, InvalidKeyException, CSRNotVerifiedException {
         certificateService.issueCertificate(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

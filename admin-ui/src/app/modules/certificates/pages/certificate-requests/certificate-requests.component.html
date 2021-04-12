@@ -21,7 +21,8 @@
       <td>{{ csr.countryCode}}</td>
       <td>{{ csr.email}}</td>
       <td>
-        <button class="p-button" (click)="issueCertificate(csr.id)" label="Issue certificate" pButton></button>
+        <button *ngIf="csr.verified" class="p-button" (click)="issueCertificate(csr.id)" label="Issue certificate" pButton></button>
+        <p *ngIf="!csr.verified">Not verified</p>
       </td>
     </tr>
   </ng-template>

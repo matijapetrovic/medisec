@@ -33,6 +33,8 @@ public class CsrExtractor {
 
     public static String getField(X500Name name, ASN1ObjectIdentifier field) {
         RDN[] rdn = name.getRDNs(field);
+        if (rdn.length == 0)
+            return null;
         return IETFUtils.valueToString(rdn[0].getFirst().getValue());
     }
 }

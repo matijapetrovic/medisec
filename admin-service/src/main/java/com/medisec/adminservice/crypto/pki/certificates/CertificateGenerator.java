@@ -30,7 +30,7 @@ public class CertificateGenerator {
 
         // Postavljaju se podaci za generisanje sertifiakta
         X509v3CertificateBuilder certGen = new JcaX509v3CertificateBuilder(issuerData.getX500name(),
-                new BigInteger(subjectData.getSerialNumber()),
+                new BigInteger(subjectData.getSerialNumber(), 16),
                 subjectData.getStartDate(),
                 subjectData.getEndDate(),
                 subjectData.getX500name(),

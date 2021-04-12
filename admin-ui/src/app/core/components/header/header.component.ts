@@ -13,11 +13,11 @@ export class HeaderComponent implements OnInit {
       icon: 'pi pi-home',
       routerLink: ['']
     },
-    {
-      label: 'Issue Certificate',
-      icon: 'pi pi-map',
-      routerLink: ['/certificates/issue-certificate']
-    },
+    // {
+    //   label: 'Issue Certificate',
+    //   icon: 'pi pi-map',
+    //   routerLink: ['/certificates/issue-certificate']
+    // },
     {
       label: 'List Certificates',
       icon: 'pi pi-map',

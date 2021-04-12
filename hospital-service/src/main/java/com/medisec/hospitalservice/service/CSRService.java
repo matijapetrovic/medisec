@@ -46,7 +46,6 @@ public class CSRService {
     }
 
     private HashMap<String, String> csrToMap(CertificateSigningRequest certificateSigningRequest) {
-        // TODO: pogledaj sta ces sa serial numberom
         HashMap<String, String> subjectData = new HashMap<>();
 
         subjectData.put("CN", certificateSigningRequest.getCommonName());
@@ -55,8 +54,9 @@ public class CSRService {
         subjectData.put("O", certificateSigningRequest.getOrganization());
         subjectData.put("OU", certificateSigningRequest.getOrganizationUnit());
         subjectData.put("C", certificateSigningRequest.getCountry());
-        subjectData.put("E", certificateSigningRequest.getEmail());
+        subjectData.put("EmailAddress", certificateSigningRequest.getEmail());
         //subjectData.put("serialNumber", csr.getSerialNumber());
+
 
         return subjectData;
     }
