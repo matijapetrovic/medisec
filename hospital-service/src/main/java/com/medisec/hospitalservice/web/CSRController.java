@@ -1,8 +1,8 @@
-package com.medisec.hospitalservice.controller;
+package com.medisec.hospitalservice.web;
 
 
-import com.medisec.hospitalservice.request.CertificateSigningRequest;
-import com.medisec.hospitalservice.service.CSRService;
+import com.medisec.hospitalservice.csr.CertificateSigningRequest;
+import com.medisec.hospitalservice.csr.CSRService;
 import lombok.RequiredArgsConstructor;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.springframework.http.HttpStatus;

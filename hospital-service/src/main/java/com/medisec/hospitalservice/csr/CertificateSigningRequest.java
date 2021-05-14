@@ -1,13 +1,9 @@
-package com.medisec.hospitalservice.request;
+package com.medisec.hospitalservice.csr;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
-@Getter
 public class CertificateSigningRequest {
     private String commonName;
     private String givenName;

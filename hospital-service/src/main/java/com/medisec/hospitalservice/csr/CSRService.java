@@ -1,9 +1,6 @@
-package com.medisec.hospitalservice.service;
+package com.medisec.hospitalservice.csr;
 
-import com.medisec.hospitalservice.keypairgenerator.KeyPairGenerator;
-import com.medisec.hospitalservice.request.CertificateSigningRequest;
 import lombok.RequiredArgsConstructor;
-import org.bouncycastle.jce.PKCS10CertificationRequest;
 import org.bouncycastle.operator.ContentSigner;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
@@ -12,7 +9,6 @@ import org.bouncycastle.pkcs.PKCS10CertificationRequestHolder;
 import org.bouncycastle.pkcs.jcajce.JcaPKCS10CertificationRequestBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.beans.factory.annotation.Value;
@@ -60,12 +56,11 @@ public class CSRService {
     }
 
     private String csrAttrMapToString(HashMap<String, String> subjectData) {
-        String mapToString = subjectData.keySet().stream()
+
+        return subjectData.keySet().stream()
                 .filter(key -> subjectData.get(key) != null && !subjectData.get(key).isEmpty())
                 .map(key -> key + "=" + subjectData.get(key))
                 .collect(Collectors.joining(","));
-
-        return mapToString;
     }
 
     private PKCS10CertificationRequestHolder buildCSRHolder(String map, KeyPair keyPair) throws OperatorCreationException {

@@ -1,4 +1,4 @@
-package com.medisec.hospitalservice.keypairgenerator;
+package com.medisec.hospitalservice.csr;
 
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;

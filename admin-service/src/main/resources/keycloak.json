@@ -1,0 +1,11 @@
+{
+  "realm": "medisec",
+  "auth-server-url": "http://localhost:9900/auth",
+  "ssl-required": "external",
+  "resource": "admin-service",
+  "credentials": {
+    "secret": "ac3b8037-74f9-45bb-80d1-af98adfc290b"
+  },
+  "policy-enforcer": {
+  }
+}
