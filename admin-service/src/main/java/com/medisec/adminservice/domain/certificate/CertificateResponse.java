@@ -1,16 +1,13 @@
-package com.medisec.adminservice.certificate;
+package com.medisec.adminservice.domain.certificate;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigInteger;
 import java.util.Date;
 
-@Setter
-@Getter
-@AllArgsConstructor
+@Data
+@Builder
 public class CertificateResponse {
     String serialNumber;
     String name;

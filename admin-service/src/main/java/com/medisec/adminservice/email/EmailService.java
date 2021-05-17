@@ -1,4 +1,4 @@
-package com.medisec.adminservice.service;
+package com.medisec.adminservice.email;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;

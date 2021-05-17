@@ -1,4 +1,4 @@
-package com.medisec.adminservice.controller;
+package com.medisec.adminservice.web.template;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;

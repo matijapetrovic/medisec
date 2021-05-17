@@ -1,4 +1,4 @@
-package com.medisec.adminservice.crypto.pki.certificates;
+package com.medisec.adminservice.domain.crypto.pki.certificates;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;

@@ -1,9 +1,7 @@
-package com.medisec.adminservice.crypto.pki.certificates;
+package com.medisec.adminservice.domain.crypto.pki.certificates;
 
-import com.medisec.adminservice.crypto.pki.data.IssuerData;
-import com.medisec.adminservice.crypto.pki.data.SubjectData;
-import lombok.NoArgsConstructor;
-import org.bouncycastle.asn1.x509.Extension;
+import com.medisec.adminservice.domain.crypto.pki.data.IssuerData;
+import com.medisec.adminservice.domain.crypto.pki.data.SubjectData;
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.X509v3CertificateBuilder;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;

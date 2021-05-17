@@ -1,32 +1,45 @@
-package com.medisec.adminservice.request;
+package com.medisec.adminservice.web.certificate;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 import java.security.PublicKey;
 import java.util.Date;
 
-@Getter
-@AllArgsConstructor
+
+@Data
 @NoArgsConstructor
 public class IssueCertificateRequest {
+    @Positive
+    private Long csrId;
+    @Valid
+    private SubjectData subjectData;
 
-    Long csrId;
+    @FutureOrPresent
+    private Date startDate;
+    @FutureOrPresent
+    private Date endDate;
 
-    String givenName;
-    String surname;
-    String countryCode;
-    String email;
-    String organization;
-    String organizationUnitName;
+    @Getter
+    public static class SubjectData {
+        String subjectId;
+        String givenName;
+        String surname;
+        String countryCode;
+        @Email
+        String email;
+        String organization;
+        String organizationUnitName;
 
-    String subjectId;
-
-    Date startDate;
-    Date endDate;
-
-    public String getFullName() {
-        return givenName + ' ' + surname;
+        public String getFullName() {
+            return givenName + ' ' + surname;
+        }
     }
+
+
+
 }

@@ -1,13 +1,13 @@
-package com.medisec.adminservice.certificate;
+package com.medisec.adminservice.domain.certificate;
 
-import com.medisec.adminservice.crypto.pki.certificates.CertificateGenerator;
-import com.medisec.adminservice.crypto.pki.data.IssuerData;
-import com.medisec.adminservice.crypto.pki.data.SubjectData;
-import com.medisec.adminservice.crypto.pki.keystores.KeyStoreReader;
-import com.medisec.adminservice.crypto.pki.keystores.KeyStoreWriter;
-import com.medisec.adminservice.csr.Csr;
-import com.medisec.adminservice.csr.CsrExtractor;
-import com.medisec.adminservice.csr.CsrRepository;
+import com.medisec.adminservice.domain.crypto.pki.certificates.CertificateGenerator;
+import com.medisec.adminservice.domain.crypto.pki.data.IssuerData;
+import com.medisec.adminservice.domain.crypto.pki.data.SubjectData;
+import com.medisec.adminservice.domain.crypto.pki.keystores.KeyStoreReader;
+import com.medisec.adminservice.domain.crypto.pki.keystores.KeyStoreWriter;
+import com.medisec.adminservice.domain.certificate_request.CertificateSigningRequest;
+import com.medisec.adminservice.domain.certificate_request.CertificateRequestExtractor;
+import com.medisec.adminservice.domain.certificate_request.CertificateRequestRepository;
 import com.medisec.adminservice.exception.AliasNotValidException;
 import com.medisec.adminservice.exception.CSRNotVerifiedException;
 import com.medisec.adminservice.exception.MissingPrivateKeyException;
@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
+import org.bouncycastle.asn1.x509.KeyUsage;
 import org.bouncycastle.cert.X509CRLHolder;
 import org.bouncycastle.cert.X509v2CRLBuilder;
 import org.bouncycastle.operator.OperatorCreationException;
@@ -40,7 +41,7 @@ public class CertificateService {
     private final KeyStoreWriter keyStoreWriter;
     private final KeyStoreReader keyStoreReader;
 
-    private final CsrRepository csrRepository;
+    private final CertificateRequestRepository certificateRequestRepository;
 
     public void issueCertificate(IssueCertificateRequest request) throws
             NoSuchAlgorithmException,
@@ -50,43 +51,31 @@ public class CertificateService {
             IOException,
             UnrecoverableKeyException,
             InvalidKeyException {
-        Csr csr = csrRepository.findById(request.getCsrId()).orElseThrow(() -> new EntityNotFoundException("CSR Id invalid"));
-        if (!csr.isVerified())
+        CertificateSigningRequest certificateSigningRequest = certificateRequestRepository.findById(request.getCsrId()).orElseThrow(() -> new EntityNotFoundException("CSR Id invalid"));
+        if (!certificateSigningRequest.isVerified())
             throw new CSRNotVerifiedException();
 
-        SubjectData subjectData = generateSubjectData(request, CsrExtractor.extractPK(csr.getRawCsr()));
+        PublicKey subjectPublicKey = CertificateRequestExtractor.extractPK(certificateSigningRequest.getRawCsr());
+        SubjectData subjectData = new SubjectDataBuilder(subjectPublicKey, request.getStartDate(), request.getEndDate())
+                .withSubjectId(request.getSubjectData().getSubjectId())
+                .withCommonName(request.getSubjectData().getFullName())
+                .withCountryCode(request.getSubjectData().getCountryCode())
+                .withEmail(request.getSubjectData().getEmail())
+                .withGivenName(request.getSubjectData().getGivenName())
+                .withOrganization(request.getSubjectData().getOrganization())
+                .withOrganizationUnit(request.getSubjectData().getOrganizationUnitName())
+                .withSurname(request.getSubjectData().getSurname())
+                .build();
+
         IssuerData issuerData = keyStoreReader.readIssuerFromStore("bongcloud");
         PrivateKey issuerPrivateKey = keyStoreReader.readPrivateKey("bongcloud")
                 .orElseThrow(MissingPrivateKeyException::new);
 
         X509Certificate cert = CertificateGenerator.generateCertificate(subjectData, issuerData);
-        keyStoreWriter.write(request.getEmail(), issuerPrivateKey, cert);
-        csrRepository.delete(csr);
-    }
+        cert.checkValidity(new Date());
 
-    private SubjectData generateSubjectData(IssueCertificateRequest request, PublicKey publicKey) {
-        Random rand = new Random();
-        BigInteger serialNumber = new BigInteger(128, rand);
-
-        X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);
-        builder.addRDN(BCStyle.CN, request.getFullName());
-        builder.addRDN(BCStyle.SURNAME, request.getSurname());
-        builder.addRDN(BCStyle.GIVENNAME, request.getGivenName());
-        builder.addRDN(BCStyle.O, request.getOrganization());
-        builder.addRDN(BCStyle.OU, request.getOrganizationUnitName());
-        builder.addRDN(BCStyle.C, request.getCountryCode());
-        builder.addRDN(BCStyle.E, request.getEmail());
-
-        //builder.addRDN(BCStyle.UID, request.getSubjectId());
-
-        return new SubjectData(publicKey, builder.build(), serialNumber.toString(16), request.getStartDate(),request.getEndDate());
-    }
-
-    private KeyPair generateKeyPair() throws NoSuchAlgorithmException, NoSuchProviderException {
-        KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
-        SecureRandom random = SecureRandom.getInstance("SHA1PRNG", "SUN");
-        keyGen.initialize(2048, random);
-        return keyGen.generateKeyPair();
+        keyStoreWriter.write(request.getSubjectData().getEmail(), issuerPrivateKey, cert);
+        certificateRequestRepository.delete(certificateSigningRequest);
     }
 
     public List<CertificateResponse> readAllCertificates() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException, AliasNotValidException, CRLException {
@@ -96,27 +85,25 @@ public class CertificateService {
         while (aliases.hasMoreElements()) {
             String alias = aliases.nextElement();
             Certificate certificate = keyStoreReader.readCertificate(alias).orElseThrow(AliasNotValidException::new);
-            boolean revoked = isRevoked(certificate);
             JcaX509CertificateHolder certHolder = new JcaX509CertificateHolder((X509Certificate) certificate);
-            CertificateResponse response = X500NameSubjectToCertificateResponse(certHolder, revoked);
-            certificates.add(response);
+            X500Name subject = certHolder.getSubject();
+            CertificateResponse certificateResponse = CertificateResponse.builder()
+                    .countryCode(CertificateRequestExtractor.getField(subject, BCStyle.C))
+                    .email(CertificateRequestExtractor.getField(subject, BCStyle.E))
+                    .subjectId(CertificateRequestExtractor.getField(subject, BCStyle.UID))
+                    .name(CertificateRequestExtractor.getField(subject, BCStyle.GIVENNAME))
+                    .surname(CertificateRequestExtractor.getField(subject, BCStyle.SURNAME))
+                    .organization(CertificateRequestExtractor.getField(subject, BCStyle.O))
+                    .organizationUnitName(CertificateRequestExtractor.getField(subject, BCStyle.OU))
+                    .startDate(certHolder.getNotBefore())
+                    .endDate(certHolder.getNotAfter())
+                    .serialNumber(certHolder.getSerialNumber().toString(16))
+                    .revoked(isRevoked(certificate))
+                    .build();
+            certificates.add(certificateResponse);
         }
 
         return certificates;
-    }
-
-    private CertificateResponse X500NameSubjectToCertificateResponse(JcaX509CertificateHolder certHolder, boolean revoked) {
-        X500Name subject = certHolder.getSubject();
-        String cn = CsrExtractor.getField(subject, BCStyle.CN);
-        String surname = CsrExtractor.getField(subject, BCStyle.SURNAME);
-        String givenName = CsrExtractor.getField(subject, BCStyle.GIVENNAME);
-        String o = CsrExtractor.getField(subject, BCStyle.O);
-        String ou = CsrExtractor.getField(subject, BCStyle.OU);
-        String c = CsrExtractor.getField(subject, BCStyle.C);
-        String e = CsrExtractor.getField(subject, BCStyle.E);
-        //String uid = IETFUtils.valueToString(subject.getRDNs(BCStyle.UID)[0].getFirst().getValue());
-
-        return new CertificateResponse(certHolder.getSerialNumber().toString(16), givenName, surname, c, e, o, ou, null, certHolder.getNotBefore(), certHolder.getNotAfter(), revoked);
     }
 
     public void revokeCertificate(String serialNumber, Integer reason, String alias) throws IOException, UnrecoverableKeyException, CertificateException, NoSuchAlgorithmException, KeyStoreException, OperatorCreationException {
@@ -139,6 +126,7 @@ public class CertificateService {
         os.write(x509CRLHolder.getEncoded());
         os.close();
     }
+
     private boolean isRevoked(Certificate certificate) throws IOException, CertificateException, CRLException {
         File crlFile = new File("src/main/resources/revocationList.crl");
         byte[] fileContent = Files.readAllBytes(crlFile.toPath());

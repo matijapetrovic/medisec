@@ -1,4 +1,4 @@
-package com.medisec.adminservice.crypto.signature;
+package com.medisec.adminservice.domain.crypto.signature;
 
 
 import com.medisec.adminservice.util.Base64Utility;

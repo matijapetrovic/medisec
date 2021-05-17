@@ -1,4 +1,4 @@
-package com.medisec.adminservice.template;
+package com.medisec.adminservice.domain.template;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

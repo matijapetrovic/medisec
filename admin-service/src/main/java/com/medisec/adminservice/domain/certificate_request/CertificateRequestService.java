@@ -1,4 +1,4 @@
-package com.medisec.adminservice.domain.csr;
+package com.medisec.adminservice.domain.certificate_request;
 
 import com.medisec.adminservice.email.EmailService;
 import lombok.RequiredArgsConstructor;
@@ -13,22 +13,22 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CsrService {
-    private final CsrRepository csrRepository;
+public class CertificateRequestService {
+    private final CertificateRequestRepository certificateRequestRepository;
     private final EmailService emailService;
 
-    public void createCsr(byte[] csr) throws IOException {
-        PKCS10CertificationRequest request = CsrExtractor.extractCsr(csr);
+    public void createCertificateRequest(byte[] csr) throws IOException {
+        PKCS10CertificationRequest request = CertificateRequestExtractor.extractCsr(csr);
         X500Name name = request.getSubject();
-        Csr saved = csrRepository.save(
-                new Csr(null,
-                        CsrExtractor.getField(name, BCStyle.CN),
-                        CsrExtractor.getField(name, BCStyle.SURNAME),
-                        CsrExtractor.getField(name, BCStyle.GIVENNAME),
-                        CsrExtractor.getField(name, BCStyle.O),
-                        CsrExtractor.getField(name, BCStyle.OU),
-                        CsrExtractor.getField(name, BCStyle.C),
-                        CsrExtractor.getField(name, BCStyle.E),
+        CertificateSigningRequest saved = certificateRequestRepository.save(
+                new CertificateSigningRequest(null,
+                        CertificateRequestExtractor.getField(name, BCStyle.CN),
+                        CertificateRequestExtractor.getField(name, BCStyle.SURNAME),
+                        CertificateRequestExtractor.getField(name, BCStyle.GIVENNAME),
+                        CertificateRequestExtractor.getField(name, BCStyle.O),
+                        CertificateRequestExtractor.getField(name, BCStyle.OU),
+                        CertificateRequestExtractor.getField(name, BCStyle.C),
+                        CertificateRequestExtractor.getField(name, BCStyle.E),
                         false,
                         csr));
         emailService.sendEmail(saved.getEmail(), "CSR Verification", buildText(saved.getId()));
@@ -39,18 +39,18 @@ public class CsrService {
                 "http://localhost:8080/api/csr/verify/" + csrId + ".";
     }
 
-    public List<Csr> getCsrs() {
-        return csrRepository.findAll();
+    public List<CertificateSigningRequest> getCsrs() {
+        return certificateRequestRepository.findAll();
     }
 
-    public void verify(Long id) {
-        Csr csr = csrRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("CSR Id invalid"));
-        csr.verify();
-        csrRepository.save(csr);
+    public void veriftCertificateRequest(Long id) {
+        CertificateSigningRequest certificateSigningRequest = certificateRequestRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("CSR Id invalid"));
+        certificateSigningRequest.verify();
+        certificateRequestRepository.save(certificateSigningRequest);
     }
 
-    public Csr findById(Long id) {
-        return csrRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    public CertificateSigningRequest findById(Long id) {
+        return certificateRequestRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
 }

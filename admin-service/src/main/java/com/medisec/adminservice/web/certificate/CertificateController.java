@@ -1,13 +1,11 @@
-package com.medisec.adminservice.controller;
+package com.medisec.adminservice.web.certificate;
 
-import com.medisec.adminservice.certificate.CertificateResponse;
-import com.medisec.adminservice.certificate.RevocationReason;
+import com.medisec.adminservice.domain.certificate.CertificateResponse;
+import com.medisec.adminservice.domain.certificate.RevocationReason;
 import com.medisec.adminservice.exception.AliasNotValidException;
 import com.medisec.adminservice.exception.CSRNotVerifiedException;
 import com.medisec.adminservice.exception.MissingPrivateKeyException;
-import com.medisec.adminservice.web.certificate.IssueCertificateRequest;
-import com.medisec.adminservice.web.certificate.RevokeCertificateRequest;
-import com.medisec.adminservice.certificate.CertificateService;
+import com.medisec.adminservice.domain.certificate.CertificateService;
 import lombok.RequiredArgsConstructor;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.springframework.http.HttpStatus;

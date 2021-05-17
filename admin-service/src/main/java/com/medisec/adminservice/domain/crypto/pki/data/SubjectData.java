@@ -1,4 +1,4 @@
-package com.medisec.adminservice.crypto.pki.data;
+package com.medisec.adminservice.domain.crypto.pki.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

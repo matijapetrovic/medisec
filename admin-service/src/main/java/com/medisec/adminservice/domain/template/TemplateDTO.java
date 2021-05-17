@@ -1,4 +1,4 @@
-package com.medisec.adminservice.template;
+package com.medisec.adminservice.domain.template;
 
 import lombok.Data;
 

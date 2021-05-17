@@ -1,6 +1,6 @@
-package com.medisec.adminservice.domain.csr;
+package com.medisec.adminservice.domain.certificate_request;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CsrRepository extends JpaRepository<Csr, Long> {
+public interface CertificateRequestRepository extends JpaRepository<CertificateSigningRequest, Long> {
 }

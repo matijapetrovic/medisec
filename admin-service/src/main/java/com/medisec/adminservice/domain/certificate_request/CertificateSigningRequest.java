@@ -1,4 +1,4 @@
-package com.medisec.adminservice.csr;
+package com.medisec.adminservice.domain.certificate_request;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="csr")
-public class Csr {
+public class CertificateSigningRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

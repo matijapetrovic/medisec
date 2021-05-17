@@ -1,7 +1,7 @@
 package com.medisec.adminservice.web.certificate_request;
 
-import com.medisec.adminservice.csr.Csr;
-import com.medisec.adminservice.csr.CsrService;
+import com.medisec.adminservice.domain.certificate_request.CertificateSigningRequest;
+import com.medisec.adminservice.domain.certificate_request.CertificateRequestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,29 +13,29 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value="/api/csr", produces = MediaType.APPLICATION_JSON_VALUE)
-public class CsrController {
-    private final CsrService csrService;
+@RequestMapping(value="/api/certificate-request", produces = MediaType.APPLICATION_JSON_VALUE)
+public class CertificateRequestController {
+    private final CertificateRequestService certificateRequestService;
 
     @PostMapping("")
-    public ResponseEntity<Void> createCsr(@RequestBody byte[] csr) throws IOException {
-        csrService.createCsr(csr);
+    public ResponseEntity<Void> createCertificateRequest(@RequestBody byte[] certificateRequest) throws IOException {
+        certificateRequestService.createCertificateRequest(certificateRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/verify/{id}")
-    public ResponseEntity<Void> verifyCsr(@PathVariable Long id) {
-        csrService.verify(id);
+    public ResponseEntity<Void> verifyCertificateRequest(@PathVariable Long id) {
+        certificateRequestService.veriftCertificateRequest(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @GetMapping("")
-    public ResponseEntity<List<Csr>> getAllRequests() {
-        return ResponseEntity.ok(csrService.getCsrs());
+    public ResponseEntity<List<CertificateSigningRequest>> getAllRequests() {
+        return ResponseEntity.ok(certificateRequestService.getCsrs());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Csr> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(csrService.findById(id));
+    public ResponseEntity<CertificateSigningRequest> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(certificateRequestService.findById(id));
     }
 }

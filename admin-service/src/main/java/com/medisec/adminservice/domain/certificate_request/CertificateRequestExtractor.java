@@ -1,4 +1,4 @@
-package com.medisec.adminservice.domain.csr;
+package com.medisec.adminservice.domain.certificate_request;
 
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.x500.RDN;
@@ -13,7 +13,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 
-public class CsrExtractor {
+public class CertificateRequestExtractor {
     public static PublicKey extractPK(byte[] csr) throws IOException, NoSuchAlgorithmException, InvalidKeyException {
         PKCS10CertificationRequest request = extractCsr(csr);
         JcaPKCS10CertificationRequest jcaRequest = new JcaPKCS10CertificationRequest(request.getEncoded()).setProvider("BC");
