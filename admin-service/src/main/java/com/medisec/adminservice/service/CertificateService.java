@@ -51,8 +51,7 @@ public class CertificateService {
             KeyStoreException,
             IOException,
             UnrecoverableKeyException,
-            MissingPrivateKeyException,
-            InvalidKeyException, CSRNotVerifiedException {
+            InvalidKeyException {
         Csr csr = csrRepository.findById(request.getCsrId()).orElseThrow(() -> new EntityNotFoundException("CSR Id invalid"));
         if (!csr.isVerified())
             throw new CSRNotVerifiedException();

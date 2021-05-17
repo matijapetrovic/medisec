@@ -3,6 +3,7 @@ package com.medisec.adminservice.crypto.pki.certificates;
 import com.medisec.adminservice.crypto.pki.data.IssuerData;
 import com.medisec.adminservice.crypto.pki.data.SubjectData;
 import lombok.NoArgsConstructor;
+import org.bouncycastle.asn1.x509.Extension;
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.X509v3CertificateBuilder;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
@@ -35,7 +36,6 @@ public class CertificateGenerator {
                 subjectData.getEndDate(),
                 subjectData.getX500name(),
                 subjectData.getPublicKey());
-
         // Generise se sertifikat
         X509CertificateHolder certHolder = certGen.build(contentSigner);
 

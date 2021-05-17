@@ -1,4 +1,4 @@
 package com.medisec.adminservice.exception;
 
-public class CSRNotVerifiedException extends Exception {
+public class CSRNotVerifiedException extends RuntimeException {
 }

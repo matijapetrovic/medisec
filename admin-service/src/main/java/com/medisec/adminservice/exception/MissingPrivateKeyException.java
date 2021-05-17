@@ -1,4 +1,4 @@
 package com.medisec.adminservice.exception;
 
-public class MissingPrivateKeyException extends Exception {
+public class MissingPrivateKeyException extends RuntimeException {
 }
