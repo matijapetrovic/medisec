@@ -9,8 +9,11 @@ export function initializer(keycloak: KeycloakService): () => Promise<any> {
         clientId: environment.keycloakClientId,
       },
         initOptions: {
-            onLoad: 'login-required',
-            checkLoginIframe: false
+          // onLoad: 'login-required',
+          // checkLoginIframe: false
+          onLoad: 'check-sso',
+          silentCheckSsoRedirectUri:
+            window.location.origin + '/assets/silent-check-sso.html'
         },
         enableBearerInterceptor: true,
         bearerPrefix: 'Bearer',

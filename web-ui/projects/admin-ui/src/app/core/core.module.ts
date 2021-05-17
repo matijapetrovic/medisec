@@ -7,6 +7,7 @@ import {MenubarModule} from 'primeng/menubar';
 import { KeycloakBearerInterceptor, KeycloakService } from 'keycloak-angular';
 import { ButtonModule } from 'primeng/button';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { VendorsModule } from 'projects/vendors/src/public-api';
 
 
 @NgModule({
@@ -14,8 +15,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
   imports: [
     CommonModule,
     RouterModule,
-    MenubarModule,
-    ButtonModule
+    VendorsModule
   ],
   exports: [HeaderComponent],
   providers: [KeycloakService,

@@ -10,20 +10,15 @@ import { CertificateRequestsComponent } from './pages/certificate-requests/certi
 import {TableModule} from 'primeng/table';
 import { CertificatesComponent } from './pages/certificates/certificates.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { KeycloakBearerInterceptor } from 'keycloak-angular';
-import { CertificateService } from './certificate.service';
 import { CoreModule } from '../../core/core.module';
+import { VendorsModule } from 'projects/vendors/src/public-api';
 
 @NgModule({
   declarations: [IssueCertitifcatesComponent, IssueCertificateFormComponent, CertificateRequestsComponent, CertificatesComponent],
   imports: [
     CommonModule,
     CertificatesRoutingModule,
-    InputTextModule,
-    ButtonModule,
-    TableModule,
-    ReactiveFormsModule,
+    VendorsModule,
     CoreModule
   ]
 })
