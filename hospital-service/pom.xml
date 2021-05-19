@@ -66,6 +66,7 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+<<<<<<< HEAD
         <dependency>
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
@@ -73,6 +74,10 @@
         </dependency>
 
     </dependencies>
+=======
+
+	</dependencies>
+>>>>>>> main
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

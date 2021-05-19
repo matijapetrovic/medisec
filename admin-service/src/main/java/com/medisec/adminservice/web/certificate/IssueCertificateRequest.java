@@ -39,6 +39,7 @@ public class IssueCertificateRequest {
         @NotBlank
         String organization;
         @NotBlank
+
         String organizationUnitName;
 
         public String getFullName() {
