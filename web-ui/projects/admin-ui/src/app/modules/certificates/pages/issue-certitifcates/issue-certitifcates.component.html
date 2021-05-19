@@ -1,0 +1,49 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <span class="p-float-label">
+        <input id="common-name" type="text" pInputText class="p-inputtext-lg" formControlName="commonName"> 
+        <label for="common-name">Common Name</label>
+    </span>
+    <span class="p-float-label">
+        <input id="surname" type="text" pInputText class="p-inputtext-lg" formControlName="surname"> 
+        <label for="surname">Surname</label>
+    </span>
+    <span class="p-float-label">
+        <input id="given-name" type="text" pInputText class="p-inputtext-lg" formControlName="givenName"> 
+        <label for="given-name">Given Name</label>
+    </span>
+    <span class="p-float-label">
+      <input id="organization" type="text" pInputText class="p-inputtext-lg" formControlName="organization"> 
+      <label for="organization">Organization</label>
+    </span>
+    <span class="p-float-label">
+      <input id="country-code" type="text" pInputText class="p-inputtext-lg" formControlName="countryCode"> 
+      <label for="country-code">Country Code</label>
+    </span>
+    <span class="p-float-label">
+      <input id="organization-unit" type="text" pInputText class="p-inputtext-lg" formControlName="organizationUnit"> 
+      <label for="organization-unit">Organization Unit</label>
+    </span>
+    <span class="p-float-label">
+      <input id="email" type="email" pInputText class="p-inputtext-lg" formControlName="email"> 
+      <label for="email">Email</label>
+    </span>
+    <span class="p-float-label">
+      <input id="startDate" type="date" pInputText class="p-inputtext-lg" formControlName="startDate">
+      <label for="startDate">Start date</label>
+    </span>
+      <span class="p-float-label">
+        <input id="endDate" type="date" pInputText class="p-inputtext-lg" formControlName="endDate">
+        <label for="endDate">End date</label>
+      </span>
+    </div>
+  <div class="p-grid p-px-5 p-mt-6 p-justify-center" type="submit">
+    <button
+      id=""
+      type="submit"
+      class="p-button"
+      label="Issue"
+      pButton
+    ></button>
+  </div>
+</form>
