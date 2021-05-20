@@ -28,13 +28,19 @@ public class IssueCertificateRequest {
 
     @Getter
     public static class SubjectData {
+        @NotBlank
         String subjectId;
+        @NotBlank
         String givenName;
+        @NotBlank
         String surname;
+        @NotBlank
         String countryCode;
         @Email
         String email;
+        @NotBlank
         String organization;
+        @NotBlank
         String organizationUnitName;
 
         public String getFullName() {

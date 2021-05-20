@@ -87,6 +87,32 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- XSS security -->
+		<!-- Esapi - open-source web application security control library available from OWASP -->
+		<dependency>
+			<groupId>org.owasp.esapi</groupId>
+			<artifactId>esapi</artifactId>
+			<version>2.2.2.0</version>
+		</dependency>
+		<!-- Jsoup - provides some simple cleanup functions for detecting XSS scripts -->
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.5.2</version>
+		</dependency>
+		<!-- Cookie util for XSS filter class -->
+		<dependency>
+			<groupId>com.j2mvc</groupId>
+			<artifactId>j2mvc-util</artifactId>
+			<version>2.1.02</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20210307</version>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>

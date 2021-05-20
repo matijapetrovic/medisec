@@ -6,7 +6,6 @@ import { Observable, of, scheduled } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { CSR } from './csr';
 import { environment } from 'src/environments/environment';
-import { MessageService } from 'primeng/api';
 
 
 const httpOptions = {
@@ -23,7 +22,7 @@ export class CsrService {
   private handleError: HandleError;
 
 
-  constructor(private http: HttpClient, private messageService: MessageService, httpErrorHandler: HttpErrorHandler) {
+  constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandler) {
     this.handleError = httpErrorHandler.createHandleError('CsrService');
   }
 

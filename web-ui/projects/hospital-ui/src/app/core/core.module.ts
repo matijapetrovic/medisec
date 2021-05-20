@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { MenubarModule } from 'primeng/menubar';
+import { KeycloakBearerInterceptor, KeycloakService } from 'keycloak-angular';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
 @NgModule({
@@ -12,7 +14,12 @@ import { MenubarModule } from 'primeng/menubar';
     CommonModule,
     MenubarModule
   ],
-  providers: [
+  providers: [KeycloakService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: KeycloakBearerInterceptor,
+      multi: true
+    }
   ],
   exports: [],
 })

@@ -5,7 +5,6 @@ import { HandleError, HttpErrorHandler } from '../../core/services/http-error-ha
 import { Observable, of, scheduled } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { CSR } from './csr';
-import { MessageService } from 'primeng/api';
 import { environment } from 'projects/hospital-ui/src/environments/environment';
 
 
@@ -23,7 +22,7 @@ export class CsrService {
   private handleError: HandleError;
 
 
-  constructor(private http: HttpClient, private messageService: MessageService, httpErrorHandler: HttpErrorHandler) {
+  constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandler) {
     this.handleError = httpErrorHandler.createHandleError('CsrService');
   }
 

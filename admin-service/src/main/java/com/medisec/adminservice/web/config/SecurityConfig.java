@@ -24,6 +24,11 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
         http
+                .headers()
+                .xssProtection()
+                .and()
+                .contentSecurityPolicy("script-src 'self'");
+        http
                 .authorizeRequests()
                 .antMatchers("/**").hasAuthority("super-admin")
                 .and()
