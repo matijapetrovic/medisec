@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletRequestWrapper;
 @Component
 public class XSSRequestWrapper extends HttpServletRequestWrapper {
 
-
-
     public XSSRequestWrapper(HttpServletRequest request) {
         super(request);
     }

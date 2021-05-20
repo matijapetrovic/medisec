@@ -1,6 +1,9 @@
-package com.medisec.hospitalservice.web.config.xss;//package com.medisec.adminservice.web.config;
+package com.medisec.adminservice.web.config;
 
 import com.j2mvc.util.CookieUtil;
+import com.medisec.adminservice.web.config.xss.XSSBodyRequestWrapper;
+import com.medisec.adminservice.web.config.xss.XSSRequestWrapper;
+import com.medisec.adminservice.web.config.xss.XSSStripUtils;
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -107,7 +110,7 @@ public class XSSFilter implements Filter {
         String params = "";
         if(xssNormalRequestWrapper != null)
             JSON = new JSONObject(xssNormalRequestWrapper.getParameterMap());
-            params = JSON.toString();
+        params = JSON.toString();
         if(xssBodyRequestWrapper != null)
             params = xssBodyRequestWrapper.getBody();
 
@@ -117,6 +120,5 @@ public class XSSFilter implements Filter {
         }
         logger.info("Request url:{},method:{},path:{},header:{},param:{}",url,method,path,header,params);
     }
-
 
 }

@@ -8,7 +8,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CoreModule } from './core/core.module';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
 import { initializer } from './keycloak/init';
 import { KeycloakService } from 'keycloak-angular';
 
@@ -29,7 +28,7 @@ import { KeycloakService } from 'keycloak-angular';
       provide: APP_INITIALIZER,
       useFactory: initializer,
       multi: true,
-      deps: [KeycloakService]
+      deps: [KeycloakService],
     }
   ],
   bootstrap: [AppComponent]

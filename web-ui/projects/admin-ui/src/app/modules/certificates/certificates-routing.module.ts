@@ -19,6 +19,12 @@ const routes: Routes = [
     data: { roles: ['super-admin']}
   },
   {
+    path: 'issue',
+    component: IssueCertitifcatesComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['super-admin']}
+  },
+  {
     path: 'requests/:csrId/issue',
     component: IssueCertitifcatesComponent,
     canActivate: [AuthGuard],

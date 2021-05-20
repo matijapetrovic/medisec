@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { MenubarModule } from 'primeng/menubar';
-import { SharedModule } from '../shared/shared.module';
 import { KeycloakBearerInterceptor, KeycloakService } from 'keycloak-angular';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -13,8 +12,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
   imports: [
     RouterModule,
     CommonModule,
-    MenubarModule,
-    SharedModule
+    MenubarModule
   ],
   providers: [KeycloakService,
     {

@@ -95,7 +95,7 @@
               "projects/hospital-ui/src/assets"
             ],
             "styles": [
-              "projects/hospital-ui/src/styles.scss"
+               "projects/admin-ui/src/styles.css"
             ],
             "scripts": []
           }

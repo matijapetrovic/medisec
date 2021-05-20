@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { Observable, of, throwError } from 'rxjs';
-import { MessageService } from 'primeng/api';
+// import { MessageService } from 'primeng/api';
 
 export type HandleError =
   <T> (operation?: string, result?: T) => (error: HttpErrorResponse) => Observable<T>;
@@ -12,7 +12,8 @@ export type HandleError =
   providedIn: 'root'
 })
 export class HttpErrorHandler {
-  constructor(private messageService: MessageService) { }
+  // constructor(private messageService: MessageService) { }
+  constructor() { }
 
   /** Create curried handleError function that already knows the service name */
   createHandleError = (serviceName = '') => {
@@ -32,7 +33,7 @@ export class HttpErrorHandler {
     return (error: HttpErrorResponse): Observable<T> => {
       console.error(error);
 
-      this.messageService.add({ severity: 'error', summary: 'Error!', detail: error.error.message });
+      // this.messageService.add({ severity: 'error', summary: 'Error!', detail: error.error.message });
 
       // Let the app keep running by returning a safe result.
       return throwError('');

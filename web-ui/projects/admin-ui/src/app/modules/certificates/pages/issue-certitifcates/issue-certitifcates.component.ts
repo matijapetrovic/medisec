@@ -33,6 +33,8 @@ export class IssueCertitifcatesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (!this.route.snapshot.params.csrId)
+      return;
     this.csrId = +this.route.snapshot.params.csrId;
     this.certificateService.getCsr(this.csrId).subscribe((csr) => {
       this.form.patchValue({
