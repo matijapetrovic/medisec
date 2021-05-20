@@ -1,4 +1,4 @@
-package com.medisec.hospitalservice.validation.validators;
+package com.medisec.hospitalservice.common.validation.validators;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

@@ -1,7 +1,7 @@
-package com.medisec.hospitalservice.validation.annotations;
+package com.medisec.hospitalservice.common.validation.annotations;
 
 
-import com.medisec.hospitalservice.validation.validators.RevocationReasonValidator;
+import com.medisec.hospitalservice.common.validation.validators.RevocationReasonValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

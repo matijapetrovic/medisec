@@ -1,4 +1,4 @@
-package com.medisec.adminservice.web.config;
+package com.medisec.adminservice.web.config.xss;
 
 
 import java.util.regex.Pattern;

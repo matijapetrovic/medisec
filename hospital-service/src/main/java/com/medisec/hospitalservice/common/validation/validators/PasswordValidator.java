@@ -1,7 +1,7 @@
-package com.medisec.hospitalservice.validation.validators;
+package com.medisec.hospitalservice.common.validation.validators;
 
 
-import com.medisec.hospitalservice.validation.annotations.Password;
+import com.medisec.hospitalservice.common.validation.annotations.Password;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 

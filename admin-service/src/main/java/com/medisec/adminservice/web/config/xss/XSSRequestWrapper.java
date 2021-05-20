@@ -1,25 +1,9 @@
-package com.medisec.adminservice.web.config;
+package com.medisec.adminservice.web.config.xss;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang.StringUtils;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.jsoup.*;
-import org.jsoup.safety.Whitelist;
-import org.owasp.esapi.ESAPI;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.List;
 
 @Component
 public class XSSRequestWrapper extends HttpServletRequestWrapper {

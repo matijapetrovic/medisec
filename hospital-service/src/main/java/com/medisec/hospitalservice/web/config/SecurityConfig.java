@@ -22,7 +22,6 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
         http
-<<<<<<< HEAD
                 .headers()
                 .xssProtection()
                 .and()
@@ -34,10 +33,6 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .cors()
                 .and()
                 .csrf().disable();
-=======
-                .authorizeRequests()
-                .antMatchers("/").hasAuthority("super-admin");
->>>>>>> main
     }
 
     @Autowired

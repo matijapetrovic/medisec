@@ -12,7 +12,6 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class RevokeCertificateRequest {
     @RevocationReason
-    // TODO Kabi validiraj da ne moze sedmica!! UPDATE: DONE
     private Integer reason;
 
     @NotBlank(message="Certificate alias must not be blank")

@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 
 import { MenubarModule } from 'primeng/menubar';
 import { SharedModule } from '../shared/shared.module';
+import { KeycloakBearerInterceptor, KeycloakService } from 'keycloak-angular';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
 @NgModule({
@@ -14,7 +16,12 @@ import { SharedModule } from '../shared/shared.module';
     MenubarModule,
     SharedModule
   ],
-  providers: [ 
+  providers: [KeycloakService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: KeycloakBearerInterceptor,
+      multi: true
+    }
   ],
   exports: [],
 })
