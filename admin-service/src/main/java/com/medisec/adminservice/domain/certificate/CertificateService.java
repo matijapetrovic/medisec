@@ -69,8 +69,7 @@ public class CertificateService {
         IssuerData issuerData = keyStoreReader.readIssuerFromStore("bongcloud");
         PrivateKey issuerPrivateKey = keyStoreReader.readPrivateKey("bongcloud")
                 .orElseThrow(MissingPrivateKeyException::new);
-
-
+       
         X509Certificate cert = CertificateGenerator.generateCertificate(subjectData, issuerData, request.getExtensions());
         cert.checkValidity(new Date());
 

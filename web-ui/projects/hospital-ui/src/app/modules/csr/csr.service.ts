@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
 import { Observable, of, scheduled } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { CSR } from './csr';
-import { MessageService } from 'primeng/api';
 import { environment } from 'projects/hospital-ui/src/environments/environment';
 
 

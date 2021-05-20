@@ -51,6 +51,8 @@ public class CSRService {
         subjectData.put("OU", certificateSigningRequest.getOrganizationUnit());
         subjectData.put("C", certificateSigningRequest.getCountry());
         subjectData.put("EmailAddress", certificateSigningRequest.getEmail());
+        //subjectData.put("serialNumber", csr.getSerialNumber());
+
 
         return subjectData;
     }
@@ -64,14 +66,14 @@ public class CSRService {
     }
 
     private PKCS10CertificationRequestHolder buildCSRHolder(String map, KeyPair keyPair) throws OperatorCreationException {
+        X500Principal principal = new X500Principal(map);
         PKCS10CertificationRequestBuilder p10Builder = new JcaPKCS10CertificationRequestBuilder(
-                new X500Principal(map), keyPair.getPublic());
+                principal, keyPair.getPublic());
         JcaContentSignerBuilder csBuilder = new JcaContentSignerBuilder("SHA256withRSA");
         ContentSigner signer = csBuilder.build(keyPair.getPrivate());
 
         return p10Builder.build(signer);
     }
-
 
     private StringBuilder encodeStringCSR(PKCS10CertificationRequestHolder csr) throws IOException {
         StringBuilder builder = new StringBuilder();
