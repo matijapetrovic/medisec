@@ -3,7 +3,7 @@ package com.medisec.adminservice.domain.crypto.pki.certificates;
 import com.medisec.adminservice.domain.crypto.pki.data.IssuerData;
 import com.medisec.adminservice.domain.crypto.pki.data.SubjectData;
 import com.medisec.adminservice.domain.extension.CertificateExtensions;
-import com.medisec.adminservice.web.certificate.IssueCertificateRequest;
+import com.medisec.adminservice.domain.extension.CertificateKeyUsage;
 import org.bouncycastle.asn1.x509.BasicConstraints;
 import org.bouncycastle.asn1.x509.Extension;
 import org.bouncycastle.asn1.x509.KeyUsage;
@@ -62,16 +62,16 @@ public class CertificateGenerator {
             BasicConstraints basicConstraints = extensionsDTO.getBasicConstraints().getPathLen() != null
                     ? new BasicConstraints(extensionsDTO.getBasicConstraints().getPathLen())
                     : new BasicConstraints(extensionsDTO.getBasicConstraints().isCa());
-            certBuilder.addExtension(Extension.basicConstraints, extensionsDTO.getBasicConstraints().isCritical(), basicConstraints);
+            certBuilder.addExtension(Extension.basicConstraints, extensionsDTO.getBasicConstraints().isBasicConstraintsIsCritical(), basicConstraints);
         }
         if (extensionsDTO.getKeyUsage() != null) {
             KeyUsage keyUsage = getKeyUsage(extensionsDTO.getKeyUsage());
-            certBuilder.addExtension(Extension.keyUsage, extensionsDTO.getKeyUsage().isCritical(), keyUsage);
+            certBuilder.addExtension(Extension.keyUsage, extensionsDTO.getKeyUsage().isKeyUsageIsCritical(), keyUsage);
         }
     }
 
 
-    public static KeyUsage getKeyUsage(CertificateExtensions.CertificateKeyUsage keyUsage) {
+    public static KeyUsage getKeyUsage(CertificateKeyUsage keyUsage) {
         int key = 0;
         if (keyUsage.isCrlSign())
             key |= KeyUsage.cRLSign;
