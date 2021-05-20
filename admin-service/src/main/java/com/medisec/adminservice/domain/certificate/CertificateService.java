@@ -14,9 +14,8 @@ import com.medisec.adminservice.exception.MissingPrivateKeyException;
 import com.medisec.adminservice.web.certificate.IssueCertificateRequest;
 import lombok.RequiredArgsConstructor;
 import org.bouncycastle.asn1.x500.X500Name;
-import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
-import org.bouncycastle.asn1.x509.KeyUsage;
+import org.bouncycastle.asn1.x509.BasicConstraints;
 import org.bouncycastle.cert.X509CRLHolder;
 import org.bouncycastle.cert.X509v2CRLBuilder;
 import org.bouncycastle.operator.OperatorCreationException;
@@ -71,7 +70,8 @@ public class CertificateService {
         PrivateKey issuerPrivateKey = keyStoreReader.readPrivateKey("bongcloud")
                 .orElseThrow(MissingPrivateKeyException::new);
 
-        X509Certificate cert = CertificateGenerator.generateCertificate(subjectData, issuerData);
+
+        X509Certificate cert = CertificateGenerator.generateCertificate(subjectData, issuerData, request.getExtensions());
         cert.checkValidity(new Date());
 
         keyStoreWriter.write(request.getSubjectData().getEmail(), issuerPrivateKey, cert);
@@ -105,6 +105,7 @@ public class CertificateService {
 
         return certificates;
     }
+
 
     public void revokeCertificate(String serialNumber, Integer reason, String alias) throws IOException, UnrecoverableKeyException, CertificateException, NoSuchAlgorithmException, KeyStoreException, OperatorCreationException {
         File crlFile = new File("src/main/resources/revocationList.crl");

@@ -1,5 +1,7 @@
 package com.medisec.adminservice;
 
+import com.medisec.adminservice.domain.certificate_request.CertificateRequestRepository;
+import com.medisec.adminservice.domain.certificate_request.CertificateSigningRequest;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,7 +17,7 @@ public class AdminServiceApplication {
 	public static void main(String[] args) { SpringApplication.run(AdminServiceApplication.class, args); }
 
 	@Bean
-	public CommandLineRunner run() {
+	public CommandLineRunner run(CertificateRequestRepository certificateRequestRepository) {
 		return args -> {
 			Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
 		};

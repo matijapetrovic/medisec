@@ -1,13 +1,12 @@
 package com.medisec.adminservice.web.certificate;
 
-import lombok.AllArgsConstructor;
+import com.medisec.adminservice.domain.extension.CertificateExtensions;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
-import java.security.PublicKey;
 import java.util.Date;
 
 
@@ -16,6 +15,7 @@ import java.util.Date;
 public class IssueCertificateRequest {
     @Positive
     private Long csrId;
+
     @Valid
     private SubjectData subjectData;
 
@@ -23,6 +23,8 @@ public class IssueCertificateRequest {
     private Date startDate;
     @FutureOrPresent
     private Date endDate;
+
+    private CertificateExtensions extensions;
 
     @Getter
     public static class SubjectData {
@@ -39,7 +41,4 @@ public class IssueCertificateRequest {
             return givenName + ' ' + surname;
         }
     }
-
-
-
 }
