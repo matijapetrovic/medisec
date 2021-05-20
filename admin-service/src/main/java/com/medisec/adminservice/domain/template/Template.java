@@ -1,10 +1,7 @@
 package com.medisec.adminservice.domain.template;
 
 import com.medisec.adminservice.domain.extension.CertificateExtensions;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,6 +9,7 @@ import javax.persistence.*;
 @Table(name="template")
 @Builder
 @Getter
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Template {
 
