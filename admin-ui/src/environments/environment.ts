@@ -4,7 +4,10 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://localhost:8443'
+  apiUrl: 'https://localhost:8443',
+  keycloakUrl: 'http://localhost:9900/auth',
+  keycloakRealm: 'medisec',
+  keycloakClientId: 'admin-ui'
 };
 
 /*

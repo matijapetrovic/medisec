@@ -1,5 +1,5 @@
 {
-  "realm": "master",
+  "realm": "medisec",
   "auth-server-url": "http://localhost:9900/auth",
   "ssl-required": "external",
   "resource": "admin-service",

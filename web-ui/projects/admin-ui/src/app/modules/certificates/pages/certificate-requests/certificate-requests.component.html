@@ -1,0 +1,29 @@
+<p-table [value]="certificateRequests">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Common Name</th>
+      <th>Surname</th>
+      <th>Given Name</th>
+      <th>Organization</th>
+      <th>Organization Unit</th>
+      <th>Country Code</th>
+      <th>Email</th>
+      <th>Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-csr>
+    <tr>
+      <td>{{ csr.commonName}}</td>
+      <td>{{ csr.surname}}</td>
+      <td>{{ csr.givenName}}</td>
+      <td>{{ csr.organization}}</td>
+      <td>{{ csr.organizationUnit}}</td>
+      <td>{{ csr.countryCode}}</td>
+      <td>{{ csr.email}}</td>
+      <td>
+        <button *ngIf="csr.verified" class="p-button" (click)="issueCertificate(csr.id)" label="Issue certificate" pButton></button>
+        <p *ngIf="!csr.verified">Not verified</p>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
