@@ -5,8 +5,8 @@ import { HandleError, HttpErrorHandler } from '../../core/services/http-error-ha
 import { Observable, of, scheduled } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { CSR } from './csr';
-import { environment } from 'src/environments/environment';
 import { MessageService } from 'primeng/api';
+import { environment } from 'projects/hospital-ui/src/environments/environment';
 
 
 const httpOptions = {

@@ -1,5 +1,6 @@
 package com.medisec.adminservice.domain.template;
 
+import com.medisec.adminservice.web.template.CreateTemplateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +13,14 @@ import java.util.stream.Collectors;
 public class TemplateService {
     private final TemplateRepository templateRepository;
 
-    public void create() {
+    public void create(CreateTemplateRequest request) {
+        Template template = Template.builder()
+                .id(null)
+                .name(request.getName())
+                .extensions(request.getExtensions())
+                .build();
 
+        templateRepository.save(template);
     }
 
     public List<TemplateDTO> findAll() {

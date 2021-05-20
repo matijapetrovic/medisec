@@ -24,5 +24,7 @@ services:
       DB_USER: keycloak
       DB_SCHEMA: public
       DB_PASSWORD: password
+    volumes:
+      - "./tmp:/tmp"
     depends_on:
       - postgres

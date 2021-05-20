@@ -2,20 +2,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SendCsrFormComponent } from './pages/send-csr-form/send-csr-form.component';
 
-import { FlexLayoutModule } from '@angular/flex-layout';
-
-import { SharedModule } from './../../shared/shared.module';
 import { CsrRoutingModule } from './csr-routing.module';
-import { CoreModule } from 'src/app/core/core.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CoreModule } from '../../core/core.module';
+import { VendorsModule } from 'projects/vendors/src/public-api';
 
 @NgModule({
   declarations: [SendCsrFormComponent],
   imports: [
     CommonModule,
+    VendorsModule,
     CsrRoutingModule,
-    SharedModule,
-    FlexLayoutModule,
     CoreModule,
     ReactiveFormsModule
   ]

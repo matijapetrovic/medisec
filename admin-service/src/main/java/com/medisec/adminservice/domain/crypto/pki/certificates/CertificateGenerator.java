@@ -2,6 +2,12 @@ package com.medisec.adminservice.domain.crypto.pki.certificates;
 
 import com.medisec.adminservice.domain.crypto.pki.data.IssuerData;
 import com.medisec.adminservice.domain.crypto.pki.data.SubjectData;
+import com.medisec.adminservice.domain.extension.CertificateExtensions;
+import com.medisec.adminservice.web.certificate.IssueCertificateRequest;
+import org.bouncycastle.asn1.x509.BasicConstraints;
+import org.bouncycastle.asn1.x509.Extension;
+import org.bouncycastle.asn1.x509.KeyUsage;
+import org.bouncycastle.cert.CertIOException;
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.X509v3CertificateBuilder;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
@@ -15,7 +21,8 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
 public class CertificateGenerator {
-    public static X509Certificate generateCertificate(SubjectData subjectData, IssuerData issuerData) throws CertificateException, OperatorCreationException {
+
+    public static X509Certificate generateCertificate(SubjectData subjectData, IssuerData issuerData, CertificateExtensions extensionsDTO) throws CertificateException, OperatorCreationException, CertIOException {
         // Posto klasa za generisanje sertifiakta ne moze da primi direktno privatni kljuc pravi se builder za objekat
         // Ovaj objekat sadrzi privatni kljuc izdavaoca sertifikata i koristiti se za potpisivanje sertifikata
         // Parametar koji se prosledjuje je algoritam koji se koristi za potpisivanje sertifiakta
@@ -34,6 +41,9 @@ public class CertificateGenerator {
                 subjectData.getEndDate(),
                 subjectData.getX500name(),
                 subjectData.getPublicKey());
+
+        extractExtensions(certGen, extensionsDTO);
+
         // Generise se sertifikat
         X509CertificateHolder certHolder = certGen.build(contentSigner);
 
@@ -44,5 +54,44 @@ public class CertificateGenerator {
 
         // Konvertuje objekat u sertifikat
         return certConverter.getCertificate(certHolder);
+    }
+
+    private static void extractExtensions(X509v3CertificateBuilder certBuilder, CertificateExtensions extensionsDTO) throws CertIOException {
+        if (extensionsDTO == null) return;
+        if (extensionsDTO.getBasicConstraints() != null) {
+            BasicConstraints basicConstraints = extensionsDTO.getBasicConstraints().getPathLen() != null
+                    ? new BasicConstraints(extensionsDTO.getBasicConstraints().getPathLen())
+                    : new BasicConstraints(extensionsDTO.getBasicConstraints().isCa());
+            certBuilder.addExtension(Extension.basicConstraints, extensionsDTO.getBasicConstraints().isCritical(), basicConstraints);
+        }
+        if (extensionsDTO.getKeyUsage() != null) {
+            KeyUsage keyUsage = getKeyUsage(extensionsDTO.getKeyUsage());
+            certBuilder.addExtension(Extension.keyUsage, extensionsDTO.getKeyUsage().isCritical(), keyUsage);
+        }
+    }
+
+
+    public static KeyUsage getKeyUsage(CertificateExtensions.CertificateKeyUsage keyUsage) {
+        int key = 0;
+        if (keyUsage.isCrlSign())
+            key |= KeyUsage.cRLSign;
+        if (keyUsage.isDataEncipherment())
+            key |= KeyUsage.dataEncipherment;
+        if (keyUsage.isDecipherOnly())
+            key |= KeyUsage.decipherOnly;
+        if (keyUsage.isKeyAgreement())
+            key |= KeyUsage.keyAgreement;
+        if (keyUsage.isDigitalSignature())
+            key |= KeyUsage.digitalSignature;
+        if (keyUsage.isEncipherOnly())
+            key |= KeyUsage.encipherOnly;
+        if (keyUsage.isKeyCertSign())
+            key |= KeyUsage.keyCertSign;
+        if (keyUsage.isNonRepudiation())
+            key |= KeyUsage.nonRepudiation;
+        if (keyUsage.isKeyEncipherment())
+            key |= KeyUsage.keyEncipherment;
+
+        return new KeyUsage(key);
     }
 }

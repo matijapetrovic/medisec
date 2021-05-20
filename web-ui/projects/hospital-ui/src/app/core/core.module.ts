@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { MenubarModule } from 'primeng/menubar';
-import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -11,10 +10,9 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     RouterModule,
     CommonModule,
-    MenubarModule,
-    SharedModule
+    MenubarModule
   ],
-  providers: [ 
+  providers: [
   ],
   exports: [],
 })
