@@ -14,11 +14,11 @@ export class CertificateService {
   constructor(private http: HttpClient) { }
 
   getCertificateRequests(): Observable<CertificateRequest[]> {
-    return this.http.get<CertificateRequest[]>(` ${environment.apiUrl}/api/csr`);
+    return this.http.get<CertificateRequest[]>(` ${environment.apiUrl}/api/certificate-requests`);
   }
 
   getCsr(id: number) {
-    return this.http.get<CertificateRequest>(`${environment.apiUrl}/api/csr/${id}`);
+    return this.http.get<CertificateRequest>(`${environment.apiUrl}/api/certificate-requests/${id}`);
   }
 
   getCertificates(){

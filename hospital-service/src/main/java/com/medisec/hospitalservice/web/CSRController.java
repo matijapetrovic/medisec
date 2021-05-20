@@ -19,7 +19,7 @@ import java.security.NoSuchProviderException;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value="/api/hospital-service", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value="/api", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CSRController {
     private final CSRService csrService;
 

@@ -23,7 +23,7 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         super.configure(http);
         http
                 .authorizeRequests()
-                .antMatchers("/").hasAuthority("super-admin");
+                .antMatchers("/**").hasAuthority("admin");
     }
 
     @Autowired

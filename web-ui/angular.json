@@ -69,7 +69,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "hospital-ui:build"
+            "browserTarget": "hospital-ui:build",
+            "port": 4201
           },
           "configurations": {
             "production": {
@@ -192,7 +193,11 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "admin-ui:build"
+            "browserTarget": "admin-ui:build",
+            "port": 4200,
+            "ssl": true,
+            "sslKey": "./projects/admin-ui/ssl/server.key",
+            "sslCert": "./projects/admin-ui/ssl/server.crt"
           },
           "configurations": {
             "production": {

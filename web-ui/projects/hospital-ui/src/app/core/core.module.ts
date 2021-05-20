@@ -3,18 +3,26 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { MenubarModule } from 'primeng/menubar';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { KeycloakService, KeycloakBearerInterceptor } from 'keycloak-angular';
+import { HeaderComponent } from './components/header/header.component';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [HeaderComponent],
   imports: [
     RouterModule,
     CommonModule,
     MenubarModule
   ],
-  providers: [
+  providers: [KeycloakService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: KeycloakBearerInterceptor,
+      multi: true
+    }
   ],
-  exports: [],
+  exports: [HeaderComponent],
 })
 
 export class CoreModule { }

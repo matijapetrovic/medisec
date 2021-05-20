@@ -13,7 +13,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value="/api/certificate-request", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value="/api/certificate-requests", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CertificateRequestController {
     private final CertificateRequestService certificateRequestService;
 

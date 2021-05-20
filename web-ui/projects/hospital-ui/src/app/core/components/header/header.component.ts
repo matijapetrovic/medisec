@@ -17,24 +17,14 @@ export class HeaderComponent implements OnInit {
       label: 'Home',
       icon: 'pi pi-home',
       routerLink: ['']
-    },
-    // {
-    //   label: 'Issue Certificate',
-    //   icon: 'pi pi-map',
-    //   routerLink: ['/certificates/issue-certificate']
-    // },
+    }
   ];
 
-  superAdminItems: MenuItem[] = [
+  adminItems: MenuItem[] = [
     {
-      label: 'List Certificates',
+      label: 'Send Certificate Request',
       icon: 'pi pi-map',
-     routerLink: ['/certificates']
-    },
-    {
-      label: 'Certificate Requests',
-      icon: 'pi pi-map',
-     routerLink: ['/certificates/requests']
+     routerLink: ['']
     }
   ];
 
@@ -44,10 +34,10 @@ export class HeaderComponent implements OnInit {
     this.isLoggedIn = await this.keycloakService.isLoggedIn();
     if (this.isLoggedIn) {
       const roles: string[] = this.keycloakService.getUserRoles();
-      if (roles.includes('super-admin'))
+      if (roles.includes('admin'))
         this.items = [
           ...this.commonItems,
-          ...this.superAdminItems
+          ...this.adminItems
         ];
     }
     else {
