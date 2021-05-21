@@ -11,62 +11,16 @@ import { IssueCertificateData } from '../certificates/certificate';
 })
 export class IssueCertitifcatesComponent implements OnInit {
 
-  private csrId: number;
-  form: FormGroup;
+  csrId: number = null;
 
   constructor(
-    private route: ActivatedRoute,
-    private certificateService: CertificateService,
-    private router: Router,
-    formBuilder: FormBuilder) {
-    this.form = formBuilder.group({
-      commonName: '',
-      surname: '',
-      givenName: '',
-      organization: '',
-      organizationUnit: '',
-      countryCode: '',
-      email: '',
-      startDate: '',
-      endDate: ''
-    });
+    private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
     if (!this.route.snapshot.params.csrId)
       return;
     this.csrId = +this.route.snapshot.params.csrId;
-    this.certificateService.getCsr(this.csrId).subscribe((csr) => {
-      this.form.patchValue({
-        commonName: csr.commonName,
-        surname: csr.surname,
-        givenName: csr.givenName,
-        organization: csr.organization,
-        organizationUnit: csr.organizationUnit,
-        countryCode: csr.countryCode,
-        email: csr.email,
-      });
-    });
-  }
-
-  get f(): any { return this.form.controls; }
-
-  onSubmit(): void {
-    const certificateData: IssueCertificateData = {
-      csrId: this.csrId,
-      commonName: this.f.commonName.value,
-      surname: this.f.surname.value,
-      givenName: this.f.givenName.value,
-      organization: this.f.organization.value,
-      organizationUnitName: this.f.organizationUnit.value,
-      countryCode: this.f.countryCode.value,
-      email: this.f.email.value,
-      startDate: this.f.startDate.value,
-      endDate: this.f.endDate.value,
-    }
-    this.certificateService.addSertificate(certificateData).subscribe(() => {
-      this.router.navigate(['certificates']);
-    });
   }
 
 }

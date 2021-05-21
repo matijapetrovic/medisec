@@ -17,7 +17,8 @@ import { TableModule } from 'primeng/table';
 import {CalendarModule} from 'primeng/calendar';
 import {TriStateCheckboxModule} from 'primeng/tristatecheckbox';
 import { MenubarModule } from 'primeng/menubar';
-
+import {CheckboxModule} from 'primeng/checkbox';
+import {InputNumberModule} from 'primeng/inputnumber';
 @NgModule({
   declarations: [],
   imports: [
@@ -37,7 +38,9 @@ import { MenubarModule } from 'primeng/menubar';
     AccordionModule,
     CalendarModule,
     TriStateCheckboxModule,
-    MenubarModule
+    MenubarModule,
+    CheckboxModule,
+    InputNumberModule
   ],
   exports: [
     ButtonModule,
@@ -56,7 +59,9 @@ import { MenubarModule } from 'primeng/menubar';
     AccordionModule,
     CalendarModule,
     TriStateCheckboxModule,
-    MenubarModule
+    MenubarModule,
+    CheckboxModule,
+    InputNumberModule
   ]
 })
 export class PrimengModule { }

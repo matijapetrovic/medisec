@@ -31,6 +31,8 @@ public class IssueCertificateRequest {
         @NotBlank
         String subjectId;
         @NotBlank
+        String commonName;
+        @NotBlank
         String givenName;
         @NotBlank
         String surname;
