@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../../core/guards/auth.guard';
+import { IssueCertificateFormComponent } from './components/issue-certificate-form/issue-certificate-form.component';
 import { CertificateRequestsComponent } from './pages/certificate-requests/certificate-requests.component';
 import { CertificatesComponent } from './pages/certificates/certificates.component';
 import { IssueCertitifcatesComponent } from './pages/issue-certitifcates/issue-certitifcates.component';
@@ -20,7 +21,7 @@ const routes: Routes = [
   },
   {
     path: 'issue',
-    component: IssueCertitifcatesComponent,
+    component: IssueCertificateFormComponent,
     canActivate: [AuthGuard],
     data: { roles: ['super-admin']}
   },

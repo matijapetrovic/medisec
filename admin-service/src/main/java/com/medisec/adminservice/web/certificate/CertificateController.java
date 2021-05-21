@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.KeyStoreException;
@@ -31,7 +32,7 @@ public class CertificateController {
     private final CertificateService certificateService;
 
     @PostMapping("")
-    public ResponseEntity<Void> issueCertificate(@RequestBody IssueCertificateRequest request) throws CertificateException, UnrecoverableKeyException, NoSuchAlgorithmException, OperatorCreationException, KeyStoreException, MissingPrivateKeyException, IOException, InvalidKeyException, CSRNotVerifiedException {
+    public ResponseEntity<Void> issueCertificate(@Valid @RequestBody IssueCertificateRequest request) throws CertificateException, UnrecoverableKeyException, NoSuchAlgorithmException, OperatorCreationException, KeyStoreException, MissingPrivateKeyException, IOException, InvalidKeyException, CSRNotVerifiedException {
         certificateService.issueCertificate(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

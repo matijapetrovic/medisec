@@ -1,0 +1,123 @@
+<form class="p-grid p-fluid" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="p-col-12 p-md-4">
+    <p-card header="Subject data" class="p-col-4 p-md-4">
+      <div class="form-group p-grid p-fluid" formGroupName="subjectData">
+        <div class="p-float-label p-col-12 p-md-6">
+            <input placeholder="Common name" id="common-name" type="text" pInputText class="p-inputtext-lg" formControlName="commonName">
+        </div>
+        <div class="p-float-label p-col-12 p-md-6">
+          <input placeholder="Subject Id" id="subject-id" type="text" pInputText class="p-inputtext-lg" formControlName="subjectId">
+      </div>
+        <div class="p-float-label p-col-12 p-md-6">
+            <input placeholder="Given Name" id="given-name" type="text" pInputText class="p-inputtext-lg" formControlName="givenName">
+        </div>
+        <div class="p-float-label p-col-12 p-md-6">
+          <input placeholder="Surname" id="surname" type="text" pInputText class="p-inputtext-lg" formControlName="surname">
+      </div>
+        <div class="p-float-label p-col-12 p-md-6">
+          <input placeholder="Organization" id="organization" type="text" pInputText class="p-inputtext-lg" formControlName="organization">
+        </div>
+        <div class="p-float-label p-col-12 p-md-6">
+          <input placeholder="Country Code" id="country-code" type="text" pInputText class="p-inputtext-lg" formControlName="countryCode">
+        </div>
+        <div class="p-float-label p-col-12 p-md-6">
+          <input placeholder="Organization Unit" id="organization-unit" type="text" pInputText class="p-inputtext-lg" formControlName="organizationUnit">
+        </div>
+        <div class="p-float-label p-col-12 p-md-6">
+          <input placeholder="Email" id="email" type="email" pInputText class="p-inputtext-lg" formControlName="email">
+        </div>
+      </div>
+    </p-card>
+  </div>
+  <div class="p-col-12 p-md-4">
+    <p-card header="Extensions" class="p-col-4 p-md-4">
+      <div class="p-field-checkbox">
+        <p-checkbox binary="true" inputId="basicConstraintsEnabled" formControlName="basicConstraintsEnabled"></p-checkbox>
+        <label for="basicConstraintsEnabled">Basic Constraints</label>
+      </div>
+      <div *ngIf="form.controls.basicConstraintsEnabled.value" class="form-group p-ml-5" formGroupName="basicConstraints">
+        <div class="p-field-checkbox">
+          <p-checkbox binary="true" inputId="isCritical" formControlName="isCritical"></p-checkbox>
+          <label for="isCritical">Critical</label>
+        </div>
+        <hr>
+        <div class="p-field-checkbox">
+          <p-checkbox binary="true" inputId="isCa" formControlName="isCa"></p-checkbox>
+          <label for="isCa">Is Certificate Authority</label>
+        </div>
+        <div class="p-field p-md-6">
+          <label for="pathLen">Path Length</label>
+          <p-inputNumber [disabled]="form.value.basicConstraints.isCa" inputId="pathLen" formControlName="pathLen" mode="decimal" [useGrouping]="false">
+          </p-inputNumber>
+        </div>
+      </div>
+      <div class="p-field-checkbox">
+        <p-checkbox binary="true" inputId="keyUsageEnabled" formControlName="keyUsageEnabled"></p-checkbox>
+        <label for="keyUsageEnabled">Key Usage</label>
+      </div>
+      <div *ngIf="form.controls.keyUsageEnabled.value" class="form-group p-ml-5" formGroupName="keyUsage">
+        <div class="p-field-checkbox">
+          <p-checkbox binary="true" inputId="isCritical" formControlName="isCritical"></p-checkbox>
+          <label for="isCritical">Critical</label>
+        </div>
+        <hr>
+        <div class="p-field-checkbox">
+          <p-checkbox binary="true" inputId="crlSign" formControlName="crlSign"></p-checkbox>
+          <label for="crlSign">CRL Signing</label>
+        </div>
+        <div class="p-field-checkbox">
+          <p-checkbox binary="true" inputId="dataEncipherment" formControlName="dataEncipherment"></p-checkbox>
+          <label for="dataEncipherment">Data Encipherment</label>
+        </div>
+        <div class="p-field-checkbox">
+          <p-checkbox binary="true" inputId="decipherOnly" formControlName="decipherOnly"></p-checkbox>
+          <label for="decipherOnly">Decipher Only</label>
+        </div>
+        <div class="p-field-checkbox">
+          <p-checkbox binary="true" inputId="keyAgreement" formControlName="keyAgreement"></p-checkbox>
+          <label for="keyAgreement">Key Agreement</label>
+        </div>
+        <div class="p-field-checkbox">
+          <p-checkbox binary="true" inputId="keyCertSign" formControlName="keyCertSign"></p-checkbox>
+          <label for="keyCertSign">Key Cert Signing</label>
+        </div>
+        <div class="p-field-checkbox">
+          <p-checkbox binary="true" inputId="keyEncipherment" formControlName="keyEncipherment"></p-checkbox>
+          <label for="keyEncipherment">Key Encipherment</label>
+        </div>
+        <div class="p-field-checkbox">
+          <p-checkbox binary="true" inputId="nonRepudiation" formControlName="nonRepudiation"></p-checkbox>
+          <label for="nonRepudiation">Non Repudiation</label>
+        </div>
+        <div class="p-field-checkbox">
+          <p-checkbox binary="true" inputId="digitalSignature" formControlName="digitalSignature"></p-checkbox>
+          <label for="digitalSignature">Digital Signature</label>
+        </div>
+        <div class="p-field-checkbox">
+          <p-checkbox binary="true" inputId="encipherOnly" formControlName="encipherOnly"></p-checkbox>
+          <label for="encipherOnly">Encipher Only</label>
+        </div>
+      </div>
+      <div class="p-field-checkbox">
+        <p-checkbox binary="true" inputId="subjectKeyId" formControlName="subjectKeyId"></p-checkbox>
+        <label for="subjectKeyId">Subject Key Identifier</label>
+      </div>
+    </p-card>
+  </div>
+  <div class="p-col-12 p-md-4">
+    <p-card header="idk" class="p-col-4 p-md-4">
+      <div class="p-col-12 p-md-6">
+        <p-calendar placeholder="Start Date" [minDate]="minStartDate" formControlName="startDate"></p-calendar>
+      </div>
+      <div class="p-col-12 p-md-6">
+        <p-calendar placeholder="End Date" [minDate]="minStartDate" formControlName="endDate"></p-calendar>
+      </div>
+      <button
+        type="submit"
+        class="p-button"
+        label="Issue"
+        pButton
+      ></button>
+    </p-card>
+  </div>
+</form>

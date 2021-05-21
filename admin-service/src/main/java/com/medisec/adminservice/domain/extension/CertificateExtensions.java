@@ -1,7 +1,6 @@
 package com.medisec.adminservice.domain.extension;
 
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
@@ -15,4 +14,5 @@ public class CertificateExtensions {
     CertificateBasicConstraints basicConstraints;
     @Embedded
     CertificateKeyUsage keyUsage;
+    boolean subjectKeyId;
 }
