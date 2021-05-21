@@ -30,6 +30,10 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/**").hasAuthority("admin")
                 .and()
+                .requiresChannel()
+                .anyRequest()
+                .requiresSecure()
+                .and()
                 .cors()
                 .and()
                 .csrf().disable();
