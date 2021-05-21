@@ -17,7 +17,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class CsrService {
-  csrUrl = `${environment.apiUrl}/api/hospital-service`;
+  csrUrl = `${environment.apiUrl}/api`;
 
 
   constructor(private http: HttpClient) {
