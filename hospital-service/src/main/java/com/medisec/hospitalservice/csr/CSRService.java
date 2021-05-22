@@ -1,5 +1,6 @@
 package com.medisec.hospitalservice.csr;
 
+import com.medisec.hospitalservice.client.AdminClient;
 import lombok.RequiredArgsConstructor;
 import org.bouncycastle.operator.ContentSigner;
 import org.bouncycastle.operator.OperatorCreationException;
@@ -23,8 +24,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class CSRService {
-    @Value("${admin-service.certificate-signing-request-url}")
-    private String requestUrl;
+    private final AdminClient adminClient;
 
 
     public void sendCSR(CertificateSigningRequest certificateSigningRequest) throws NoSuchProviderException, NoSuchAlgorithmException, OperatorCreationException, IOException {
@@ -38,7 +38,8 @@ public class CSRService {
         //System.out.println("Private key: " + Base64.getEncoder().encodeToString(pair.getPrivate().getEncoded()));
 
         StringBuilder builder = encodeStringCSR(csr);
-        sendRequest(builder);
+        adminClient.createCertificateRequest(builder.toString().getBytes());
+        //sendRequest(builder);
     }
 
     private HashMap<String, String> csrToMap(CertificateSigningRequest certificateSigningRequest) {
@@ -85,13 +86,13 @@ public class CSRService {
         return builder;
     }
 
-    private void sendRequest(StringBuilder builder) {
-        HttpEntity<String> request = new HttpEntity<>(builder.toString());
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.exchange(
-                requestUrl,
-                HttpMethod.POST,
-                request,
-                String.class).getStatusCode();
-    }
+//    private void sendRequest(StringBuilder builder) {
+//        HttpEntity<String> request = new HttpEntity<>(builder.toString());
+//        RestTemplate restTemplate = new RestTemplate();
+//        restTemplate.exchange(
+//                requestUrl,
+//                HttpMethod.POST,
+//                request,
+//                String.class).getStatusCode();
+//    }
 }
