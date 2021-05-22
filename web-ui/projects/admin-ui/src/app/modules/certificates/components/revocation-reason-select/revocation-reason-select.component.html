@@ -1,0 +1,11 @@
+<p-card [style]="{width: '360px', height: '260px'}" styleClass="p-card-shadow">
+  <ng-template pTemplate="header">
+
+  </ng-template>
+  <p-dropdown [options]="reasons" [(ngModel)]="selectedReason" optionLabel="desc"></p-dropdown>
+
+  <ng-template pTemplate="footer">
+    <p-button (click)="revoke()" icon="pi pi-check" label="Revoke" styleClass="p-mr-2"></p-button>
+    <p-button (click)="cancel()" icon="pi pi-times" label="Cancel"></p-button>
+  </ng-template>
+</p-card>
