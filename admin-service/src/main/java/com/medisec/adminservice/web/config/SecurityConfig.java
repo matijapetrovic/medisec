@@ -31,8 +31,9 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .contentSecurityPolicy("script-src 'self'");
         http
                 .authorizeRequests()
-                .antMatchers("/**").hasAuthority("super-admin")
                 .antMatchers(HttpMethod.POST,"/api/certificate-requests").hasAuthority("admin")
+                .antMatchers(HttpMethod.POST,"/api/certificate-requests/verify/*").permitAll()
+                .antMatchers("/**").hasAuthority("super-admin")
                 .and()
                 .requiresChannel()
                 .anyRequest()

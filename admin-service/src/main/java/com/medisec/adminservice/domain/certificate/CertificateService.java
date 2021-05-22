@@ -69,7 +69,6 @@ public class CertificateService {
                 .orElseThrow(MissingPrivateKeyException::new);
        
         X509Certificate cert = CertificateGenerator.generateCertificate(subjectData, issuerData, request.getExtensions());
-        cert.checkValidity(new Date());
 
         keyStoreWriter.write(request.getSubjectData().getEmail(), issuerPrivateKey, cert);
     }

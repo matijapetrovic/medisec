@@ -39,7 +39,7 @@ export class CertificatesComponent implements OnInit {
     this.ref.onClose.subscribe((reason: RevocationReason) => {
       if(reason){
         console.log(reason.key);
-        //this.service.revokeCertificate(serialNumber, "bongcloud", reason.key).subscribe(() => this.getCertificates());
+        this.service.revokeCertificate(serialNumber, "bongcloud", reason.key).subscribe(() => this.getCertificates());
       }
     })
   }
