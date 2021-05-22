@@ -4,7 +4,7 @@
   "ssl-required": "external",
   "resource": "admin-service",
   "credentials": {
-    "secret": "69c76ceb-0385-42cf-89c5-f7f2d13a3b39"
+    "secret": "eff1054b-75e8-4e34-a3d0-1f2a205da7e7"
   },
   "policy-enforcer": {
   }

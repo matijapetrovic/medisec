@@ -12,14 +12,19 @@ import { CertificatesComponent } from './pages/certificates/certificates.compone
 import { ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '../../core/core.module';
 import { VendorsModule } from 'projects/vendors/src/public-api';
+import {DropdownModule} from 'primeng/dropdown';
+import { RevocationReasonSelectComponent } from './components/revocation-reason-select/revocation-reason-select.component';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
-  declarations: [IssueCertitifcatesComponent, IssueCertificateFormComponent, CertificateRequestsComponent, CertificatesComponent],
+  declarations: [IssueCertitifcatesComponent, IssueCertificateFormComponent, CertificateRequestsComponent, CertificatesComponent, RevocationReasonSelectComponent],
   imports: [
     CommonModule,
     CertificatesRoutingModule,
     VendorsModule,
-    CoreModule
+    CoreModule,
+    DropdownModule,
+    CardModule
   ]
 })
 export class CertificatesModule { }
