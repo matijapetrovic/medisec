@@ -29,6 +29,7 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/").hasAuthority("super-admin")
+                .antMatchers("/medical-record").hasAnyRole()
                 .and()
                 .cors()
                 .and()
