@@ -44,9 +44,6 @@ public class MultipleMongoConfig {
 
     @Bean
     public MongoDatabaseFactory secondaryFactory(final MongoProperties mongo) {
-//        System.out.println(mongo.getHost());
-//        System.out.println(mongo.getPort());
-//        System.out.println(mongo.getDatabase());
         String connectionString = getMongoProperties().getPrefix() + "://" + mongo.getHost() + ":" + mongo.getPort() + "/" + mongo.getDatabase();
         return new SimpleMongoClientDatabaseFactory(connectionString);
     }
