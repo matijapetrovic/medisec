@@ -14,21 +14,30 @@ import java.util.ArrayList;
 public class MedicalRecordRequest {
     @Positive
     private int age;
+
     @Positive
     private Long patientId;
+
     @JsonFormat(pattern="dd/MM/yyyy HH:mm:SS")
     private Date time;
+
     @Positive
     private int heartBeat;
+
     @Positive
     private int averageHeardBeat;
+
     @NotBlank
     private String bloodPressure;
+
     @NotBlank
     private String averageBloodPressure;
+
     @Positive
     private float bodyTemperature;
+
     @NotBlank
     private String surgery;
+
     private boolean vaccinated;
 }

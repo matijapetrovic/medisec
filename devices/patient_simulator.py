@@ -1,9 +1,10 @@
-from datetime import date
+from datetime import datetime
 import requests
 import random
 
 API_PORT = 8081
-BASE_URL = "http://localhost:{0}/api".format(API_PORT)
+API_HOST = "localhost"
+BASE_URL = "http://{0}:{1}/api".format(API_HOST, API_PORT)
 
 surgeries = ["Cataract", "Low back", "Heart", "Spine", "Tonsil", "Jaw", "Arm muslce"]
 
@@ -55,7 +56,7 @@ class MedicalRecordGenerator:
         return self.data
 
 def get_current_timestamp():
-    now = date.today()
+    now = datetime.now()
     return now.strftime("%d/%m/%Y %H:%M:%S")
 
 def send_reqeust(resource, data):
@@ -69,8 +70,8 @@ def send_reqeust(resource, data):
 
 def run():
     medical_record = MedicalRecordGenerator()
-    for patient_id in range(10):
-        send_reqeust("medical-record", medical_record.get_data(patient_id))
+    # for patient_id in range(10):
+    send_reqeust("medical-record", medical_record.get_data(1))
 
 if __name__ == '__main__':
     run()
