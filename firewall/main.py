@@ -5,6 +5,9 @@ API_PORT = 8481
 API_HOST = "localhost"
 BASE_URL = "https://{0}:{1}/api".format(API_HOST, API_PORT)
 
+API_CRT = "firewall.crt"
+API_KEY = "firewall.key"
+
 def get_current_timestamp():
     now = datetime.now()
     return now.strftime("%d/%m/%Y %H:%M:%S")
@@ -13,8 +16,7 @@ def send_reqeust(resource, data):
     headers = {'Content-type': 'application/json'}
     path = BASE_URL + "/" + resource
     try:
-        #requests.post('https://localhost:8081/api/receive', data=message, cert=(API_CRT, API_KEY))
-        requests.post(path, json=data, headers=headers)
+        requests.post(path, json=data, headers=headers, cert=(API_CRT, API_KEY))
     except Exception as ex:
             print(ex)
 
