@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8081',
-  keycloakUrl: 'http://localhost:9900/auth',
+  apiUrl: 'https://localhost:8481',
+  keycloakUrl: 'https://localhost:9943/auth',
   keycloakRealm: 'medisec',
   keycloakClientId: 'hospital-ui'
 };

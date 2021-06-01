@@ -29,6 +29,7 @@
             ],
             "styles": [
               "projects/hospital-ui/src/styles.css",
+              "./node_modules/primeflex/primeflex.css",
               "node_modules/primeng/resources/themes/saga-blue/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
               "node_modules/primeicons/primeicons.css"
@@ -69,7 +70,11 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "hospital-ui:build"
+            "browserTarget": "hospital-ui:build",
+            "port": 4201,
+            "ssl": true,
+            "sslKey": "./projects/hospital-ui/ssl/hospital.key",
+            "sslCert": "./projects/hospital-ui/ssl/hospital.crt"
           },
           "configurations": {
             "production": {
@@ -153,6 +158,7 @@
             ],
             "styles": [
               "projects/admin-ui/src/styles.scss",
+              "./node_modules/primeflex/primeflex.css",
               "node_modules/primeng/resources/themes/saga-blue/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
               "node_modules/primeicons/primeicons.css"
@@ -192,7 +198,11 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "admin-ui:build"
+            "browserTarget": "admin-ui:build",
+            "port": 4200,
+            "ssl": true,
+            "sslKey": "./projects/admin-ui/ssl/server.key",
+            "sslCert": "./projects/admin-ui/ssl/server.crt"
           },
           "configurations": {
             "production": {

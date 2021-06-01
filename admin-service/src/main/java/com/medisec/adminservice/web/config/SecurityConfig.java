@@ -8,6 +8,7 @@ import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -30,13 +31,17 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .contentSecurityPolicy("script-src 'self'");
         http
                 .authorizeRequests()
+                .antMatchers(HttpMethod.POST,"/api/certificate-requests").hasAuthority("admin")
+                .antMatchers(HttpMethod.POST,"/api/certificate-requests/verify/*").permitAll()
                 .antMatchers("/**").hasAuthority("super-admin")
                 .and()
                 .requiresChannel()
                 .anyRequest()
                 .requiresSecure()
                 .and()
-                .cors();
+                .cors()
+                .and()
+                .csrf().disable();
     }
 
     @Autowired

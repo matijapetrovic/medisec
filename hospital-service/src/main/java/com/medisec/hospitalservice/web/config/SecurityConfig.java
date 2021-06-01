@@ -28,8 +28,12 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .contentSecurityPolicy("script-src 'self'");;
         http
                 .authorizeRequests()
-                .antMatchers("/").hasAuthority("super-admin")
+                .antMatchers("/**").hasAuthority("admin")
                 .antMatchers("/medical-record").hasAnyRole()
+                .and()
+                .requiresChannel()
+                .anyRequest()
+                .requiresSecure()
                 .and()
                 .cors()
                 .and()

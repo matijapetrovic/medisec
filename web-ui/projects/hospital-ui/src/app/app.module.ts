@@ -28,7 +28,7 @@ import { KeycloakService } from 'keycloak-angular';
       provide: APP_INITIALIZER,
       useFactory: initializer,
       multi: true,
-      deps: [KeycloakService],
+      deps: [KeycloakService]
     }
   ],
   bootstrap: [AppComponent]

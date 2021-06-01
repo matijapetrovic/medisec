@@ -34,6 +34,8 @@ import java.security.cert.*;
 import java.security.cert.Certificate;
 import java.util.*;
 
+import static com.medisec.adminservice.domain.crypto.KeyPairGenerator.generateKeyPair;
+
 @Service
 @RequiredArgsConstructor
 public class CertificateService {
@@ -49,12 +51,8 @@ public class CertificateService {
             KeyStoreException,
             IOException,
             UnrecoverableKeyException,
-            InvalidKeyException {
-        CertificateSigningRequest certificateSigningRequest = certificateRequestRepository.findById(request.getCsrId()).orElseThrow(() -> new EntityNotFoundException("CSR Id invalid"));
-        if (!certificateSigningRequest.isVerified())
-            throw new CSRNotVerifiedException();
-
-        PublicKey subjectPublicKey = CertificateRequestExtractor.extractPK(certificateSigningRequest.getRawCsr());
+            InvalidKeyException, NoSuchProviderException {
+        PublicKey subjectPublicKey = getSubjectPublicKey(request.getCsrId());
         SubjectData subjectData = new SubjectDataBuilder(subjectPublicKey, request.getStartDate(), request.getEndDate())
                 .withSubjectId(request.getSubjectData().getSubjectId())
                 .withCommonName(request.getSubjectData().getFullName())
@@ -71,10 +69,20 @@ public class CertificateService {
                 .orElseThrow(MissingPrivateKeyException::new);
        
         X509Certificate cert = CertificateGenerator.generateCertificate(subjectData, issuerData, request.getExtensions());
-        cert.checkValidity(new Date());
 
         keyStoreWriter.write(request.getSubjectData().getEmail(), issuerPrivateKey, cert);
-        certificateRequestRepository.delete(certificateSigningRequest);
+    }
+
+    private PublicKey getSubjectPublicKey(Long csrId) throws NoSuchProviderException, NoSuchAlgorithmException, IOException, InvalidKeyException {
+        if (csrId == null) {
+            return generateKeyPair().getPublic();
+        }
+        CertificateSigningRequest certificateSigningRequest = certificateRequestRepository.findById(csrId).orElseThrow(() -> new EntityNotFoundException("CSR Id invalid"));
+        if (!certificateSigningRequest.isVerified())
+            throw new CSRNotVerifiedException();
+        PublicKey subjectPublicKey = CertificateRequestExtractor.extractPK(certificateSigningRequest.getRawCsr());
+        certificateRequestRepository.deleteById(csrId);
+        return subjectPublicKey;
     }
 
     public List<CertificateResponse> readAllCertificates() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException, AliasNotValidException, CRLException {

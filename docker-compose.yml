@@ -15,7 +15,9 @@ services:
     image: jboss/keycloak
     ports:
       - "9900:8080"
+      - "9943:8443"
     environment:
+      JAVA_OPTS_APPEND: "-Dkeycloak.profile.feature.upload_scripts=enabled"
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
       DB_VENDOR: POSTGRES
@@ -25,6 +27,11 @@ services:
       DB_SCHEMA: public
       DB_PASSWORD: password
     volumes:
-      - "./tmp:/tmp"
+      - type: bind
+        source: ./ssl/tls.crt
+        target: /etc/x509/https/tls.crt
+      - type: bind
+        source: ./ssl/tls.key
+        target: /etc/x509/https/tls.key
     depends_on:
       - postgres
