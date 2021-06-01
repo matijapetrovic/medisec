@@ -20,6 +20,7 @@ public class MedicalRecordController {
 
     @PostMapping("")
     public ResponseEntity<Void> save(@RequestBody MedicalRecordRequest request) {
+        System.out.println(request);
         medicalRecordService.save(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

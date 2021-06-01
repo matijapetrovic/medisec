@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="282859c4-20e2-4bac-bb91-a079a478ebfa" name="Default Changelist" comment="" />
+    <list default="true" id="282859c4-20e2-4bac-bb91-a079a478ebfa" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/devices/patient_simulator.py" beforeDir="false" afterPath="$PROJECT_DIR$/devices/patient_simulator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/firewall/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/firewall/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hospital-service/src/main/java/com/medisec/hospitalservice/web/MedicalRecordController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hospital-service/src/main/java/com/medisec/hospitalservice/web/MedicalRecordController.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,13 +28,15 @@
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -46,6 +52,7 @@
       <updated>1622548214308</updated>
       <workItem from="1622548217626" duration="140000" />
       <workItem from="1622548370780" duration="290000" />
+      <workItem from="1622549653501" duration="44000" />
     </task>
     <servers />
   </component>

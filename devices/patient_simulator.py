@@ -2,9 +2,9 @@ from datetime import datetime
 import requests
 import random
 
-API_PORT = 8081
+API_PORT = 8481
 API_HOST = "localhost"
-BASE_URL = "http://{0}:{1}/api".format(API_HOST, API_PORT)
+BASE_URL = "https://{0}:{1}/api".format(API_HOST, API_PORT)
 
 surgeries = ["Cataract", "Low back", "Heart", "Spine", "Tonsil", "Jaw", "Arm muslce"]
 
