@@ -62,6 +62,7 @@ def get_current_timestamp():
 def send_reqeust(resource, data):
     headers = {'Content-type': 'application/json'}
     path = BASE_URL + "/" + resource
+
     try:
         #requests.post('https://localhost:8081/api/receive', data=message, cert=(API_CRT, API_KEY))
         requests.post(path, json=data, headers=headers)
