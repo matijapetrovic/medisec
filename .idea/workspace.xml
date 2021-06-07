@@ -2,7 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="282859c4-20e2-4bac-bb91-a079a478ebfa" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.project" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RemoteSystemsTempFiles/.project" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bin/.project" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/medical-record-alarm/.classpath" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/medical-record-alarm/.project" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/medical-record-alarm/.settings/org.hibernate.eclipse.console.prefs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/medical-record-alarm/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/medical-record-alarm/src/main/resources/META-INF/kmodule.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/medical-record-alarm/src/main/resources/META-INF/maven/pom.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/medical-record-alarm/src/main/resources/logback-test.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/medical-record-alarm/target/classes/META-INF/kmodule.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/medical-record-alarm/target/classes/META-INF/maven/pom.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/medical-record-alarm/target/classes/logback-test.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/medical-record-alarm/target/maven-archiver/pom.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/medical-record-alarm/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/medical-record-alarm/target/medical-record-alarm-1.0.0-SNAPSHOT.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hospital-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hospital-service/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -51,7 +67,7 @@
       <workItem from="1622548217626" duration="140000" />
       <workItem from="1622548370780" duration="290000" />
       <workItem from="1622549653501" duration="44000" />
-      <workItem from="1623051356535" duration="435000" />
+      <workItem from="1623051356535" duration="1043000" />
     </task>
     <servers />
   </component>
