@@ -19,20 +19,20 @@ public class MultipleMongoProperties {
     private final MongoProperties primary = new MongoProperties();
     private final MongoProperties secondary = new MongoProperties();
 
-    @Value("${spring.data.mongodb.prefix}")
-    private String prefix;
+    //@Value("${spring.data.mongodb.prefix}")
+    private String prefix = "mongodb";
 
-    @Value("${spring.data.mongodb.host}")
-    private String dbHost;
+    //@Value("${spring.data.mongodb.host}")
+    private String dbHost = "localhost";
 
-    @Value("${spring.data.mongodb.port}")
-    private int dbPort;
+    //@Value("${spring.data.mongodb.port}")
+    private int dbPort = 27017;
 
-    @Value("${spring.data.mongodb.primary.database}")
-    private String firstDB;
+    //@Value("${spring.data.mongodb.primary.database}")
+    private String firstDB = "MedicalRecord";
 
-    @Value("${spring.data.mongodb.secondary.database}")
-    private String secondDB;
+    //@Value("${spring.data.mongodb.secondary.database}")
+    private String secondDB = "FirewallLog";
 
 
     @PostConstruct

@@ -1,4 +1,4 @@
-import test.DroolsTest.Booking;
+import Test.Booking;
 
 rule "Apply discount"
     when

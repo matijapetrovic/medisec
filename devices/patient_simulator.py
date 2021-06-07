@@ -2,9 +2,9 @@ from datetime import datetime
 import requests
 import random
 
-API_PORT = 8481
+API_PORT = 8080
 API_HOST = "localhost"
-BASE_URL = "https://{0}:{1}/api".format(API_HOST, API_PORT)
+BASE_URL = "http://{0}:{1}/api".format(API_HOST, API_PORT)
 
 surgeries = ["Cataract", "Low back", "Heart", "Spine", "Tonsil", "Jaw", "Arm muslce"]
 
@@ -71,7 +71,7 @@ def send_reqeust(resource, data):
 
 def run():
     medical_record = MedicalRecordGenerator()
-    # for patient_id in range(10):
+    #for patient_id in range(10):
     send_reqeust("medical-record", medical_record.get_data(1))
 
 if __name__ == '__main__':
