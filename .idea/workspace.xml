@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="282859c4-20e2-4bac-bb91-a079a478ebfa" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/devices/patient_simulator.py" beforeDir="false" afterPath="$PROJECT_DIR$/devices/patient_simulator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/firewall/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/firewall/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hospital-service/src/main/java/com/medisec/hospitalservice/web/MedicalRecordController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hospital-service/src/main/java/com/medisec/hospitalservice/web/MedicalRecordController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hospital-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hospital-service/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,17 +25,16 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -53,6 +51,7 @@
       <workItem from="1622548217626" duration="140000" />
       <workItem from="1622548370780" duration="290000" />
       <workItem from="1622549653501" duration="44000" />
+      <workItem from="1623051356535" duration="435000" />
     </task>
     <servers />
   </component>
