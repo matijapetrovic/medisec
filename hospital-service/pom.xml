@@ -15,6 +15,7 @@
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>
+		<kie.version>6.5.0.Final</kie.version>
 		<spring-cloud.version>2020.0.2</spring-cloud.version>
 	</properties>
 	<dependencies>
@@ -103,11 +104,30 @@
             <artifactId>jakarta.validation-api</artifactId>
             <version>2.0.2</version>
         </dependency>
-        <dependency>
-            <groupId>com.medisec</groupId>
-            <artifactId>hospital-service</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.medisec</groupId>-->
+<!--            <artifactId>hospital-service</artifactId>-->
+<!--            <version>0.0.1-SNAPSHOT</version>-->
+<!--        </dependency>-->
+
+		<!--		Kie -->
+		<dependency>
+			<groupId>org.kie</groupId>
+			<artifactId>kie-ci</artifactId>
+			<version>${kie.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.kie</groupId>
+			<artifactId>kie-spring</artifactId>
+			<version>${kie.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.medisec</groupId>
+			<artifactId>medical-record-alarm</artifactId>
+			<type>jar</type>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
 
     </dependencies>
 
