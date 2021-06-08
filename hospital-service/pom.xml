@@ -8,20 +8,17 @@
 		<version>2.4.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<modules>
-		<module>medical-record-alarm</module>
-	</modules>
 
 	<groupId>com.medisec</groupId>
 	<artifactId>hospital-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>hospital-service</name>
-	<packaging>pom</packaging>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>2020.0.2</spring-cloud.version>
+		<kie.version>6.5.0.Final</kie.version>
 	</properties>
 
 	<dependencies>
@@ -119,7 +116,16 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>org.kie</groupId>
+			<artifactId>kie-ci</artifactId>
+			<version>${kie.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.kie</groupId>
+			<artifactId>kie-spring</artifactId>
+			<version>${kie.version}</version>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>

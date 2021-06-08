@@ -71,7 +71,16 @@ public class MedicalRecord {
         this.bodyTemperature = bodyTemperature;
         this.vaccinated = vaccinated;
         this.surgery = surgery;
+    }
 
+    public int getSystolicBloodPressure() {
+        String systolic = bloodPressure.split("/")[0];
+        return Integer.parseInt(systolic);
+    }
+
+    public int getDiastolicBloodPressure() {
+        String diastolic = bloodPressure.split("/")[1];
+        return Integer.parseInt(diastolic);
     }
 
 }

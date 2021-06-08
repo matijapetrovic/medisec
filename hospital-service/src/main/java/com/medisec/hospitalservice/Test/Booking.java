@@ -1,4 +1,4 @@
-package Test;
+package com.medisec.hospitalservice.Test;
 
 public class Booking {
 

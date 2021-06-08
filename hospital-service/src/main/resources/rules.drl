@@ -1,9 +1,0 @@
-import com.medisec.hospitalservice.DroolsTest.Booking;
-
-rule "Apply discount"
-    when
-        b : Booking( applyDiscount()==true )
-    then
-        System.out.println("Apply discount rule fired");
-        b.setPrice(60);
-end

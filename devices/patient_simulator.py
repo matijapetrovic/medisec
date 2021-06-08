@@ -23,14 +23,14 @@ class MedicalRecordGenerator:
         self.data = {}
 
     def generate_blood_pressure(self):
-        systolic = random.randint(110, 145)
-        diastolic = random.randint(65, 95)
+        systolic = random.randint(105, 150)
+        diastolic = random.randint(60, 100)
         return str(systolic) + "/" + str(diastolic)
 
     def set_attributes(self):
         self.age = random.randint(25, 90)
         self.time = get_current_timestamp()
-        self.heart_beat = random.randint(75, 110)
+        self.heart_beat = random.randint(70, 120)
         self.average_heard_beat = random.randint(75, 110)
         self.blood_pressure = self.generate_blood_pressure()
         self.average_blood_pressure = self.generate_blood_pressure()
@@ -71,8 +71,8 @@ def send_reqeust(resource, data):
 
 def run():
     medical_record = MedicalRecordGenerator()
-    #for patient_id in range(10):
-    send_reqeust("medical-record", medical_record.get_data(1))
+    for patient_id in range(1, 6):
+        send_reqeust("medical-record", medical_record.get_data(patient_id))
 
 if __name__ == '__main__':
     run()
