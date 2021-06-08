@@ -5,8 +5,6 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>medical-record-alarm</module>
-		<module>proba</module>
-		<module>medical-record-alarm</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -25,10 +23,7 @@
 		<spring-cloud.version>2020.0.2</spring-cloud.version>
 	</properties>
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
+		<!-- Spring  -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -36,6 +31,15 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+			<version>2.3.4.RELEASE</version>
 		</dependency>
 
 		<dependency>
@@ -177,6 +181,16 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<resources>
+			<resource>
+				<directory>
+					src/main/resources
+				</directory>
+				<filtering>
+					false
+				</filtering>
+			</resource>
+		</resources>
 	</build>
 
 </project>
