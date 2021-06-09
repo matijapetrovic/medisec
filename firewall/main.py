@@ -1,17 +1,21 @@
 from datetime import datetime
+
+import certifi
 import requests
 import random
 
+from requests.exceptions import SSLError
+
 API_PORT = 8481
 API_HOST = "localhost"
-BASE_URL = "http://{0}:{1}/api".format(API_HOST, API_PORT)
+BASE_URL = "https://{0}:{1}/api".format(API_HOST, API_PORT)
 
-API_CRT = "device1.crt"
+API_CRT = "device1.cer"
 API_KEY = "device1.key"
-API_CER = "firewall.cer"
-API_P7B = "firewall.p7b"
-API_PEM = "firewall.pem"
-ROOT_CRT = "hospital.crt"
+# API_CER = "firewall.cer"
+# API_P7B = "firewall.p7b"
+# API_PEM = "firewall.pem"
+ROOT_CRT = "rootBongcloudCA.pem"
 secret = "attack"
 
 http_methods = ["GET", "POST", "PUT", "DELETE", "PATCH"]
@@ -111,8 +115,14 @@ def send_reqeust(resource, data):
     try:
         requests.post(path, json=data, headers=headers, verify=ROOT_CRT, cert=(API_CRT, API_KEY))
         # requests.post(path, json=data, headers=headers)
-    except Exception as ex:
-            print(ex)
+    except SSLError as ex:
+        cafile = certifi.where()
+        with open('rootBongcloudCA.pem', 'rb') as infile:
+            customca = infile.read()
+        with open(cafile, 'ab') as outfile:
+            outfile.write(customca)
+        print(ex)
+        print(certifi.where())
 
 def run(num_requests=10):
     log_generators = [LoginLogGenerator(), RandomLogGenerator()]

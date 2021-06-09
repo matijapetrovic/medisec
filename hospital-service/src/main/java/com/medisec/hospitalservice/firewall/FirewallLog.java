@@ -40,4 +40,6 @@ public class FirewallLog {
 
     @Field("packet_size")
     private int packetSize;
+
+
 }
