@@ -1,8 +1,21 @@
 import com.medisec.hospitalservice.firewall.FirewallLog;
+import com.medisec.hospitalservice.firewall.Logs;
 
-rule "Test firewall"
+rule "Login fail"
     when
-        log : FirewallLog(message.length() > 0)
+        log : FirewallLog(getPathResource() == "login", status == 400)
     then
-        System.out.println("Firewall log is working!");
+        System.out.println("Failed login!");
+end
+
+rule "More than 100 logins in 60 seconds"
+	when
+		logs: Logs();
+		Number(intValue >= 0) from accumulate(
+                 $log : FirewallLog(
+                    getPathResource() == "login",
+                    status == 400),
+                 count( $log ) )
+	then
+		System.out.println("More than 100 logins in 60 seconds");
 end

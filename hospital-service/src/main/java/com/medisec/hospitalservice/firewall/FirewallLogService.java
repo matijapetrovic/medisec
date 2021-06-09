@@ -14,7 +14,13 @@ public class FirewallLogService {
         FirewallLog log =
                 new FirewallLog(
                         null,
-                         request.getMessage()
+                         request.getSourceIp(),
+                         request.getDestIp(),
+                         request.getPath(),
+                         request.getProtocol(),
+                         request.getStatus(),
+                         request.getTime(),
+                         request.getPacketSize()
                         );
 
         fireWallLogRepository.save(log);

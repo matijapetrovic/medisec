@@ -40,4 +40,10 @@ public class FirewallLog {
 
     @Field("packet_size")
     private int packetSize;
+
+    public String getPathResource() {
+        String resource = path.split(" ")[1];
+        resource = resource.split("\\?")[0].substring(1);
+        return resource;
+    }
 }

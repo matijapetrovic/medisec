@@ -124,4 +124,4 @@ def run(num_requests=10):
 
 
 if __name__ == '__main__':
-    run(num_requests=1)
+    run(num_requests=5)
