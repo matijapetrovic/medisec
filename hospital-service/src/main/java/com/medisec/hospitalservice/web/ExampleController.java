@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ExampleController {
 
-    @GetMapping("doctor")
+    @GetMapping("/api/patients")
     public String getDoctor() {
         return "Welcome doctor";
     }

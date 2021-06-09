@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -24,7 +25,7 @@ public class CSRController {
     private final CSRService csrService;
 
     @PostMapping("/csr")
-    public ResponseEntity<Void> sendCSR(@RequestBody CertificateSigningRequest csr) throws NoSuchAlgorithmException, IOException, NoSuchProviderException, OperatorCreationException {
+    public ResponseEntity<Void> sendCSR(@Valid @RequestBody CertificateSigningRequest csr) throws NoSuchAlgorithmException, IOException, NoSuchProviderException, OperatorCreationException {
         csrService.sendCSR(csr);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
