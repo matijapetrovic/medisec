@@ -11,13 +11,13 @@ public class FirewallLogService {
     private final FirewallLogRepository fireWallLogRepository;
 
     public void save(FirewallLogRequest request) {
-        FirewallLog log =
-                new FirewallLog(
-                        null,
-                         request.getMessage()
-                        );
-
-        fireWallLogRepository.save(log);
+//        FirewallLog log =
+//                new FirewallLog(
+//                        null,
+//                         request.getMessage()
+//                        );
+//
+//        fireWallLogRepository.save(log);
     }
 
     public List<FirewallLog> findAll() {
