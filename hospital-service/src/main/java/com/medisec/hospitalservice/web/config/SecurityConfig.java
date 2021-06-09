@@ -21,6 +21,24 @@ import java.io.InputStream;
 public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+//        super.configure(http);
+//        http
+//                .headers()
+//                .xssProtection()
+//                .and()
+//                .contentSecurityPolicy("script-src 'self'");;
+//        http
+//                .authorizeRequests()
+//                .antMatchers("/**").hasAuthority("admin")
+//                .antMatchers("/medical-record").hasAnyRole()
+//                .and()
+//                .requiresChannel()
+//                .anyRequest()
+//                .requiresSecure()
+//                .and()
+//                .cors()
+//                .and()
+//                .csrf().disable();
         super.configure(http);
         http
                 .headers()
