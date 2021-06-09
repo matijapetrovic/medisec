@@ -6,12 +6,12 @@ API_PORT = 8481
 API_HOST = "localhost"
 BASE_URL = "http://{0}:{1}/api".format(API_HOST, API_PORT)
 
-API_CRT = "firewall.crt"
-API_KEY = "firewall.key"
+API_CRT = "device1.crt"
+API_KEY = "device1.key"
 API_CER = "firewall.cer"
 API_P7B = "firewall.p7b"
 API_PEM = "firewall.pem"
-ROOT_CRT = "root.cer"
+ROOT_CRT = "hospital.crt"
 secret = "attack"
 
 http_methods = ["GET", "POST", "PUT", "DELETE", "PATCH"]
@@ -109,8 +109,8 @@ def send_reqeust(resource, data):
     headers = {'Content-type': 'application/json'}
     path = BASE_URL + "/" + resource
     try:
-        #requests.post(path, json=data, headers=headers, verify=ROOT_CRT, cert=(API_CER, API_KEY))
-        requests.post(path, json=data, headers=headers)
+        requests.post(path, json=data, headers=headers, verify=ROOT_CRT, cert=(API_CRT, API_KEY))
+        # requests.post(path, json=data, headers=headers)
     except Exception as ex:
             print(ex)
 
