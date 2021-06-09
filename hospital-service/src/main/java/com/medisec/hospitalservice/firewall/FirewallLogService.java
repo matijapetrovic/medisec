@@ -3,6 +3,8 @@ package com.medisec.hospitalservice.firewall;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class FirewallLogService {
@@ -16,5 +18,9 @@ public class FirewallLogService {
                         );
 
         fireWallLogRepository.save(log);
+    }
+
+    public List<FirewallLog> findAll() {
+        return fireWallLogRepository.findAll();
     }
 }

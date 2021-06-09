@@ -1,8 +1,8 @@
-package com.medisec.hospitalservice.Test;
+package com.medisec.hospitalservice.firewall;
 
-
+import com.medisec.hospitalservice.firewall.FirewallLog;
+import com.medisec.hospitalservice.firewall.FirewallLogService;
 import com.medisec.hospitalservice.medical_record.MedicalRecord;
-import com.medisec.hospitalservice.medical_record.MedicalRecordService;
 import lombok.RequiredArgsConstructor;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
@@ -13,21 +13,20 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class TestDrools {
-    private final MedicalRecordService service;
+public class FirewallAlarm {
+    private final FirewallLogService service;
 
     public void run() {
-        List<MedicalRecord> medicalRecords = service.findAll();
+        List<FirewallLog> firewallLogs = service.findAll();
 
-        // load up the knowledge base
         KieServices ks = KieServices.Factory.get();
         KieContainer kContainer = ks.getKieClasspathContainer();
         KieSession kSession = kContainer.newKieSession("ksession-rules");
 
-        for(MedicalRecord record: medicalRecords) {
-            kSession.insert(record);
+        for(FirewallLog log: firewallLogs) {
+            kSession.insert(log);
             kSession.fireAllRules();
-            kSession.delete(kSession.getFactHandle(record));
+            kSession.delete(kSession.getFactHandle(log));
         }
     }
 }

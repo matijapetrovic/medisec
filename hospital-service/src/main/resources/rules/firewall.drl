@@ -1,0 +1,8 @@
+import com.medisec.hospitalservice.firewall.FirewallLog;
+
+rule "Test firewall"
+    when
+        log : FirewallLog(message.length() > 0)
+    then
+        System.out.println("Firewall log is working!");
+end

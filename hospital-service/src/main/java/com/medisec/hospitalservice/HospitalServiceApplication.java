@@ -1,6 +1,7 @@
 package com.medisec.hospitalservice;
 
-import com.medisec.hospitalservice.Test.TestDrools;
+import com.medisec.hospitalservice.firewall.FirewallAlarm;
+import com.medisec.hospitalservice.medical_record.MedicalRecordAlarm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -18,10 +19,12 @@ public class HospitalServiceApplication {
 
 	@Bean
 	public CommandLineRunner run(
-			TestDrools drools
+			MedicalRecordAlarm medicalRecordAlarm,
+			FirewallAlarm firewallAlarm
 	) {
 		return args -> {
-			drools.run();
+			medicalRecordAlarm.run();
+			firewallAlarm.run();
 		};
 	}
 }

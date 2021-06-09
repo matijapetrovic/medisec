@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.Id;
+import java.util.Date;
 
 @Document(collection = "firewall_log")
 @Data
@@ -19,6 +20,24 @@ public class FirewallLog {
     @JsonIgnore
     private Long id;
 
-    @Field("message")
-    private String message;
+    @Field("source_ip")
+    private String sourceIp;
+
+    @Field("dest_ip")
+    private String destIp;
+
+    @Field("path")
+    private String path;
+
+    @Field("protocol")
+    private String protocol;
+
+    @Field("status")
+    private int status;
+
+    @Field("time")
+    private Date time;
+
+    @Field("packet_size")
+    private int packetSize;
 }
