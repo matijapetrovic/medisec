@@ -41,9 +41,27 @@ public class FirewallLog {
     @Field("packet_size")
     private int packetSize;
 
+    @Field("type")
+    private LogType type;
+
     public String getPathResource() {
         String resource = path.split(" ")[1];
         resource = resource.split("\\?")[0].substring(1);
         return resource;
     }
+
+    public String getUsername() {
+        String resource = path.split(" ")[1];
+        resource = resource.split("\\?")[1];
+        String[] params =  resource.split("&");
+        for(String param: params) {
+            if (param.split("=")[0].equals("username"))
+                return param.split("=")[1];
+        }
+        return resource;
+    }
+}
+
+enum LogType {
+    INFORMATION, WARNING, ERROR
 }

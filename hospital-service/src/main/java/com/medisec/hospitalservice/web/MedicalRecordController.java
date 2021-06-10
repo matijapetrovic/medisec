@@ -30,7 +30,7 @@ public class MedicalRecordController {
         return ResponseEntity.ok(medicalRecordService.findByPatientId(id));
     }
 
-    @GetMapping("/getAll")
+    @GetMapping("")
     public ResponseEntity<List<MedicalRecord>> findAll() {
         return ResponseEntity.ok(medicalRecordService.findAll());
     }

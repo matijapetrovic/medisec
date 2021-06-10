@@ -33,4 +33,7 @@ public class FirewallLogRequest {
     @PositiveOrZero
     private int packetSize;
 
+    @NotBlank
+    private String type;
+
 }
