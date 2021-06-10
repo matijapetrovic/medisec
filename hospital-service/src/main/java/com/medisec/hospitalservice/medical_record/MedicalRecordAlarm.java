@@ -1,31 +1,24 @@
 package com.medisec.hospitalservice.medical_record;
 
-import com.medisec.hospitalservice.medical_record.MedicalRecord;
-import com.medisec.hospitalservice.medical_record.MedicalRecordService;
-import lombok.RequiredArgsConstructor;
-import org.kie.api.KieServices;
-import org.kie.api.runtime.KieContainer;
-import org.kie.api.runtime.KieSession;
-import org.springframework.stereotype.Component;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.Date;
 
-@Component
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class MedicalRecordAlarm {
-    private final MedicalRecordService service;
+    Long eventId;
+    Date time;
+    Severity severity;
+    String eventSource;
+    Long eventCode;
+    String message;
+    Long alarmId;
+    Long alarmCode;
 
-    public void run() {
-        List<MedicalRecord> medicalRecords = service.findAll();
-
-        KieServices ks = KieServices.Factory.get();
-        KieContainer kContainer = ks.getKieClasspathContainer();
-        KieSession kSession = kContainer.newKieSession("ksession-rules");
-
-        for(MedicalRecord record: medicalRecords) {
-            kSession.insert(record);
-            kSession.fireAllRules();
-            kSession.delete(kSession.getFactHandle(record));
-        }
-    }
 }
+
+

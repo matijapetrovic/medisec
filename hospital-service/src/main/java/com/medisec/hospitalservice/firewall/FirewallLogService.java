@@ -21,7 +21,7 @@ public class FirewallLogService {
                         request.getStatus(),
                         request.getTime(),
                         request.getPacketSize(),
-                        FirewallLog.LogType.valueOf(request.getType())
+                        LogType.valueOf(request.getType())
                         );
 
         fireWallLogRepository.save(log);
