@@ -1,19 +1,20 @@
-package com.medisec.hospitalservice.firewall;
+package com.medisec.hospitalservice.logs.service_log;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class FirewallLogService {
-    private final FirewallLogRepository fireWallLogRepository;
+public class ServiceLogService {
+    private final ServiceLogRepository serviceLogRepository;
 
-    public void save(FirewallLogRequest request) {
-        FirewallLog log =
-                new FirewallLog(
-                        null,
+    public void save(ServiceLogRequest request) {
+        ServiceLog log =
+                new ServiceLog(
+                        UUID.randomUUID().toString(),
                         request.getSourceIp(),
                         request.getDestIp(),
                         request.getPath(),
@@ -24,10 +25,10 @@ public class FirewallLogService {
                         LogType.valueOf(request.getType())
                         );
 
-        fireWallLogRepository.save(log);
+        serviceLogRepository.save(log);
     }
 
-    public List<FirewallLog> findAll() {
-        return fireWallLogRepository.findAll();
+    public List<ServiceLog> findAll() {
+        return serviceLogRepository.findAll();
     }
 }

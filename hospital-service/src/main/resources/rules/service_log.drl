@@ -1,6 +1,6 @@
-import com.medisec.hospitalservice.firewall.FirewallLog;
-import com.medisec.hospitalservice.firewall.Logs;
-import com.medisec.hospitalservice.firewall.LogType;
+import com.medisec.hospitalservice.logs.service_log.ServiceLog;
+import com.medisec.hospitalservice.logs.service_log.Logs;
+import com.medisec.hospitalservice.logs.service_log.LogType;
 import java.util.Arrays;
 
 
@@ -13,7 +13,7 @@ end
 
 rule "Attempt to login to an account that has not been active for 90 days"
     when
-        log : FirewallLog(getPathResource() == "login", $username: getUsername())
+        log : ServiceLog(parsePathResource() == "login", $username: parseUsernameParam())
         logs: Logs(getInactiveAccounts() contains $username)
     then
         System.out.println("Attempt to login to an account that has not been active for 90 days");
@@ -21,14 +21,14 @@ end
 
 rule "Log type ERROR"
     when
-        log : FirewallLog(getType() == LogType.ERROR)
+        log : ServiceLog(getType() == LogType.ERROR)
     then
         System.out.println("Log type ERROR");
 end
 
 rule "Login or attempt to login from an IP address that is on the list of malicious IP addresses"
     when
-        log : FirewallLog(getPathResource() == "login", $sourceIp: getSourceIp())
+        log : ServiceLog(parsePathResource() == "login", $sourceIp: getSourceIp())
         logs: Logs(getMaliciousIps() contains $sourceIp)
     then
         System.out.println("Login or attempt to login from an IP address that is on the list of malicious IP addresses");
@@ -37,7 +37,7 @@ end
 
 rule "Appearance of a log containing an source IP address from the list of malicious IP addresses"
     when
-         log : FirewallLog($sourceIp: getSourceIp())
+         log : ServiceLog($sourceIp: getSourceIp())
          logs: Logs(getMaliciousIps() contains $sourceIp)
     then
         System.out.println("Appearance of a log containing an IP address from the list of malicious IP addresses");
@@ -45,7 +45,7 @@ end
 
 rule "Appearance of a log containing an destination IP address from the list of malicious IP addresses"
     when
-         log : FirewallLog($destIp: getDestIp())
+         log : ServiceLog($destIp: getDestIp())
          logs: Logs(getMaliciousIps() contains $destIp)
     then
         System.out.println("Appearance of a log containing an IP address from the list of malicious IP addresses");
@@ -62,8 +62,8 @@ rule "Enable detection of overly frequent requests (more than 50 within 60 secon
     when
         logs: Logs();
         Number(intValue >= 0) from accumulate(
-                 $log : FirewallLog(
-                    getPathResource() == "login",
+                 $log : ServiceLog(
+                    parsePathResource() == "login",
                     status == 400),
                  count( $log ))
     then

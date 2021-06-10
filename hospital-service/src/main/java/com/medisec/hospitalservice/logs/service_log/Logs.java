@@ -1,6 +1,4 @@
-package com.medisec.hospitalservice.firewall;
-
-import com.medisec.hospitalservice.medical_record.MedicalRecord;
+package com.medisec.hospitalservice.logs.service_log;
 
 import java.util.*;
 
@@ -14,17 +12,17 @@ public class Logs {
 
     private final List<String> INACTIVE_ACCOUNTS = Arrays.asList( "inactiveuser1", "inactiveuser2", "inactiveuser3" );
 
-    private static List<FirewallLog> logs;
+    private static List<ServiceLog> logs;
 
-    public Logs(List<FirewallLog> logs) {
+    public Logs(List<ServiceLog> logs) {
         Logs.logs = logs;
     }
 
-    public static Logs of(List<FirewallLog> logs) {
+    public static Logs of(List<ServiceLog> logs) {
         return new Logs(logs);
     }
 
-    public List<FirewallLog> getLogs() {
+    public List<ServiceLog> getLogs() {
         return logs;
     }
 
@@ -36,18 +34,18 @@ public class Logs {
 
     public boolean hasMultipleFailedLoginAttempts() {
         Map<String, Integer> failedAttempts = new HashMap<>();
-        for(FirewallLog log: logs) {
-            if(failedAttempts.containsKey(log.getUsername()))
+        for(ServiceLog log: logs) {
+            if(failedAttempts.containsKey(log.parseUsernameParam()))
                 return true;
-            failedAttempts.put(log.getUsername(), 1);
+            failedAttempts.put(log.parseUsernameParam(), 1);
         }
         return false;
     }
 
-    private List<FirewallLog> getAllFailedLoginAttempts() {
-        List<FirewallLog> failedLogs = new ArrayList<>();
-        for(FirewallLog log: logs) {
-            if(log.getStatus() == 400 && log.getPathResource() == "login") {
+    private List<ServiceLog> getAllFailedLoginAttempts() {
+        List<ServiceLog> failedLogs = new ArrayList<>();
+        for(ServiceLog log: logs) {
+            if(log.getStatus() == 400 && log.parsePathResource().equals("login")) {
                 failedLogs.add(log);
             }
         }
@@ -64,8 +62,8 @@ public class Logs {
 //    }
 
     public boolean are30LoginAttemptsFailedIn24Hours() {
-        List<FirewallLog> failedLogs = getAllFailedLoginAttempts();
-        Comparator<FirewallLog> compareByDateTime = (FirewallLog log1, FirewallLog log2) -> log1.getTime().compareTo(log2.getTime());
+        List<ServiceLog> failedLogs = getAllFailedLoginAttempts();
+        Comparator<ServiceLog> compareByDateTime = (ServiceLog log1, ServiceLog log2) -> log1.getTime().compareTo(log2.getTime());
         Collections.sort(failedLogs, compareByDateTime);
 
         if (failedLogs.size() < 2)

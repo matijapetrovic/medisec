@@ -1,4 +1,4 @@
-package com.medisec.hospitalservice.medical_record;
+package com.medisec.hospitalservice.logs.medical_record_log;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -7,11 +7,10 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import java.util.Date;
-import java.util.ArrayList;
 
 @Data
 @NoArgsConstructor
-public class MedicalRecordRequest {
+public class MedicalRecordLogRequest {
     @Positive
     private int age;
 

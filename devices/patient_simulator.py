@@ -75,7 +75,7 @@ def send_reqeust(resource, data):
 def run():
     medical_record = MedicalRecordGenerator()
     for patient_id in range(1, 2):
-        send_reqeust("medical-record", medical_record.get_data(patient_id))
+        send_reqeust("medical-record-log", medical_record.get_data(patient_id))
 
 if __name__ == '__main__':
     run()

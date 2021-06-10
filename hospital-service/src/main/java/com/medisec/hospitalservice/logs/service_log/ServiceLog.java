@@ -1,4 +1,4 @@
-package com.medisec.hospitalservice.firewall;
+package com.medisec.hospitalservice.logs.service_log;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -7,18 +7,20 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.Date;
+import java.util.UUID;
 
-@Document(collection = "firewall_log")
+@Document(collection = "service_log")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FirewallLog {
+public class ServiceLog {
     @Id
     @Field("id")
-    @JsonIgnore
-    private Long id;
+    @GeneratedValue
+    private String id;
 
     @Field("source_ip")
     private String sourceIp;
@@ -44,13 +46,13 @@ public class FirewallLog {
     @Field("type")
     private LogType type;
 
-    public String getPathResource() {
+    public String parsePathResource() {
         String resource = path.split(" ")[1];
         resource = resource.split("\\?")[0].substring(1);
         return resource;
     }
 
-    public String getUsername() {
+    public String parseUsernameParam() {
         String resource = path.split(" ")[1];
         resource = resource.split("\\?")[1];
         String[] params =  resource.split("&");

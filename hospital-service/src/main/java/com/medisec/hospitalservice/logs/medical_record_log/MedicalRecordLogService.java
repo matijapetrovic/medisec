@@ -1,20 +1,21 @@
-package com.medisec.hospitalservice.medical_record;
+package com.medisec.hospitalservice.logs.medical_record_log;
 
 import com.medisec.hospitalservice.exception.PatientDoesNotExist;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.function.Supplier;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class MedicalRecordService {
-    private final MedicalRecordRepository medicalRecordRepository;
+public class MedicalRecordLogService {
+    private final MedicalRecordLogRepository medicalRecordRepository;
 
-    public void save(MedicalRecordRequest request) {
-        MedicalRecord medicalRecord =
-                new MedicalRecord(
+    public void save(MedicalRecordLogRequest request) {
+        MedicalRecordLog medicalRecord =
+                new MedicalRecordLog(
+                        UUID.randomUUID().toString(),
                         request.getAge(),
                         request.getPatientId(),
                         request.getTime(),
@@ -30,12 +31,12 @@ public class MedicalRecordService {
         medicalRecordRepository.save(medicalRecord);
     }
 
-    public MedicalRecord findByPatientId(Long id) throws PatientDoesNotExist {
+    public MedicalRecordLog findByPatientId(Long id) throws PatientDoesNotExist {
         return medicalRecordRepository
                 .findByPatientId(id).orElseThrow(() -> new PatientDoesNotExist(String.format("Patiend with id: {%d} does not exist!", id)));
     }
 
-    public List<MedicalRecord> findAll() {
+    public List<MedicalRecordLog> findAll() {
         return medicalRecordRepository.findAll();
     }
 }

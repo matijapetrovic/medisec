@@ -148,7 +148,7 @@ def run(num_requests=10):
         log_generator = random.choice(log_generators)
         log_generator.set_data()
         print(log_generator.get_data())
-        send_reqeust("firewall-log", log_generator.get_data())
+        send_reqeust("service-log", log_generator.get_data())
 
 
 if __name__ == '__main__':

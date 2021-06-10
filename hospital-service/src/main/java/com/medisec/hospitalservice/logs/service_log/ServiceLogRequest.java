@@ -1,17 +1,16 @@
-package com.medisec.hospitalservice.firewall;
+package com.medisec.hospitalservice.logs.service_log;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.Date;
 
 @Data
 @NoArgsConstructor
-public class FirewallLogRequest {
+public class ServiceLogRequest {
     @NotBlank
     private String sourceIp;
 
