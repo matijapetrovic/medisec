@@ -16,7 +16,7 @@ const httpOptions = {
 })
 export class MedicalRecordLogsService {
   //url = `${environment.apiUrl}/api`;
-  url = 'http://localhost:8481/api/medical-record-log/getAll';
+  url = 'https://localhost:8481/api/medical-record/getAll';
 
   constructor(private http: HttpClient) { }
 

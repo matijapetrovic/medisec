@@ -33,7 +33,7 @@ public class MedicalRecord {
     private int heartBeat;
 
     @Field("average_heart_beat")
-    private int averageHeardBeat;
+    private int averageHeartBeat;
 
     @Field("blood_pressure")
     private String bloodPressure;
@@ -65,7 +65,7 @@ public class MedicalRecord {
         this.patientId = patientId;
         this.time = time;
         this.heartBeat = heartBeat;
-        this.averageHeardBeat = averageHeardBeat;
+        this.averageHeartBeat = averageHeardBeat;
         this.bloodPressure = bloodPressure;
         this.averageBloodPressure = averageBloodPressure;
         this.bodyTemperature = bodyTemperature;

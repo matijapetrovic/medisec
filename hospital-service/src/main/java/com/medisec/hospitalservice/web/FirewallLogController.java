@@ -20,6 +20,7 @@ public class FirewallLogController {
 
     @PostMapping("")
     public ResponseEntity<Void> save(@RequestBody FirewallLogRequest request) {
+        System.out.print("RADI");
         firewallLogService.save(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

@@ -19,7 +19,7 @@ public class MedicalRecordService {
                         request.getPatientId(),
                         request.getTime(),
                         request.getHeartBeat(),
-                        request.getAverageHeardBeat(),
+                        request.getAverageHeartBeat(),
                         request.getBloodPressure(),
                         request.getAverageBloodPressure(),
                         request.getBodyTemperature(),

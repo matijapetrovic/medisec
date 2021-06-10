@@ -8,6 +8,7 @@ import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.session.SessionRegistryImpl;
@@ -46,8 +47,14 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .contentSecurityPolicy("script-src 'self'");;
         http
                 .authorizeRequests()
-                .antMatchers("/").hasAuthority("super-admin")
-                .antMatchers("/medical-record").hasAnyRole()
+                .antMatchers(HttpMethod.GET, "/api/patients").hasAuthority("doctor")
+                .antMatchers(HttpMethod.POST, "/api/firewall-log").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/medical-record/**").permitAll()
+                .antMatchers("/**").hasAuthority("admin")
+                .and()
+                .requiresChannel()
+                .anyRequest()
+                .requiresSecure()
                 .and()
                 .cors()
                 .and()

@@ -17,15 +17,15 @@ public class HospitalServiceApplication {
 
 	public static void main(String[] args) {SpringApplication.run(HospitalServiceApplication.class, args);}
 
-	@Bean
-	public CommandLineRunner run(
-			MedicalRecordAlarm medicalRecordAlarm,
-			FirewallAlarm firewallAlarm
-	) {
-		return args -> {
-			medicalRecordAlarm.run();
-			firewallAlarm.run();
-		};
-	}
+//	@Bean
+//	public CommandLineRunner run(
+//			MedicalRecordAlarm medicalRecordAlarm,
+//			FirewallAlarm firewallAlarm
+//	) {
+//		return args -> {
+//			medicalRecordAlarm.run();
+//			firewallAlarm.run();
+//		};
+//	}
 }
 

@@ -25,7 +25,7 @@ public class MedicalRecordRequest {
     private int heartBeat;
 
     @Positive
-    private int averageHeardBeat;
+    private int averageHeartBeat;
 
     @NotBlank
     private String bloodPressure;

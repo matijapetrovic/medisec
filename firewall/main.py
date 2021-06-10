@@ -1,17 +1,18 @@
 from datetime import datetime
+
+import certifi
 import requests
 import random
 
+from requests.exceptions import SSLError
+
 API_PORT = 8481
 API_HOST = "localhost"
-BASE_URL = "http://{0}:{1}/api".format(API_HOST, API_PORT)
+BASE_URL = "https://{0}:{1}/api".format(API_HOST, API_PORT)
 
-API_CRT = "firewall.crt"
-API_KEY = "firewall.key"
-API_CER = "firewall.cer"
-API_P7B = "firewall.p7b"
-API_PEM = "firewall.pem"
-ROOT_CRT = "root.cer"
+API_CRT = "device1.cer"
+API_KEY = "device1.key"
+ROOT_CRT = "rootBongcloudCA.pem"
 secret = "attack"
 
 http_methods = ["GET", "POST", "PUT", "DELETE", "PATCH"]
@@ -62,7 +63,6 @@ class RandomLogGenerator(LogGenerator):
         self.data["status"] = self.get_random_status_code()
         self.data["time"] =self.get_current_timestamp()
         self.data["packetSize"] = str(random.randint(1024, 2048))
-        #return self.create_http_log(source_ip, dest_ip, path, protocol, status)
 
     def get_data(self):
         return self.data
@@ -76,7 +76,6 @@ class LoginLogGenerator(LogGenerator):
         self.data["status"] = "200"
         self.data["time"] = self.get_current_timestamp()
         self.data["packetSize"] = str(random.randint(1024, 2048))
-        #return self.create_http_log(source_ip, dest_ip, path, protocol, status)
 
     def fail_login(self, username):
         self.data["sourceIp"] =  self.generate_random_ip()
@@ -86,7 +85,6 @@ class LoginLogGenerator(LogGenerator):
         self.data["status"] = "400"
         self.data["time"] = self.get_current_timestamp()
         self.data["packetSize"] = str(random.randint(1024, 2048))
-        #return self.create_http_log(source_ip, dest_ip, path, protocol, status)
 
     def call_login_method(self, method):
         if method == "login":
@@ -109,10 +107,16 @@ def send_reqeust(resource, data):
     headers = {'Content-type': 'application/json'}
     path = BASE_URL + "/" + resource
     try:
-        #requests.post(path, json=data, headers=headers, verify=ROOT_CRT, cert=(API_CER, API_KEY))
-        requests.post(path, json=data, headers=headers)
-    except Exception as ex:
-            print(ex)
+        requests.post(path, json=data, headers=headers, verify=ROOT_CRT, cert=(API_CRT, API_KEY))
+        # requests.post(path, json=data, headers=headers)
+    except SSLError as ex:
+        cafile = certifi.where()
+        with open('rootBongcloudCA.pem', 'rb') as infile:
+            customca = infile.read()
+        with open(cafile, 'ab') as outfile:
+            outfile.write(customca)
+        print(ex)
+        print(certifi.where())
 
 def run(num_requests=10):
     log_generators = [LoginLogGenerator(), RandomLogGenerator()]
@@ -125,3 +129,4 @@ def run(num_requests=10):
 
 if __name__ == '__main__':
     run(num_requests=5)
+
