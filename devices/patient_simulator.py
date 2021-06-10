@@ -4,7 +4,10 @@ import random
 
 API_PORT = 8481
 API_HOST = "localhost"
-BASE_URL = "http://{0}:{1}/api".format(API_HOST, API_PORT)
+BASE_URL = "https://{0}:{1}/api".format(API_HOST, API_PORT)
+API_CER = "patient-sim.cer"
+API_KEY = "medical-record.key"
+API_ROOT = "rootBongcloudCA.pem"
 
 surgeries = ["Cataract", "Low back", "Heart", "Spine", "Tonsil", "Jaw", "Arm muslce"]
 
@@ -64,14 +67,14 @@ def send_reqeust(resource, data):
     path = BASE_URL + "/" + resource
 
     try:
-        #requests.post('https://localhost:8081/api/receive', data=message, cert=(API_CRT, API_KEY))
-        requests.post(path, json=data, headers=headers)
+        requests.post(path, headers=headers, json=data, verify=API_ROOT, cert=(API_CER, API_KEY))
+        # requests.post(path, json=data, headers=headers)
     except Exception as ex:
             print(ex)
 
 def run():
     medical_record = MedicalRecordGenerator()
-    for patient_id in range(1, 6):
+    for patient_id in range(1, 2):
         send_reqeust("medical-record", medical_record.get_data(patient_id))
 
 if __name__ == '__main__':
