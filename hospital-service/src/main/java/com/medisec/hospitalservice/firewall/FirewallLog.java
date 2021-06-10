@@ -60,6 +60,7 @@ public class FirewallLog {
         }
         return resource;
     }
+
 }
 
 enum LogType {

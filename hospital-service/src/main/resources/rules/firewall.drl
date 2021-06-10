@@ -3,9 +3,10 @@ import com.medisec.hospitalservice.firewall.Logs;
 import com.medisec.hospitalservice.firewall.LogType;
 import java.util.Arrays;
 
+
 rule "More than one failed login attempt with the same username"
     when
-        log : FirewallLog(getPathResource() == "login", getStatus() == 400)
+        $logs : Logs(hasMultipleFailedLoginAttempts())
     then
         System.out.println("More than one failed login attempt with the same username");
 end
@@ -52,7 +53,7 @@ end
 
 rule "30 or more unsuccessful login attempts are registered from the same IP address within 24 hours - add that IP address to the list of malicious IP addresses"
     when
-        log : FirewallLog(getPathResource() == "login", status == 400)
+        log :Logs(are30LoginAttemptsFailedIn24Hours())
     then
         System.out.println("Failed login!");
 end
