@@ -44,6 +44,24 @@ public class MedicalRecordAlarm {
 
     @Transient
     boolean persisted;
+
+    public MedicalRecordAlarm(
+            Long eventId,
+            Severity severity,
+            String eventSource,
+            Long eventCode,
+            String message,
+            Long alarmCode){
+        this.id = UUID.randomUUID().toString();
+        this.eventId = eventId;
+        this.time = new Date();
+        this.severity = severity;
+        this.eventSource = eventSource;
+        this.eventCode = eventCode;
+        this.message = message;
+        this.alarmCode = alarmCode;
+        this.persisted = false;
+    }
 }
 
 

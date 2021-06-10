@@ -17,18 +17,18 @@ public class MedicalRecordAlarmGenerator {
     private final MedicalRecordAlarmService medicalRecordAlarmService;
 
     public void run() {
-        List<MedicalRecordLog> medicalRecords = service.findAll();
+//        List<MedicalRecordLog> medicalRecords = service.findAll();
 
-        KieServices ks = KieServices.Factory.get();
-        KieContainer kContainer = ks.getKieClasspathContainer();
-        KieSession kSession = kContainer.newKieSession("ksession-rules");
-
-
-        kSession.setGlobal("service", medicalRecordAlarmService);
-        for(MedicalRecordLog record: medicalRecords) {
-            kSession.insert(record);
-            kSession.fireAllRules();
-            kSession.delete(kSession.getFactHandle(record));
-        }
+//        KieServices ks = KieServices.Factory.get();
+//        KieContainer kContainer = ks.getKieClasspathContainer();
+//        KieSession kSession = kContainer.newKieSession("ksession-rules");
+//
+//
+//        kSession.setGlobal("service", medicalRecordAlarmService);
+//        for(MedicalRecordLog record: medicalRecords) {
+//            kSession.insert(record);
+//            kSession.fireAllRules();
+//            kSession.delete(kSession.getFactHandle(record));
+//        }
     }
 }

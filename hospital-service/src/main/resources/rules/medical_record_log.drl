@@ -14,15 +14,12 @@ rule "Heart beat over 110"
     then
         System.out.println(String.format("Patient {%s} - Heart beat over 110", $patientId));
         insert(new MedicalRecordAlarm(
-                               UUID.randomUUID().toString(),
                                1L,
-                               new Date(),
-                               Severity.LOW,
+                               Severity.MEDIUM,
                                "Event source",
                                1001L,
                                String.format("Patient {%s} - Heart beat over 110", $patientId),
-                               1L,
-                               false
+                               1L
                        ));
 end
 
@@ -41,6 +38,14 @@ rule "Heart beat below 75"
         medicalRecord : MedicalRecordLog($patientId: patientId, heartBeat < 75 )
     then
         System.out.println(String.format("Patient {%s} - Heart beat below 75", $patientId));
+        insert(new MedicalRecordAlarm(
+                               2L,
+                               Severity.LOW,
+                               "Checkout patient",
+                               1002L,
+                               String.format("Patient {%s} - Heart beat below 75", $patientId),
+                               2L
+                       ));
 end
 
 rule "Systolic blood pressure is above 145"
@@ -48,6 +53,14 @@ rule "Systolic blood pressure is above 145"
         medicalRecord : MedicalRecordLog($patientId: patientId, getSystolicBloodPressure() > 145  )
     then
         System.out.println(String.format("Patient {%s} - Systolic body pressure is above 145", $patientId));
+        insert(new MedicalRecordAlarm(
+                               3L,
+                               Severity.MEDIUM,
+                               "Checkout patient",
+                               1003L,
+                               String.format("Patient {%s} - Systolic body pressure is above 145", $patientId),
+                               3L
+                       ));
 end
 
 rule "Systolic blood pressure is below 110"
@@ -55,6 +68,14 @@ rule "Systolic blood pressure is below 110"
         medicalRecord : MedicalRecordLog($patientId: patientId, getSystolicBloodPressure() < 110);
     then
         System.out.println(String.format("Patient {%s} - Systolic body pressure is below 110", $patientId));
+        insert(new MedicalRecordAlarm(
+                               4L,
+                               Severity.MEDIUM,
+                               "Checkout patient",
+                               1004L,
+                               String.format("Patient {%s} - Systolic body pressure is below 110", $patientId),
+                               4L
+                       ));
 end
 
 rule "Diastolic blood pressure is below 65"
@@ -62,6 +83,14 @@ rule "Diastolic blood pressure is below 65"
         medicalRecord : MedicalRecordLog($patientId: patientId, getDiastolicBloodPressure() < 65  )
     then
         System.out.println(String.format("Patient {%s} - Diastolic body pressure is below 65", $patientId));
+        insert(new MedicalRecordAlarm(
+                               5L,
+                               Severity.CRITICAL,
+                               "Checkout patient",
+                               1005L,
+                               String.format("Patient {%s} - Diastolic body pressure is below 65", $patientId),
+                               5L
+                       ));
 end
 
 rule "Diastolic blood pressure is above 95"
@@ -69,5 +98,13 @@ rule "Diastolic blood pressure is above 95"
         medicalRecord : MedicalRecordLog($patientId: patientId, getDiastolicBloodPressure() > 95  )
     then
         System.out.println(String.format("Patient {%s} - Diastolic body pressure is above 95", $patientId));
+         insert(new MedicalRecordAlarm(
+                               6L,
+                               Severity.CRITICAL,
+                               "Checkout patient",
+                               1006L,
+                               String.format("Patient {%s} - Diastolic body pressure is above 95", $patientId),
+                               6L
+                       ));
 end
 
