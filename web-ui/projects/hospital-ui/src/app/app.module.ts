@@ -13,7 +13,7 @@ import { KeycloakService } from 'keycloak-angular';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,

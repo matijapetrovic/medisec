@@ -10,6 +10,14 @@ const routes: Routes = [
     path: 'medical-record-logs',
     loadChildren: () => import('./modules/medical-record-logs/medical-records-logs.module').then(m => m.MedicalRecordLogsModule)
   },
+  {
+    path: 'medical-record-alarms',
+    loadChildren: () => import('./modules/medical-record-alarm/medical-record-alarm.module').then(m => m.MedicalRecordAlarmModule)
+  },
+  {
+    path: 'rule',
+    loadChildren: () => import('./modules/rules/rule.module').then(m => m.RuleModule)
+  }
 ];
 
 @NgModule({

@@ -2,8 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams  } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'projects/hospital-ui/src/environments/environment';
 import { Observable } from 'rxjs';
-import { Rule } from '../rules/Rule';
-import { MedicalRecordLog } from './MedicalRecordLog';
+import { MedicalRecordAlarm } from './MedicalRecordAlarm';
 
 
 const httpOptions = {
@@ -15,13 +14,13 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class MedicalRecordLogsService {
+export class MedicalRecordAlarmService {
   url = `${environment.apiUrl}/api`;
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<MedicalRecordLog[]> {
-    return this.http.get<MedicalRecordLog[]>(`${this.url}/medical-record-log`);
+  getAll(): Observable<MedicalRecordAlarm[]> {
+    return this.http.get<MedicalRecordAlarm[]>(`${this.url}/medical-record-alarm`);
   }
 
 }

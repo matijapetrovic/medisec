@@ -4,6 +4,8 @@ import com.medisec.hospitalservice.logs.medical_record_log.MedicalRecordAlarm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MedicalRecordAlarmService {
@@ -12,4 +14,6 @@ public class MedicalRecordAlarmService {
     public void save(MedicalRecordAlarm medicalRecordAlarm) {
         medicalRecordAlarmRepository.save(medicalRecordAlarm);
     }
+
+    public List<MedicalRecordAlarm> findAll(){ return medicalRecordAlarmRepository.findAll(); }
 }

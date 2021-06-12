@@ -1,0 +1,24 @@
+<p-table [value]="medicalRecordAlarms">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Event id</th>
+      <th>Time</th>
+      <th>Severity</th>
+      <th>Event source</th>
+      <th>Event code</th>
+      <th>Message</th>
+      <th>Alarm code</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-alarm>
+    <tr>
+      <td>{{ alarm.eventId}}</td>
+      <td>{{ alarm.time | date:'medium'}}</td>
+      <td>{{ alarm.severity}}</td>
+      <td>{{ alarm.eventSource}}</td>
+      <td>{{ alarm.eventCode}}</td>
+      <td>{{ alarm.message}}</td>
+      <td>{{ alarm.alarmCode}}</td>
+    </tr>
+  </ng-template>
+</p-table>
