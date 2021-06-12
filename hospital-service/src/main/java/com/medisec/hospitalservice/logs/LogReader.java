@@ -1,6 +1,5 @@
 package com.medisec.hospitalservice.logs;
 
-import com.medisec.hospitalservice.firewall.FirewallLog;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -19,7 +18,6 @@ public class LogReader implements Runnable {
             while (true) {
                 String line = br.readLine();
                 if (line != null) {
-                    FirewallLog log = new FirewallLog();
                     // ucitaj log
                     // save to db
                 }
