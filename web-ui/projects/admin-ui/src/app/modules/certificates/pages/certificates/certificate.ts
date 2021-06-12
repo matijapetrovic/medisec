@@ -12,6 +12,7 @@ export interface Certificate {
 
 export interface IssueCertificateData {
   csrId: number,
+  issuerAlias: string;
   subjectData: SubjectData,
   startDate: Date,
   endDate: Date,

@@ -108,6 +108,7 @@ export class IssueCertificateFormComponent implements OnInit {
 
     const certificateData: IssueCertificateData = {
       csrId: this.csrId,
+      issuerAlias: "server.med.com (bongcloudca.com)",
       subjectData: {
         subjectId: this.f.subjectData.subjectId,
         commonName: this.f.subjectData.commonName,

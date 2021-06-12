@@ -16,6 +16,9 @@ public class IssueCertificateRequest {
     @Positive
     private Long csrId;
 
+    @NotBlank
+    private String issuerAlias;
+
     @Valid
     private SubjectData subjectData;
 
