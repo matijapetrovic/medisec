@@ -50,7 +50,7 @@ export interface KeyUsage {
   keyUsageIsCritical: boolean;
 }
 export interface BasicConstraints {
-  isCa: boolean;
+  ca: boolean;
   pathLen: number;
   basicConstraintsIsCritical: boolean;
 }

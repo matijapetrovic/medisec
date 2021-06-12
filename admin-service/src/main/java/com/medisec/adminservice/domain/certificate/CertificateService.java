@@ -120,6 +120,22 @@ public class CertificateService {
         return certificates;
     }
 
+    public List<String> getIssuerAliases() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException {
+        List<String> issuerAliases = new ArrayList<>();
+
+        Enumeration<String> aliases = keyStoreReader.getAllAliases();
+        while (aliases.hasMoreElements()) {
+            String alias = aliases.nextElement();
+            Optional<Certificate> certificateOptional = keyStoreReader.readCertificate(alias);
+            if (certificateOptional.isEmpty()) continue;
+            X509Certificate certificate = (X509Certificate) certificateOptional.get();
+            if (certificate.getBasicConstraints() != -1)
+                issuerAliases.add(alias);
+        }
+
+        return issuerAliases;
+    }
+
 
     public void revokeCertificate(String serialNumber, Integer reason, String alias) throws IOException, UnrecoverableKeyException, CertificateException, NoSuchAlgorithmException, KeyStoreException, OperatorCreationException {
         File crlFile = new File("src/main/resources/revocationList.crl");
@@ -140,6 +156,15 @@ public class CertificateService {
         OutputStream os = new FileOutputStream("src/main/resources/revocationList.crl");
         os.write(x509CRLHolder.getEncoded());
         os.close();
+    }
+
+    public boolean isValid(X509Certificate certificate) throws CertificateException, CRLException, IOException {
+        try {
+            certificate.checkValidity();
+        } catch (CertificateNotYetValidException | CertificateExpiredException e) {
+            return false;
+        }
+        return !isRevoked(certificate);
     }
 
     private boolean isRevoked(Certificate certificate) throws IOException, CertificateException, CRLException {
