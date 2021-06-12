@@ -1,0 +1,21 @@
+<p-card header="General Info" class="p-mb-2">
+  <div>First Name: {{ patient.firstName }}</div>
+  <div>Last Name: {{ patient.lastName }}</div>
+  <div>Security Number: {{ patient.securityNumber }}</div>
+  <div>Age: {{ patient.patientDetails.age }}</div>
+  <div>Height: {{ patient.patientDetails.height }}cm</div>
+  <div>Weight: {{ patient.patientDetails.weight }}kg</div>
+  <div>Blood group: {{ patient.patientDetails.bloodGroup.type }}{{ patient.patientDetails.bloodGroup.rhPositive ? '+' : '-'}}</div>
+  <div>Dioptry: {{ patient.patientDetails.dioptry.left }}/ {{ patient.patientDetails.dioptry.right }}</div>
+</p-card>
+<p-card header="Vaccinations" class="p-mb-2">
+  <div *ngFor="let vaccination of patient.patientDetails.vaccinations">
+    {{vaccination.name}}  {{vaccination.date | date}}
+  </div>
+</p-card>
+<p-card header="Surgeries">
+  <div *ngFor="let surgery of patient.patientDetails.surgeries">
+    {{surgery.name}}  {{surgery.date | date}}
+  </div>
+</p-card>
+
