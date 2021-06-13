@@ -6,12 +6,10 @@ import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,6 +25,7 @@ public class LogSourceService {
         String json = ow.writeValueAsString(sources.toArray());
         FileWriter writer = new FileWriter(logSourcesConfig);
         writer.write(json);
+        writer.flush();
     }
 
     public List<LogSource> getSources() {

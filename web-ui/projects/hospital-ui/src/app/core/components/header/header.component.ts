@@ -33,6 +33,10 @@ export class HeaderComponent implements OnInit {
       label: 'Send Certificate Request',
       icon: 'pi pi-map',
      routerLink: ['']
+    },
+    {
+      label: 'Log Sources',
+      routerLink: ['logs/sources']
     }
   ];
 

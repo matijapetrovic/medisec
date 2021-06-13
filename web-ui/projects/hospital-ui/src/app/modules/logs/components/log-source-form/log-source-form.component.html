@@ -1,0 +1,16 @@
+<form action="" [formGroup]="form" (ngSubmit)="submitForm()">
+    <h2>Log source</h2>
+    <div class="p-float-label p-col-12 p-md-6">
+      <input placeholder="Path" id="path" type="text" pInputText class="p-inputtext-lg" formControlName="path">
+    </div>
+    <div class="p-field p-md-6">
+      <label for="pathLen">Read Frequency</label>
+      <p-inputNumber inputId="readFrequency" :min="0" formControlName="readFrequency" mode="decimal" [useGrouping]="false">
+      </p-inputNumber>
+    </div>
+    <div class="p-float-label p-col-12 p-md-6">
+      <input placeholder="Filter" id="filter" type="text" pInputText class="p-inputtext-lg" formControlName="filter">
+    </div>
+
+    <button pButton type="submit" label="Update"></button>
+</form>

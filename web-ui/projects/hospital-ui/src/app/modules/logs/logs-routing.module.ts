@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../../core/guards/auth.guard';
+import { LogSourcesListComponent } from './components/log-sources-list/log-sources-list.component';
 
-import { SendCsrFormComponent } from './pages/send-csr-form/send-csr-form.component';
 
 const routes: Routes = [
   {
-    path: '',
-    component: SendCsrFormComponent,
+    path: 'sources',
+    component: LogSourcesListComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['admin']}
+    data: { roles: ['admin', 'super-admin']}
   },
 ];
 
@@ -17,4 +17,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class CsrRoutingModule { }
+export class LogsRoutingModule { }

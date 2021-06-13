@@ -1,12 +1,18 @@
 package com.medisec.hospitalservice.logs;
 
 
+import com.medisec.hospitalservice.logs.service_log.ServiceLog;
+import com.medisec.hospitalservice.logs.service_log.ServiceLogRepository;
+import lombok.RequiredArgsConstructor;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+@RequiredArgsConstructor
 public class LogReader implements Runnable {
-    private LogSource logSource;
+    private final LogSource logSource;
+    private final ServiceLogRepository serviceLogRepository;
 
     @Override
     public void run() {
@@ -18,8 +24,8 @@ public class LogReader implements Runnable {
             while (true) {
                 String line = br.readLine();
                 if (line != null) {
-                    // ucitaj log
-                    // save to db
+                    ServiceLog log = LogParser.parseLog(line, logSource.getFilter());
+                    serviceLogRepository.save(log);
                 }
                 else {
                     Thread.sleep(logSource.getReadFrequency());

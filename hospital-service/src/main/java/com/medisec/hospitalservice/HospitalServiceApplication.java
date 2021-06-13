@@ -5,6 +5,9 @@ import com.medisec.hospitalservice.logs.medical_record_log.MedicalRecordAlarmGen
 import com.medisec.hospitalservice.patient.Patient;
 import com.medisec.hospitalservice.patient.PatientDetails;
 import com.medisec.hospitalservice.patient.PatientRepository;
+import io.krakens.grok.api.Grok;
+import io.krakens.grok.api.GrokCompiler;
+import io.krakens.grok.api.Match;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -15,6 +18,7 @@ import org.springframework.context.annotation.Bean;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 
 @SpringBootApplication
