@@ -15,7 +15,7 @@
   <ng-template pTemplate="body" let-log>
     <tr>
       <td>{{ log.age}}</td>
-      <td>{{ log.time}}</td>
+      <td>{{ log.time | date: 'medium'}}</td>
       <td>{{ log.heartBeat}}</td>
       <td>{{ log.averageHeartBeat}}</td>
       <td>{{ log.bloodPressure}}</td>

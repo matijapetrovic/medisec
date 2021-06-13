@@ -1,5 +1,9 @@
 package com.medisec.hospitalservice;
 
+import com.medisec.hospitalservice.alarms.service_log_alarm.LogHandler;
+import com.medisec.hospitalservice.alarms.service_log_alarm.ServiceLogAlarm;
+import com.medisec.hospitalservice.alarms.medical_record_alarm.MedicalRecordAlarmGenerator;
+import com.medisec.hospitalservice.alarms.service_log_alarm.ServiceLogsAlarmGenerator;
 import com.medisec.hospitalservice.logs.service_log.ServiceLogAlarm;
 import com.medisec.hospitalservice.logs.medical_record_log.MedicalRecordAlarmGenerator;
 import com.medisec.hospitalservice.patient.Patient;
@@ -30,6 +34,7 @@ public class HospitalServiceApplication {
 
 	@Bean
 	public CommandLineRunner run(
+			ServiceLogsAlarmGenerator serviceLogsAlarmGenerator
 			MedicalRecordAlarmGenerator medicalRecordAlarmGenerator,
 			ServiceLogAlarm firewallAlarm,
 			PatientRepository patientRepository
@@ -45,6 +50,7 @@ public class HospitalServiceApplication {
 							List.of(new PatientDetails.Vaccination("COVID", new Date())),
 							List.of(new PatientDetails.Surgery("Eye surgery", new Date()))
 					)));
+			serviceLogsAlarmGenerator.run();
 			medicalRecordAlarmGenerator.run();
 			firewallAlarm.run();
 		};
