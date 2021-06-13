@@ -1,0 +1,24 @@
+<p-table [value]="patients" [paginator]="true" [rows]="10">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Security Number</th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-patient>
+    <tr>
+      <td>{{ patient.firstName }}</td>
+      <td>{{ patient.lastName }}</td>
+      <td>{{ patient.securityNumber }}</td>
+      <td>
+        <button
+          pButton
+          label="Medical Record"
+          class="p-button-help p-button-rounded p-justify-right p-button-sm p-mb-2"
+          (click)="showMedicalRecord(patient)"
+        ></button></td>
+    </tr>
+  </ng-template>
+</p-table>

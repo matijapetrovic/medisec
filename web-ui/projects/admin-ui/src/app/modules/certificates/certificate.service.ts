@@ -26,6 +26,10 @@ export class CertificateService {
     return this.http.get<Certificate[]>(`${environment.apiUrl}/api/certificates`)
   }
 
+  getIssuerAliases() {
+    return this.http.get<String[]>(`${environment.apiUrl}/api/certificates/issuer-aliases`);
+  }
+
   getRevocationReasons(){
     return this.http.get<RevocationReason[]>(`${environment.apiUrl}/api/certificates/revocation-reasons`)
   }

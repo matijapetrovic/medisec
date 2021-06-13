@@ -52,6 +52,9 @@ public class CertificateService {
             IOException,
             UnrecoverableKeyException,
             InvalidKeyException, NoSuchProviderException {
+        Certificate[] issuerChain = keyStoreReader.readCertificateChain(request.getIssuerAlias());
+        if (issuerChain == null)
+            throw new AliasNotValidException();
         PublicKey subjectPublicKey = getSubjectPublicKey(request.getCsrId());
         SubjectData subjectData = new SubjectDataBuilder(subjectPublicKey, request.getStartDate(), request.getEndDate())
                 .withSubjectId(request.getSubjectData().getSubjectId())
@@ -64,13 +67,15 @@ public class CertificateService {
                 .withSurname(request.getSubjectData().getSurname())
                 .build();
 
-        IssuerData issuerData = keyStoreReader.readIssuerFromStore("bongcloud");
-        PrivateKey issuerPrivateKey = keyStoreReader.readPrivateKey("bongcloud")
+        IssuerData issuerData =  keyStoreReader.readIssuerFromStore(request.getIssuerAlias());
+        PrivateKey issuerPrivateKey = keyStoreReader.readPrivateKey(request.getIssuerAlias())
                 .orElseThrow(MissingPrivateKeyException::new);
        
         X509Certificate cert = CertificateGenerator.generateCertificate(subjectData, issuerData, request.getExtensions());
+        List<Certificate> newChain = new LinkedList<>(Arrays.asList(issuerChain));
+        newChain.add(0, cert);
 
-        keyStoreWriter.write(request.getSubjectData().getEmail(), issuerPrivateKey, cert);
+        keyStoreWriter.write(request.getSubjectData().getEmail(), issuerPrivateKey, newChain.toArray(new Certificate[0]));
     }
 
     private PublicKey getSubjectPublicKey(Long csrId) throws NoSuchProviderException, NoSuchAlgorithmException, IOException, InvalidKeyException {
@@ -91,7 +96,9 @@ public class CertificateService {
         Enumeration<String> aliases = keyStoreReader.getAllAliases();
         while (aliases.hasMoreElements()) {
             String alias = aliases.nextElement();
-            Certificate certificate = keyStoreReader.readCertificate(alias).orElseThrow(AliasNotValidException::new);
+            Optional<Certificate> certificateOptional = keyStoreReader.readCertificate(alias);
+            if (certificateOptional.isEmpty()) continue;
+            Certificate certificate = certificateOptional.get();
             JcaX509CertificateHolder certHolder = new JcaX509CertificateHolder((X509Certificate) certificate);
             X500Name subject = certHolder.getSubject();
             CertificateResponse certificateResponse = CertificateResponse.builder()
@@ -111,6 +118,22 @@ public class CertificateService {
         }
 
         return certificates;
+    }
+
+    public List<String> getIssuerAliases() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException {
+        List<String> issuerAliases = new ArrayList<>();
+
+        Enumeration<String> aliases = keyStoreReader.getAllAliases();
+        while (aliases.hasMoreElements()) {
+            String alias = aliases.nextElement();
+            Optional<Certificate> certificateOptional = keyStoreReader.readCertificate(alias);
+            if (certificateOptional.isEmpty()) continue;
+            X509Certificate certificate = (X509Certificate) certificateOptional.get();
+            if (certificate.getBasicConstraints() != -1)
+                issuerAliases.add(alias);
+        }
+
+        return issuerAliases;
     }
 
 
@@ -133,6 +156,15 @@ public class CertificateService {
         OutputStream os = new FileOutputStream("src/main/resources/revocationList.crl");
         os.write(x509CRLHolder.getEncoded());
         os.close();
+    }
+
+    public boolean isValid(X509Certificate certificate) throws CertificateException, CRLException, IOException {
+        try {
+            certificate.checkValidity();
+        } catch (CertificateNotYetValidException | CertificateExpiredException e) {
+            return false;
+        }
+        return !isRevoked(certificate);
     }
 
     private boolean isRevoked(Certificate certificate) throws IOException, CertificateException, CRLException {

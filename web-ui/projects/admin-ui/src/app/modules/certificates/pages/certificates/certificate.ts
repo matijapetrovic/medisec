@@ -12,6 +12,7 @@ export interface Certificate {
 
 export interface IssueCertificateData {
   csrId: number,
+  issuerAlias: string;
   subjectData: SubjectData,
   startDate: Date,
   endDate: Date,
@@ -49,7 +50,7 @@ export interface KeyUsage {
   keyUsageIsCritical: boolean;
 }
 export interface BasicConstraints {
-  isCa: boolean;
+  ca: boolean;
   pathLen: number;
   basicConstraintsIsCritical: boolean;
 }
