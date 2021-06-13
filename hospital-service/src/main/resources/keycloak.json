@@ -4,7 +4,7 @@
   "ssl-required": "external",
   "resource": "hospital-service",
   "credentials": {
-    "secret": "39719587-3a85-4c69-8b2f-b0b44c099da0"
+    "secret": "a0d56f78-ed7d-4d78-9d57-657d097e7647"
   },
   "policy-enforcer": {
   }

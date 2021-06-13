@@ -18,6 +18,14 @@ const routes: Routes = [
     path: 'service-log-alarm',
     loadChildren: () => import('./modules/service-log-alarm/service-log-alarm.module').then(m => m.ServiceLogAlarmModule)
   },
+  {
+    path: 'medical-record-alarms',
+    loadChildren: () => import('./modules/medical-record-alarm/medical-record-alarm.module').then(m => m.MedicalRecordAlarmModule)
+  },
+  {
+    path: 'rule',
+    loadChildren: () => import('./modules/rules/rule.module').then(m => m.RuleModule)
+  }
 ];
 
 @NgModule({
