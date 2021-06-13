@@ -11,6 +11,8 @@ import java.util.List;
 public class ServiceLogAlarmService {
     private final ServiceLogAlarmRepository serviceLogAlarmRepository;
 
+    public void save(ServiceLogAlarm serviceLogAlarm) { serviceLogAlarmRepository.save(serviceLogAlarm); }
+
     public List<ServiceLogAlarm> findAll() {
         return serviceLogAlarmRepository.findAll();
     }

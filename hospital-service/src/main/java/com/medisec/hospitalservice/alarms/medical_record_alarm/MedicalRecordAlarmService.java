@@ -11,4 +11,5 @@ public class MedicalRecordAlarmService {
     public void save(MedicalRecordAlarm medicalRecordAlarm) {
         medicalRecordAlarmRepository.save(medicalRecordAlarm);
     }
+
 }

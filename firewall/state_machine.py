@@ -28,7 +28,7 @@ class State(ABC):
         f.write(self.data_to_string() + "\n")
         f.close()
         send_reqeust("service-log", self.data)
-        sleep(1)
+        sleep(3)
 
     def run(self, context):
         print(self)

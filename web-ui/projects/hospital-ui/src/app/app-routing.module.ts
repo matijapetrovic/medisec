@@ -14,6 +14,10 @@ const routes: Routes = [
     path: 'service-log',
     loadChildren: () => import('./modules/service-logs/service-log.module').then(m => m.ServiceLogModule)
   },
+  {
+    path: 'service-log-alarm',
+    loadChildren: () => import('./modules/service-log-alarm/service-log-alarm.module').then(m => m.ServiceLogAlarmModule)
+  },
 ];
 
 @NgModule({

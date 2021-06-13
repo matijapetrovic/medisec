@@ -14,8 +14,8 @@ import java.util.*;
 @Component
 @RequiredArgsConstructor
 public class MedicalRecordAlarmGenerator {
-    private final MedicalRecordLogService service;
-    private final MedicalRecordAlarmService medicalRecordAlarmService;
+    //private final MedicalRecordLogService service;
+    //private final MedicalRecordAlarmService medicalRecordAlarmService;
 
     public void run() {
 //        List<MedicalRecordLog> medicalRecords = service.findAll();

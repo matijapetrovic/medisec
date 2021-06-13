@@ -30,6 +30,8 @@ public class ServiceLogService {
         serviceLogRepository.save(log);
     }
 
+    public List<ServiceLog> findAll() { return serviceLogRepository.findAll(); }
+
     public List<ServiceLog> search(
                                    String sourceIp,
                                    String destId,

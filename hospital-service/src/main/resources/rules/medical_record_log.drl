@@ -1,110 +1,110 @@
-import com.medisec.hospitalservice.logs.medical_record_log.MedicalRecordLog;
-import com.medisec.hospitalservice.logs.medical_record_log.Severity;
-import com.medisec.hospitalservice.alarms.medical_record_alarm.MedicalRecordAlarm;
-import com.medisec.hospitalservice.alarms.medical_record_alarm.MedicalRecordAlarmService;
-
-import java.util.UUID;
-import java.util.Date;
-
-
-global MedicalRecordAlarmService service;
-rule "Heart beat over 110"
-    when
-        medicalRecord : MedicalRecordLog($patientId: patientId, heartBeat > 110 )
-    then
-        System.out.println(String.format("Patient {%s} - Heart beat over 110", $patientId));
-        insert(new MedicalRecordAlarm(
-                               1L,
-                               Severity.MEDIUM,
-                               "Event source",
-                               1001L,
-                               String.format("Patient {%s} - Heart beat over 110", $patientId),
-                               1L
-                       ));
-end
-
-rule "Insert alaram to db"
-    when
-        alarm: MedicalRecordAlarm(persisted == false)
-    then
-        modify(alarm) {
-            setPersisted(true)
-        };
-        service.save(alarm);
-end
-
-rule "Heart beat below 75"
-    when
-        medicalRecord : MedicalRecordLog($patientId: patientId, heartBeat < 75 )
-    then
-        System.out.println(String.format("Patient {%s} - Heart beat below 75", $patientId));
-        insert(new MedicalRecordAlarm(
-                               2L,
-                               Severity.LOW,
-                               "Checkout patient",
-                               1002L,
-                               String.format("Patient {%s} - Heart beat below 75", $patientId),
-                               2L
-                       ));
-end
-
-rule "Systolic blood pressure is above 145"
-    when
-        medicalRecord : MedicalRecordLog($patientId: patientId, getSystolicBloodPressure() > 145  )
-    then
-        System.out.println(String.format("Patient {%s} - Systolic body pressure is above 145", $patientId));
-        insert(new MedicalRecordAlarm(
-                               3L,
-                               Severity.MEDIUM,
-                               "Checkout patient",
-                               1003L,
-                               String.format("Patient {%s} - Systolic body pressure is above 145", $patientId),
-                               3L
-                       ));
-end
-
-rule "Systolic blood pressure is below 110"
-    when
-        medicalRecord : MedicalRecordLog($patientId: patientId, getSystolicBloodPressure() < 110);
-    then
-        System.out.println(String.format("Patient {%s} - Systolic body pressure is below 110", $patientId));
-        insert(new MedicalRecordAlarm(
-                               4L,
-                               Severity.MEDIUM,
-                               "Checkout patient",
-                               1004L,
-                               String.format("Patient {%s} - Systolic body pressure is below 110", $patientId),
-                               4L
-                       ));
-end
-
-rule "Diastolic blood pressure is below 65"
-    when
-        medicalRecord : MedicalRecordLog($patientId: patientId, getDiastolicBloodPressure() < 65  )
-    then
-        System.out.println(String.format("Patient {%s} - Diastolic body pressure is below 65", $patientId));
-        insert(new MedicalRecordAlarm(
-                               5L,
-                               Severity.CRITICAL,
-                               "Checkout patient",
-                               1005L,
-                               String.format("Patient {%s} - Diastolic body pressure is below 65", $patientId),
-                               5L
-                       ));
-end
-
-rule "Diastolic blood pressure is above 95"
-    when
-        medicalRecord : MedicalRecordLog($patientId: patientId, getDiastolicBloodPressure() > 95  )
-    then
-        System.out.println(String.format("Patient {%s} - Diastolic body pressure is above 95", $patientId));
-         insert(new MedicalRecordAlarm(
-                               6L,
-                               Severity.CRITICAL,
-                               "Checkout patient",
-                               1006L,
-                               String.format("Patient {%s} - Diastolic body pressure is above 95", $patientId),
-                               6L
-                       ));
-end
-
+//import com.medisec.hospitalservice.logs.medical_record_log.MedicalRecordLog;
+//import com.medisec.hospitalservice.logs.medical_record_log.Severity;
+//import com.medisec.hospitalservice.alarms.medical_record_alarm.MedicalRecordAlarm;
+//import com.medisec.hospitalservice.alarms.medical_record_alarm.MedicalRecordAlarmService;
+//
+//import java.util.UUID;
+//import java.util.Date;
+//
+//
+//global MedicalRecordAlarmService service;
+//rule "Heart beat over 110"
+//    when
+//        medicalRecord : MedicalRecordLog($patientId: patientId, heartBeat > 110 )
+//    then
+//        System.out.println(String.format("Patient {%s} - Heart beat over 110", $patientId));
+//        insert(new MedicalRecordAlarm(
+//                               1L,
+//                               Severity.MEDIUM,
+//                               "Event source",
+//                               1001L,
+//                               String.format("Patient {%s} - Heart beat over 110", $patientId),
+//                               1L
+//                       ));
+//end
+//
+//rule "Insert alaram to db"
+//    when
+//        alarm: MedicalRecordAlarm(persisted == false)
+//    then
+//        modify(alarm) {
+//            setPersisted(true)
+//        };
+//        service.save(alarm);
+//end
+//
+//rule "Heart beat below 75"
+//    when
+//        medicalRecord : MedicalRecordLog($patientId: patientId, heartBeat < 75 )
+//    then
+//        System.out.println(String.format("Patient {%s} - Heart beat below 75", $patientId));
+//        insert(new MedicalRecordAlarm(
+//                               2L,
+//                               Severity.LOW,
+//                               "Checkout patient",
+//                               1002L,
+//                               String.format("Patient {%s} - Heart beat below 75", $patientId),
+//                               2L
+//                       ));
+//end
+//
+//rule "Systolic blood pressure is above 145"
+//    when
+//        medicalRecord : MedicalRecordLog($patientId: patientId, getSystolicBloodPressure() > 145  )
+//    then
+//        System.out.println(String.format("Patient {%s} - Systolic body pressure is above 145", $patientId));
+//        insert(new MedicalRecordAlarm(
+//                               3L,
+//                               Severity.MEDIUM,
+//                               "Checkout patient",
+//                               1003L,
+//                               String.format("Patient {%s} - Systolic body pressure is above 145", $patientId),
+//                               3L
+//                       ));
+//end
+//
+//rule "Systolic blood pressure is below 110"
+//    when
+//        medicalRecord : MedicalRecordLog($patientId: patientId, getSystolicBloodPressure() < 110);
+//    then
+//        System.out.println(String.format("Patient {%s} - Systolic body pressure is below 110", $patientId));
+//        insert(new MedicalRecordAlarm(
+//                               4L,
+//                               Severity.MEDIUM,
+//                               "Checkout patient",
+//                               1004L,
+//                               String.format("Patient {%s} - Systolic body pressure is below 110", $patientId),
+//                               4L
+//                       ));
+//end
+//
+//rule "Diastolic blood pressure is below 65"
+//    when
+//        medicalRecord : MedicalRecordLog($patientId: patientId, getDiastolicBloodPressure() < 65  )
+//    then
+//        System.out.println(String.format("Patient {%s} - Diastolic body pressure is below 65", $patientId));
+//        insert(new MedicalRecordAlarm(
+//                               5L,
+//                               Severity.CRITICAL,
+//                               "Checkout patient",
+//                               1005L,
+//                               String.format("Patient {%s} - Diastolic body pressure is below 65", $patientId),
+//                               5L
+//                       ));
+//end
+//
+//rule "Diastolic blood pressure is above 95"
+//    when
+//        medicalRecord : MedicalRecordLog($patientId: patientId, getDiastolicBloodPressure() > 95  )
+//    then
+//        System.out.println(String.format("Patient {%s} - Diastolic body pressure is above 95", $patientId));
+//         insert(new MedicalRecordAlarm(
+//                               6L,
+//                               Severity.CRITICAL,
+//                               "Checkout patient",
+//                               1006L,
+//                               String.format("Patient {%s} - Diastolic body pressure is above 95", $patientId),
+//                               6L
+//                       ));
+//end
+//

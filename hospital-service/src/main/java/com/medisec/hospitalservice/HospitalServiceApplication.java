@@ -1,5 +1,6 @@
 package com.medisec.hospitalservice;
 
+import com.medisec.hospitalservice.alarms.service_log_alarm.LogHandler;
 import com.medisec.hospitalservice.alarms.service_log_alarm.ServiceLogAlarm;
 import com.medisec.hospitalservice.alarms.medical_record_alarm.MedicalRecordAlarmGenerator;
 import com.medisec.hospitalservice.alarms.service_log_alarm.ServiceLogsAlarmGenerator;
@@ -20,11 +21,11 @@ public class HospitalServiceApplication {
 
 	@Bean
 	public CommandLineRunner run(
-			MedicalRecordAlarmGenerator medicalRecordAlarmGenerator,
+//			MedicalRecordAlarmGenerator medicalRecordAlarmGenerator,
 			ServiceLogsAlarmGenerator serviceLogsAlarmGenerator
 	) {
 		return args -> {
-			medicalRecordAlarmGenerator.run();
+//			medicalRecordAlarmGenerator.run();
 			serviceLogsAlarmGenerator.run();
 		};
 	}
