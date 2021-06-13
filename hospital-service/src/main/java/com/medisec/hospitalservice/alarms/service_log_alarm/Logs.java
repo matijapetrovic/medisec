@@ -1,4 +1,6 @@
-package com.medisec.hospitalservice.logs.service_log;
+package com.medisec.hospitalservice.alarms.service_log_alarm;
+
+import com.medisec.hospitalservice.logs.service_log.ServiceLog;
 
 import java.util.*;
 

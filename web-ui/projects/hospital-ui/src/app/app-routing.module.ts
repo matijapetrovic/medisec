@@ -7,8 +7,12 @@ const routes: Routes = [
     loadChildren: () => import('./modules/csr/csr.module').then(m => m.CsrModule),
   },
   {
-    path: 'medical-record-logs',
+    path: 'medical-record-log',
     loadChildren: () => import('./modules/medical-record-logs/medical-records-logs.module').then(m => m.MedicalRecordLogsModule)
+  },
+  {
+    path: 'service-log',
+    loadChildren: () => import('./modules/service-logs/service-log.module').then(m => m.ServiceLogModule)
   },
 ];
 

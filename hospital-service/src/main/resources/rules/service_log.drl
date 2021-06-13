@@ -1,55 +1,54 @@
-//import com.medisec.hospitalservice.logs.service_log.ServiceLog;
-//import com.medisec.hospitalservice.logs.service_log.Logs;
-//import com.medisec.hospitalservice.logs.service_log.LogType;
-//import java.util.Arrays;
-//
-//
+import com.medisec.hospitalservice.logs.service_log.ServiceLog;
+import com.medisec.hospitalservice.alarms.service_log_alarm.Logs;
+import com.medisec.hospitalservice.alarms.service_log_alarm.LogType;
+import java.util.Arrays;
+
+
 //rule "More than one failed login attempt with the same username"
 //    when
 //        $logs : Logs(hasMultipleFailedLoginAttempts())
 //    then
 //        System.out.println("More than one failed login attempt with the same username");
 //end
-//
-//rule "Attempt to login to an account that has not been active for 90 days"
-//    when
-//        log : ServiceLog(parsePathResource() == "login", $username: parseUsernameParam())
-//        logs: Logs(getInactiveAccounts() contains $username)
-//    then
-//        System.out.println("Attempt to login to an account that has not been active for 90 days");
-//end
-//
-//rule "Log type ERROR"
-//    when
-//        log : ServiceLog(getType() == LogType.ERROR)
-//    then
-//        System.out.println("Log type ERROR");
-//end
-//
-//rule "Login or attempt to login from an IP address that is on the list of malicious IP addresses"
-//    when
-//        log : ServiceLog(parsePathResource() == "login", $sourceIp: getSourceIp())
-//        logs: Logs(getMaliciousIps() contains $sourceIp)
-//    then
-//        System.out.println("Login or attempt to login from an IP address that is on the list of malicious IP addresses");
-//end
-//
-//
-//rule "Appearance of a log containing an source IP address from the list of malicious IP addresses"
-//    when
-//         log : ServiceLog($sourceIp: getSourceIp())
-//         logs: Logs(getMaliciousIps() contains $sourceIp)
-//    then
-//        System.out.println("Appearance of a log containing an IP address from the list of malicious IP addresses");
-//end
-//
-//rule "Appearance of a log containing an destination IP address from the list of malicious IP addresses"
-//    when
-//         log : ServiceLog($destIp: getDestIp())
-//         logs: Logs(getMaliciousIps() contains $destIp)
-//    then
-//        System.out.println("Appearance of a log containing an IP address from the list of malicious IP addresses");
-//end
+
+rule "Attempt to login to an account that has not been active for 90 days"
+    when
+        log : ServiceLog(parsePathResource() == "login", $username: parseUsernameParam())
+        logs: Logs(getInactiveAccounts() contains $username)
+    then
+        System.out.println("Attempt to login to an account that has not been active for 90 days");
+end
+
+rule "Log type ERROR"
+    when
+        log : ServiceLog(getType() == LogType.ERROR)
+    then
+        System.out.println("Log type ERROR");
+end
+
+rule "Login or attempt to login from an IP address that is on the list of malicious IP addresses"
+    when
+        log : ServiceLog(parsePathResource() == "login", $sourceIp: getSourceIp())
+        logs: Logs(getMaliciousIps() contains $sourceIp)
+    then
+        System.out.println("Login or attempt to login from an IP address that is on the list of malicious IP addresses");
+end
+
+rule "Appearance of a log containing an source IP address from the list of malicious IP addresses"
+    when
+         log : ServiceLog($sourceIp: getSourceIp())
+         logs: Logs(getMaliciousIps() contains $sourceIp)
+    then
+        System.out.println("Appearance of a log containing an IP address from the list of malicious IP addresses");
+end
+
+rule "Appearance of a log containing an destination IP address from the list of malicious IP addresses"
+    when
+         log : ServiceLog($destIp: getDestIp())
+         logs: Logs(getMaliciousIps() contains $destIp)
+    then
+        System.out.println("Appearance of a log containing an IP address from the list of malicious IP addresses");
+end
 //
 //rule "30 or more unsuccessful login attempts are registered from the same IP address within 24 hours - add that IP address to the list of malicious IP addresses"
 //    when
@@ -69,3 +68,18 @@
 //    then
 //        System.out.println("Failed login!");
 //end
+
+
+rule "Log type DOS"
+    when
+        log : ServiceLog(getType() == LogType.DOS_ATTACK)
+    then
+        System.out.println("Log type DOS attack");
+end
+
+rule "Brute force attack"
+    when
+        log : ServiceLog(getType() == LogType.BRUTE_FORCE_ATTACK)
+    then
+        System.out.println("Brute force attack");
+end

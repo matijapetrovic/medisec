@@ -1,7 +1,8 @@
 package com.medisec.hospitalservice;
 
-import com.medisec.hospitalservice.logs.service_log.ServiceLogAlarm;
-import com.medisec.hospitalservice.logs.medical_record_log.MedicalRecordAlarmGenerator;
+import com.medisec.hospitalservice.alarms.service_log_alarm.ServiceLogAlarm;
+import com.medisec.hospitalservice.alarms.medical_record_alarm.MedicalRecordAlarmGenerator;
+import com.medisec.hospitalservice.alarms.service_log_alarm.ServiceLogsAlarmGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,11 +21,11 @@ public class HospitalServiceApplication {
 	@Bean
 	public CommandLineRunner run(
 			MedicalRecordAlarmGenerator medicalRecordAlarmGenerator,
-			ServiceLogAlarm firewallAlarm
+			ServiceLogsAlarmGenerator serviceLogsAlarmGenerator
 	) {
 		return args -> {
 			medicalRecordAlarmGenerator.run();
-			firewallAlarm.run();
+			serviceLogsAlarmGenerator.run();
 		};
 	}
 }

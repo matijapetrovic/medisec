@@ -1,6 +1,5 @@
 package com.medisec.hospitalservice.alarms.medical_record_alarm;
 
-import com.medisec.hospitalservice.logs.medical_record_log.MedicalRecordAlarm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
