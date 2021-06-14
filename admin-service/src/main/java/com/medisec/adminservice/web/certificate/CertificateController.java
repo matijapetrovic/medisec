@@ -47,7 +47,7 @@ public class CertificateController {
     public ResponseEntity<Void> pendingRevocation(@RequestBody byte[] revokeRequest, @PathVariable String sn) throws CertificateException, UnrecoverableKeyException, NoSuchAlgorithmException, IOException, KeyStoreException, OperatorCreationException {
         String request = new String(revokeRequest);
         String[] params = request.split("="); //alias=myAlias
-        certificateService.revokeCertificate(sn, 1, params[0]);
+        certificateService.revokeCertificate(sn, 1, params[1]);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
