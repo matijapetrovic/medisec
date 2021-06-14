@@ -33,6 +33,7 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST,"/api/certificate-requests").hasAuthority("admin")
                 .antMatchers(HttpMethod.POST,"/api/certificate-requests/verify/*").permitAll()
+                .antMatchers(HttpMethod.POST,"/api/certificates/**").permitAll()
                 .antMatchers("/**").hasAuthority("super-admin")
                 .and()
                 .requiresChannel()

@@ -177,6 +177,31 @@ public class CertificateService {
         return crl.isRevoked(certificate);
     }
 
+    public boolean isRevoked(byte[] byteCert) throws IOException, ClassNotFoundException, CertificateException, CRLException {
+        ByteArrayInputStream in = new ByteArrayInputStream(byteCert);
+        ObjectInputStream ois = new ObjectInputStream(in);
+        java.security.cert.Certificate cer = (Certificate) ois.readObject();
+        return isRevoked(cer);
+    }
+
+    private String getIssuerAlias(String serialNumber) throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException {
+        String issuerAlias = "";
+        Enumeration<String> aliases = keyStoreReader.getAllAliases();
+        while(aliases.hasMoreElements()){
+            String alias = aliases.nextElement();
+            Optional<Certificate> certificateOptional = keyStoreReader.readCertificate(alias);
+            if (certificateOptional.isEmpty()) continue;
+            Certificate certificate = certificateOptional.get();
+            JcaX509CertificateHolder certHolder = new JcaX509CertificateHolder((X509Certificate) certificate);
+            if(certHolder.getSerialNumber().toString(16).equals(serialNumber)){
+                X500Name issuer = certHolder.getIssuer();
+                issuerAlias = CertificateRequestExtractor.getField(issuer, BCStyle.E);
+            }
+        }
+
+        return issuerAlias;
+    }
+
 //    public void initRevocationList(String serialNumber, String alias) throws UnrecoverableKeyException, CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException, OperatorCreationException {
 //        IssuerData issuerData = keyStoreReader.readIssuerFromStore(alias);
 //        X500Name issuer = issuerData.getX500name();

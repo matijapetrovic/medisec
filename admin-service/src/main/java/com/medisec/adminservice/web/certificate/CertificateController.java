@@ -14,9 +14,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.security.*;
 import java.security.cert.CRLException;
+import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +41,19 @@ public class CertificateController {
     public ResponseEntity<Void> revokeCertificated(@RequestBody RevokeCertificateRequest request, @PathVariable String sn) throws CertificateException, UnrecoverableKeyException, NoSuchAlgorithmException, IOException, KeyStoreException, OperatorCreationException {
         certificateService.revokeCertificate(sn, request.getReason(), request.getAlias());
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PostMapping("/{sn}/pending-revoke")
+    public ResponseEntity<Void> pendingRevocation(@RequestBody byte[] revokeRequest, @PathVariable String sn) throws CertificateException, UnrecoverableKeyException, NoSuchAlgorithmException, IOException, KeyStoreException, OperatorCreationException {
+        String request = new String(revokeRequest);
+        String[] params = request.split("="); //alias=myAlias
+        certificateService.revokeCertificate(sn, 1, params[0]);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PostMapping("/is-revoked")
+    public ResponseEntity<Boolean> isRevoked(@RequestBody byte[] certificate) throws IOException, ClassNotFoundException, CertificateException, CRLException {
+        return ResponseEntity.ok(certificateService.isRevoked(certificate));
     }
 
     @GetMapping("")
