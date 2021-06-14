@@ -17,16 +17,14 @@ export class HeaderComponent implements OnInit {
       label: 'Home',
       icon: 'pi pi-home',
       routerLink: ['']
-    },
+    }
+  ];
+
+  doctorItems: MenuItem[] = [
     {
-      label: 'Service logs',
-      icon: 'pi pi-list',
-      routerLink: ['service-log/search']
-    },
-    {
-      label: 'Service-log alarms',
-      icon: 'pi pi-bell',
-      routerLink: ['service-log-alarm']
+      label: 'Patients',
+      icon: 'pi pi-user',
+     routerLink: ['patients']
     },
     {
       label: 'Patient messages',
@@ -45,14 +43,6 @@ export class HeaderComponent implements OnInit {
     }
   ];
 
-  doctorItems: MenuItem[] = [
-    {
-      label: 'Patients',
-      icon: 'pi pi-user',
-     routerLink: ['patients']
-    }
-  ];
-
   adminItems: MenuItem[] = [
     {
       label: 'Send Certificate Request',
@@ -62,9 +52,24 @@ export class HeaderComponent implements OnInit {
     {
       label: 'Log Sources',
       routerLink: ['logs/sources']
+    },
+    {
+      label: 'Service logs',
+      icon: 'pi pi-list',
+      routerLink: ['service-log/search']
+    },
+    {
+      label: 'Service-log alarms',
+      icon: 'pi pi-bell',
+      routerLink: ['service-log-alarm']
+    },
+    {
+      label: 'Create rule',
+      icon: 'pi pi-exclamation-triangle',
+      routerLink: ['rule/add-rule']
     }
   ];
- 
+
   constructor(private keycloakService: KeycloakService) { }
 
   async ngOnInit() {

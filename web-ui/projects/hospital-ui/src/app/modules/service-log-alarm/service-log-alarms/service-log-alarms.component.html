@@ -9,10 +9,9 @@
     </div>
   </ng-template>
   <div class="center">
-    <div class="p-col-12 p-md-6">
       <p-card class="p-col-12 p-md-12">
         <div class="p-grid p-fluid">
-          <p-table [value]="serviceLogAlarms" [style]="{'width': '80%'}">
+          <p-table [value]="serviceLogAlarms">
             <ng-template pTemplate="header">
               <tr>
                 <th>Time</th>
@@ -33,5 +32,4 @@
         </div>
       </p-card>
     </div>
-  </div>
 </p-card>
