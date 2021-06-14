@@ -7,8 +7,24 @@ const routes: Routes = [
     loadChildren: () => import('./modules/csr/csr.module').then(m => m.CsrModule),
   },
   {
-    path: 'medical-record-logs',
+    path: 'medical-record-log',
     loadChildren: () => import('./modules/medical-record-logs/medical-records-logs.module').then(m => m.MedicalRecordLogsModule)
+  },
+  {
+    path: 'service-log',
+    loadChildren: () => import('./modules/service-logs/service-log.module').then(m => m.ServiceLogModule)
+  },
+  {
+    path: 'service-log-alarm',
+    loadChildren: () => import('./modules/service-log-alarm/service-log-alarm.module').then(m => m.ServiceLogAlarmModule)
+  },
+  {
+    path: 'medical-record-alarms',
+    loadChildren: () => import('./modules/medical-record-alarm/medical-record-alarm.module').then(m => m.MedicalRecordAlarmModule)
+  },
+  {
+    path: 'rule',
+    loadChildren: () => import('./modules/rules/rule.module').then(m => m.RuleModule)
   },
   {
     path: 'patients',
@@ -17,6 +33,10 @@ const routes: Routes = [
   {
     path: 'certificates',
     loadChildren: () => import('./modules/certificates/certificates.module').then(m => m.CertificatesModule)
+  },
+  {
+    path: 'logs',
+    loadChildren: () => import('./modules/logs/logs.module').then(m => m.LogsModule)
   }
 ];
 

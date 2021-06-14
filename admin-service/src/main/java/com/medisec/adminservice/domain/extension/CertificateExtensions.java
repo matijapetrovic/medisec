@@ -2,17 +2,19 @@ package com.medisec.adminservice.domain.extension;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 
-@Embeddable
+
 @Data
 @NoArgsConstructor
 public class CertificateExtensions {
-    @Embedded
     CertificateBasicConstraints basicConstraints;
-    @Embedded
     CertificateKeyUsage keyUsage;
+    @Field
     boolean subjectKeyId;
+    @Field
+    boolean authorityKeyId;
 }

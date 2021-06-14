@@ -1,6 +1,6 @@
 package com.medisec.hospitalservice.logs.service_log;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.medisec.hospitalservice.alarms.service_log_alarm.LogType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +10,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.Date;
-import java.util.UUID;
 
 @Document(collection = "service_log")
 @Data
@@ -63,8 +62,4 @@ public class ServiceLog {
         return resource;
     }
 
-}
-
-enum LogType {
-    INFORMATION, WARNING, ERROR
 }

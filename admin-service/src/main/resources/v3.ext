@@ -1,6 +1,6 @@
 authorityKeyIdentifier=keyid,issuer
 basicConstraints=CA:TRUE
-keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment, keyCertSigning
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment, keyCertSign
 subjectAltName = @alt_names
 
 [alt_names]

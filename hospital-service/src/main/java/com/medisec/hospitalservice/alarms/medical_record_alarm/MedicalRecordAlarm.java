@@ -1,6 +1,7 @@
-package com.medisec.hospitalservice.logs.medical_record_log;
+package com.medisec.hospitalservice.alarms.medical_record_alarm;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.medisec.hospitalservice.logs.medical_record_log.Severity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

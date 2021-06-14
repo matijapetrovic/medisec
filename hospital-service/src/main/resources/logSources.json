@@ -1,0 +1,5 @@
+[ {
+  "path" : "../firewall/sim/sim3.log",
+  "readFrequency" : 5000,
+  "filter" : "%{IP:sourceIp} %{IP:destIp} %{GREEDYDATA}"
+} ]

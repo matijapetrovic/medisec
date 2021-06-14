@@ -1,0 +1,18 @@
+import com.medisec.hospitalservice.logs.medical_record_log.MedicalRecordLog;
+import com.medisec.hospitalservice.logs.medical_record_log.Severity;
+import com.medisec.hospitalservice.alarms.medical_record_alarm.MedicalRecordAlarm;
+
+rule "Heart beat over 110(rule example) jos jedan rule"
+    when
+        medicalRecord : MedicalRecordLog($patientId: patientId, heartBeat > 110 )
+    then
+        System.out.println(String.format("Patient {%s} - Heart beat over 110", $patientId));
+        insert(new MedicalRecordAlarm(
+                               1L,
+                               Severity.MEDIUM,
+                               "Event source",
+                               1001L,
+                               String.format("Patient {%s} - Heart beat over 110", $patientId),
+                               1L
+                       ));
+end

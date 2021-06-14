@@ -14,7 +14,6 @@ import { KeycloakService } from 'keycloak-angular';
 @NgModule({
   declarations: [
     AppComponent,
-
   ],
   imports: [
     BrowserModule,

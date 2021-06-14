@@ -1,8 +1,15 @@
 package com.medisec.hospitalservice.logs.service_log;
 
+import com.medisec.hospitalservice.alarms.service_log_alarm.LogType;
+import com.medisec.hospitalservice.alarms.service_log_alarm.ServiceLogsAlarmGenerator;
+import com.medisec.hospitalservice.logs.LogReader;
+import com.medisec.hospitalservice.logs.LogSource;
+import com.medisec.hospitalservice.logs.LogSourceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,7 +35,23 @@ public class ServiceLogService {
         serviceLogRepository.save(log);
     }
 
-    public List<ServiceLog> findAll() {
-        return serviceLogRepository.findAll();
+    public List<ServiceLog> findAll() { return serviceLogRepository.findAll(); }
+
+    public List<ServiceLog> search(
+                                   String sourceIp,
+                                   String destId,
+                                   String path,
+                                   String protocol,
+                                   int status,
+                                   Date time
+                                   ) {
+        return serviceLogRepository.search(
+                sourceIp,
+                destId,
+                path,
+                protocol,
+                status,
+                time
+        );
     }
 }

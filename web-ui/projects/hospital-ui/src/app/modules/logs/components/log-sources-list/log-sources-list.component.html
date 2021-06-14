@@ -1,0 +1,22 @@
+<p-dataView #dv [value]="logSources"
+         layout="grid">
+        <ng-template pTemplate="header">
+            <div class="p-d-flex p-flex-column p-flex-md-row">
+                <button pButton class="p-button-outlined p-button-primary p-mr-5" label="Add log source" (click)="addLogSource()"></button>
+                <button pButton class="p-button-success" label="Save log sources" (click)="saveLogSources()"></button>
+              </div>
+        </ng-template>
+        <ng-template let-source pTemplate="gridItem">
+            <p-card header="Source" class="p-md-4">
+              <div>
+                <div class="p-md-12">Path: {{ source.path }}</div>
+                <div class="p-md-12">Read frequency: {{ source.readFrequency }}ms</div>
+                <div class="p-md-12">Filter: {{ source.filter }}</div>
+              </div>
+              <div>
+                <button pButton class="p-button-outlined p-button-help p-mr-2" label="Update" (click)="updateLogSource(source)"></button>
+                <button pButton class="p-button-outlined p-button-danger" label="Delete" (click)="deleteLogSource(source)"></button>
+              </div>
+            </p-card>
+        </ng-template>
+    </p-dataView>

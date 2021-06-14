@@ -15,7 +15,6 @@ public class TemplateService {
 
     public void create(CreateTemplateRequest request) {
         Template template = Template.builder()
-                .id(null)
                 .name(request.getName())
                 .extensions(request.getExtensions())
                 .build();
@@ -28,7 +27,6 @@ public class TemplateService {
                 .findAll()
                 .stream()
                 .map(template -> new TemplateDTO(
-                    template.getId(),
                     template.getName(),
                     template.getExtensions()
         )).collect(Collectors.toList());

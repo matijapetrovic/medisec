@@ -1,7 +1,13 @@
 package com.medisec.hospitalservice;
 
-import com.medisec.hospitalservice.logs.service_log.ServiceLogAlarm;
-import com.medisec.hospitalservice.logs.medical_record_log.MedicalRecordAlarmGenerator;
+import com.medisec.hospitalservice.alarms.service_log_alarm.LogHandler;
+import com.medisec.hospitalservice.alarms.service_log_alarm.ServiceLogAlarm;
+import com.medisec.hospitalservice.alarms.medical_record_alarm.MedicalRecordAlarmGenerator;
+import com.medisec.hospitalservice.alarms.service_log_alarm.ServiceLogsAlarmGenerator;
+import com.medisec.hospitalservice.logs.LogReader;
+import com.medisec.hospitalservice.logs.LogSource;
+import com.medisec.hospitalservice.logs.LogSourceService;
+import com.medisec.hospitalservice.logs.service_log.ServiceLogRepository;
 import com.medisec.hospitalservice.patient.Patient;
 import com.medisec.hospitalservice.patient.PatientDetails;
 import com.medisec.hospitalservice.patient.PatientRepository;
@@ -12,9 +18,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 
 @SpringBootApplication
@@ -27,8 +35,10 @@ public class HospitalServiceApplication {
 	@Bean
 	public CommandLineRunner run(
 			MedicalRecordAlarmGenerator medicalRecordAlarmGenerator,
-			ServiceLogAlarm firewallAlarm,
-			PatientRepository patientRepository
+			PatientRepository patientRepository,
+			LogSourceService logSourceService,
+			ServiceLogsAlarmGenerator serviceLogsAlarmGenerator,
+			ServiceLogRepository serviceLogRepository
 	) {
 		return args -> {
 			patientRepository.insert(new Patient(123L, "Djura", "Djuric", "1233245",
@@ -42,8 +52,17 @@ public class HospitalServiceApplication {
 							List.of(new PatientDetails.Surgery("Eye surgery", new Date()))
 					)));
 			medicalRecordAlarmGenerator.run();
-			firewallAlarm.run();
+			createReaders(logSourceService, serviceLogRepository, serviceLogsAlarmGenerator);
+
 		};
+	}
+	public void createReaders(LogSourceService logSourceService, ServiceLogRepository serviceLogRepository, ServiceLogsAlarmGenerator alarmGenerator) {
+		List<LogSource> logSources = logSourceService.getSources();
+		for (LogSource logSource: logSources) {
+			LogReader logReader = new LogReader(logSource, serviceLogRepository, alarmGenerator);
+			Thread t = new Thread(logReader);
+			t.start();
+		}
 	}
 }
 

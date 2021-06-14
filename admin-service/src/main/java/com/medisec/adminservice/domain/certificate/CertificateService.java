@@ -71,7 +71,7 @@ public class CertificateService {
         PrivateKey issuerPrivateKey = keyStoreReader.readPrivateKey(request.getIssuerAlias())
                 .orElseThrow(MissingPrivateKeyException::new);
        
-        X509Certificate cert = CertificateGenerator.generateCertificate(subjectData, issuerData, request.getExtensions());
+        X509Certificate cert = CertificateGenerator.generateCertificate(subjectData, issuerData, (X509Certificate)issuerChain[0], request.getExtensions());
         List<Certificate> newChain = new LinkedList<>(Arrays.asList(issuerChain));
         newChain.add(0, cert);
 

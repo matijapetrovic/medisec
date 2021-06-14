@@ -3,6 +3,7 @@ package com.medisec.adminservice.web.template;
 import com.medisec.adminservice.domain.template.TemplateDTO;
 import com.medisec.adminservice.domain.template.TemplateService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +17,9 @@ public class TemplateController {
     private final TemplateService templateService;
 
     @PostMapping("")
-    public void create(@RequestBody CreateTemplateRequest request) {
+    public ResponseEntity<Void> create(@RequestBody CreateTemplateRequest request) {
         templateService.create(request);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("")

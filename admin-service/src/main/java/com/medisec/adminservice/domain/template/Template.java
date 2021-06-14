@@ -2,24 +2,19 @@ package com.medisec.adminservice.domain.template;
 
 import com.medisec.adminservice.domain.extension.CertificateExtensions;
 import lombok.*;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name="template")
+
+@Document(collection="template")
 @Builder
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Template {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = false, unique = true)
+    @Field
     private String name;
-
-    @Embedded
     private CertificateExtensions extensions;
 }
