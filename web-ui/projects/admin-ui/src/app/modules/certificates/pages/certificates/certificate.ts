@@ -34,6 +34,7 @@ export interface Extensions {
   keyUsage: KeyUsage;
   basicConstraints: BasicConstraints;
   subjectKeyId: boolean;
+  authorityKeyId: boolean;
 }
 
 export interface KeyUsage {
@@ -54,3 +55,9 @@ export interface BasicConstraints {
   pathLen: number;
   basicConstraintsIsCritical: boolean;
 }
+
+export interface Template {
+  id: number;
+  name: string;
+  extensions: Extensions;
+};

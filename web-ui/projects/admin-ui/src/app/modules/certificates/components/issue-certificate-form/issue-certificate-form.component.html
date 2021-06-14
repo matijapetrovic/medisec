@@ -31,23 +31,27 @@
   </div>
   <div class="p-col-12 p-md-4">
     <p-card header="Extensions" class="p-col-4 p-md-4">
+      <div class="p-col-12 p-md-6">
+        <div>Template</div>
+        <p-dropdown placeholder="Choose template" [autoDisplayFirst]="false" (onChange)="updateExtensions()" emptyMessage="No templates available" optionLabel="name" [options]="templates" formControlName="template"></p-dropdown>
+      </div>
       <div class="p-field-checkbox">
         <p-checkbox binary="true" inputId="basicConstraintsEnabled" formControlName="basicConstraintsEnabled"></p-checkbox>
         <label for="basicConstraintsEnabled">Basic Constraints</label>
       </div>
       <div *ngIf="form.controls.basicConstraintsEnabled.value" class="form-group p-ml-5" formGroupName="basicConstraints">
         <div class="p-field-checkbox">
-          <p-checkbox binary="true" inputId="isCritical" formControlName="isCritical"></p-checkbox>
-          <label for="isCritical">Critical</label>
+          <p-checkbox binary="true" inputId="basicConstraintsIsCritical" formControlName="basicConstraintsIsCritical"></p-checkbox>
+          <label for="basicConstraintsIsCritical">Critical</label>
         </div>
         <hr>
         <div class="p-field-checkbox">
-          <p-checkbox binary="true" inputId="isCa" formControlName="isCa"></p-checkbox>
-          <label for="isCa">Is Certificate Authority</label>
+          <p-checkbox binary="true" inputId="ca" formControlName="ca"></p-checkbox>
+          <label for="ca">Is Certificate Authority</label>
         </div>
         <div class="p-field p-md-6">
           <label for="pathLen">Path Length</label>
-          <p-inputNumber [disabled]="form.value.basicConstraints.isCa" inputId="pathLen" formControlName="pathLen" mode="decimal" [useGrouping]="false">
+          <p-inputNumber [disabled]="!form.value.basicConstraints.ca" inputId="pathLen" formControlName="pathLen" mode="decimal" [useGrouping]="false">
           </p-inputNumber>
         </div>
       </div>
@@ -57,8 +61,8 @@
       </div>
       <div *ngIf="form.controls.keyUsageEnabled.value" class="form-group p-ml-5" formGroupName="keyUsage">
         <div class="p-field-checkbox">
-          <p-checkbox binary="true" inputId="isCritical" formControlName="isCritical"></p-checkbox>
-          <label for="isCritical">Critical</label>
+          <p-checkbox binary="true" inputId="keyUsageIsCritical" formControlName="keyUsageIsCritical"></p-checkbox>
+          <label for="keyUsageIsCritical">Critical</label>
         </div>
         <hr>
         <div class="p-field-checkbox">
@@ -102,18 +106,28 @@
         <p-checkbox binary="true" inputId="subjectKeyId" formControlName="subjectKeyId"></p-checkbox>
         <label for="subjectKeyId">Subject Key Identifier</label>
       </div>
+      <div class="p-field-checkbox">
+        <p-checkbox binary="true" inputId="authorityKeyId" formControlName="authorityKeyId"></p-checkbox>
+        <label for="authorityKeyId">Authority Key Identifier</label>
+      </div>
+      <div class="p-col-12 p-md-6">
+        <div class="p-float-label">
+          <input placeholder="Template Name" id="templateName" type="templateName" pInputText class="p-inputtext-lg" formControlName="templateName">
+        </div>
+        <button type="button" [disabled]="!form.controls['templateName'].value" class="p-mt-2 p-mb-2 p-button-success" (click)="saveTemplate()" pButton label="Save as template"></button>
+      </div>
     </p-card>
   </div>
   <div class="p-col-12 p-md-4">
-    <p-card header="idk" class="p-col-4 p-md-4">
+    <p-card header="Certificate details" class="p-col-4 p-md-4">
       <div class="p-col-12 p-md-6">
-        <p-dropdown [options]="issuerAliases" formControlName="issuerAlias"></p-dropdown>
+        <p-dropdown placeholder="Choose issuer" [options]="issuerAliases" formControlName="issuerAlias"></p-dropdown>
       </div>
       <div class="p-col-12 p-md-6">
-        <p-calendar placeholder="Start Date" [minDate]="minStartDate" formControlName="startDate"></p-calendar>
+        <p-calendar showTime="true" hourFormat="24" placeholder="Start Date" [minDate]="minStartDate" formControlName="startDate"></p-calendar>
       </div>
       <div class="p-col-12 p-md-6">
-        <p-calendar placeholder="End Date" [minDate]="minStartDate" formControlName="endDate"></p-calendar>
+        <p-calendar showTime="true" hourFormat="24" placeholder="End Date" [minDate]="minStartDate" formControlName="endDate"></p-calendar>
       </div>
       <button
         type="submit"

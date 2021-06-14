@@ -17,12 +17,13 @@ import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
 
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
 public class CertificateGenerator {
 
-    public static X509Certificate generateCertificate(SubjectData subjectData, IssuerData issuerData, CertificateExtensions extensionsDTO) throws CertificateException, OperatorCreationException, CertIOException, NoSuchAlgorithmException {
+    public static X509Certificate generateCertificate(SubjectData subjectData, IssuerData issuerData, X509Certificate issuerCert, CertificateExtensions extensionsDTO) throws CertificateException, OperatorCreationException, CertIOException, NoSuchAlgorithmException {
         // Posto klasa za generisanje sertifiakta ne moze da primi direktno privatni kljuc pravi se builder za objekat
         // Ovaj objekat sadrzi privatni kljuc izdavaoca sertifikata i koristiti se za potpisivanje sertifikata
         // Parametar koji se prosledjuje je algoritam koji se koristi za potpisivanje sertifiakta
@@ -42,7 +43,7 @@ public class CertificateGenerator {
                 subjectData.getX500name(),
                 subjectData.getPublicKey());
 
-        extractExtensions(certGen, subjectData, extensionsDTO);
+        extractExtensions(certGen, issuerCert, subjectData, extensionsDTO);
 
         // Generise se sertifikat
         X509CertificateHolder certHolder = certGen.build(contentSigner);
@@ -56,7 +57,7 @@ public class CertificateGenerator {
         return certConverter.getCertificate(certHolder);
     }
 
-    private static void extractExtensions(X509v3CertificateBuilder certBuilder, SubjectData subjectData, CertificateExtensions extensionsDTO) throws CertIOException, NoSuchAlgorithmException {
+    private static void extractExtensions(X509v3CertificateBuilder certBuilder, X509Certificate issuerCert, SubjectData subjectData, CertificateExtensions extensionsDTO) throws CertIOException, NoSuchAlgorithmException, CertificateEncodingException {
         if (extensionsDTO == null) return;
         if (extensionsDTO.getBasicConstraints() != null) {
             BasicConstraints basicConstraints = extensionsDTO.getBasicConstraints().getPathLen() != null
@@ -74,8 +75,8 @@ public class CertificateGenerator {
             certBuilder.addExtension(Extension.subjectKeyIdentifier, false, extensionUtils.createSubjectKeyIdentifier(subjectData.getPublicKey()));
         }
 
-//        if (extensionsDTO.isAuthorityKeyId())
-//            certBuilder.addExtension(Extension.authorityKeyIdentifier, false, new AuthorityKeyIdentifier(issuerData.))
+        if (extensionsDTO.isAuthorityKeyId())
+            certBuilder.addExtension(Extension.authorityKeyIdentifier, false, extensionUtils.createAuthorityKeyIdentifier(issuerCert));
     }
 
 
