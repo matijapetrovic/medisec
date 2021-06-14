@@ -45,11 +45,23 @@ export class HeaderComponent implements OnInit {
     }
   ];
 
+  doctorItems: MenuItem[] = [
+    {
+      label: 'Patients',
+      icon: 'pi pi-user',
+     routerLink: ['patients']
+    }
+  ];
+
   adminItems: MenuItem[] = [
     {
       label: 'Send Certificate Request',
       icon: 'pi pi-map',
      routerLink: ['']
+    },
+    {
+      label: 'Log Sources',
+      routerLink: ['logs/sources']
     }
   ];
  
@@ -64,6 +76,12 @@ export class HeaderComponent implements OnInit {
           ...this.commonItems,
           ...this.adminItems
         ];
+      else if (roles.includes('doctor')) {
+        this.items = [
+          ...this.commonItems,
+          ...this.doctorItems
+        ];
+      }
     }
     else {
       this.items = this.commonItems;

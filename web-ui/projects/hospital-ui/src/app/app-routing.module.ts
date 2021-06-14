@@ -26,6 +26,14 @@ const routes: Routes = [
   {
     path: 'rule',
     loadChildren: () => import('./modules/rules/rule.module').then(m => m.RuleModule)
+  },
+  {
+    path: 'patients',
+    loadChildren: () => import('./modules/patients/patients.module').then(m => m.PatientsModule)
+  },
+  {
+    path: 'logs',
+    loadChildren: () => import('./modules/logs/logs.module').then(m => m.LogsModule)
   }
 ];
 

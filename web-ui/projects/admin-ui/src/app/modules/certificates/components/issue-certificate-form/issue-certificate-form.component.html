@@ -107,6 +107,9 @@
   <div class="p-col-12 p-md-4">
     <p-card header="idk" class="p-col-4 p-md-4">
       <div class="p-col-12 p-md-6">
+        <p-dropdown [options]="issuerAliases" formControlName="issuerAlias"></p-dropdown>
+      </div>
+      <div class="p-col-12 p-md-6">
         <p-calendar placeholder="Start Date" [minDate]="minStartDate" formControlName="startDate"></p-calendar>
       </div>
       <div class="p-col-12 p-md-6">

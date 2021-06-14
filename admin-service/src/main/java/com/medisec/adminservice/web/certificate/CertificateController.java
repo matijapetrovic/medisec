@@ -45,6 +45,11 @@ public class CertificateController {
         return ResponseEntity.ok(certificateService.readAllCertificates());
     }
 
+    @GetMapping("/issuer-aliases")
+    public ResponseEntity<List<String>> getIssuerAliases() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException {
+        return ResponseEntity.ok(certificateService.getIssuerAliases());
+    }
+
     @GetMapping("revocation-reasons")
     public ResponseEntity<List<RevocationReasonDTO>> getRevocationReasons() {
         List<RevocationReasonDTO> reasons =

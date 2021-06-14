@@ -34,9 +34,9 @@ public class KeyStoreWriter {
         }
     }
 
-    public void write(String alias, PrivateKey privateKey, Certificate certificate) throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException {
+    public void write(String alias, PrivateKey privateKey, Certificate[] certificateChain) throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException {
         loadKeyStore();
-        keyStore.setKeyEntry(alias, privateKey, storePass.toCharArray(), new Certificate[]{certificate});
+        keyStore.setKeyEntry(alias, privateKey, storePass.toCharArray(), certificateChain);
         keyStore.store(new FileOutputStream(keyStoreFile), storePass.toCharArray());
     }
 }

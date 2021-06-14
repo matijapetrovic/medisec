@@ -35,6 +35,11 @@ export class HeaderComponent implements OnInit {
       label: 'Certificate Requests',
       icon: 'pi pi-map',
      routerLink: ['/certificates/requests']
+    },
+    {
+      label: 'Issue Certificate',
+      icon: 'pi pi-map',
+     routerLink: ['/certificates/issue']
     }
   ];
 

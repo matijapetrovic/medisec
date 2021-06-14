@@ -21,6 +21,8 @@ export class IssueCertificateFormComponent implements OnInit {
 
   extensions: boolean;
 
+  issuerAliases: String[];
+
   constructor(private certificateService: CertificateService,
     private router: Router) {
     this.form = new FormGroup({
@@ -34,6 +36,7 @@ export class IssueCertificateFormComponent implements OnInit {
         countryCode: new FormControl(''),
         email: new FormControl('')
       }),
+      issuerAlias: new FormControl(''),
       startDate: new FormControl(null),
       endDate: new FormControl(null),
       basicConstraintsEnabled: new FormControl(false),
@@ -60,6 +63,7 @@ export class IssueCertificateFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.certificateService.getIssuerAliases().subscribe((issuerAliases) => this.issuerAliases = issuerAliases);
     if (this.csrId) {
       this.certificateService.getCsr(this.csrId).subscribe((csr) => {
         this.form.patchValue({
@@ -84,7 +88,7 @@ export class IssueCertificateFormComponent implements OnInit {
     let basicConstraints: BasicConstraints = null;
     if (this.f.basicConstraintsEnabled) {
       basicConstraints = {
-        isCa: this.f.basicConstraints.isCa,
+        ca: this.f.basicConstraints.isCa,
         pathLen: this.f.basicConstraints.pathLen,
         basicConstraintsIsCritical: this.f.basicConstraints.isCritical
       };
@@ -108,6 +112,7 @@ export class IssueCertificateFormComponent implements OnInit {
 
     const certificateData: IssueCertificateData = {
       csrId: this.csrId,
+      issuerAlias: "bongoissuer",
       subjectData: {
         subjectId: this.f.subjectData.subjectId,
         commonName: this.f.subjectData.commonName,
