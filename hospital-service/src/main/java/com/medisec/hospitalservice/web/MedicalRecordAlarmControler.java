@@ -1,7 +1,7 @@
 package com.medisec.hospitalservice.web;
 
+import com.medisec.hospitalservice.alarms.medical_record_alarm.MedicalRecordAlarm;
 import com.medisec.hospitalservice.alarms.medical_record_alarm.MedicalRecordAlarmService;
-import com.medisec.hospitalservice.logs.medical_record_log.MedicalRecordAlarm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -68,6 +68,13 @@ export class ServiceLogSearchComponent implements OnInit {
     });
   }
 
+  isStatusOutOfBound(): boolean {
+    if (this.f.status.value >= 100 && this.f.status.value < 600) {
+      return true;
+    }
+    return false;
+  }
+
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {

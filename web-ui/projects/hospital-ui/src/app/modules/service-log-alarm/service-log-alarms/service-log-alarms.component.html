@@ -16,13 +16,15 @@
           <th>Time</th>
           <th>Severity</th>
           <th>Message</th>
+          <th>Type</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-alarm>
         <tr>
-          <td>{{ alarm.time}}</td>
-          <td>{{ alarm.severity}}</td>
-          <td>{{ alarm.message}}</td>
+          <td>{{ alarm.time }}</td>
+          <td>{{ alarm.severity }}</td>
+          <td>{{ alarm.message }}</td>
+          <td>{{ alarm.type }}</td>
         </tr>
       </ng-template>
     </p-table>
