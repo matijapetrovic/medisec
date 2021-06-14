@@ -74,7 +74,7 @@ public class LogHandler {
 
     public boolean are30LoginAttemptsFailedIn24HoursFromTheSameIpAddress() {
         List<ServiceLog> failedLogins = getAllFailedLoginAttempts();
-        Comparator<ServiceLog> compareByDateTime = (ServiceLog log1, ServiceLog log2) -> log1.getTime().compareTo(log2.getTime());
+        Comparator<ServiceLog> compareByDateTime = Comparator.comparing(ServiceLog::getTime);
         Collections.sort(failedLogins, compareByDateTime);
         Map<String, Integer> numOfAllUsersFailedLoginAttempts = getUsersNumberOfFailedLogins(failedLogins);
         System.out.println(numOfAllUsersFailedLoginAttempts.size());

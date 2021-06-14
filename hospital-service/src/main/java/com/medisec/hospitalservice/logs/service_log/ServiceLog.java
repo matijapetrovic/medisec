@@ -45,13 +45,12 @@ public class ServiceLog {
     private LogType type;
 
     public String parsePathResource() {
-        String resource = path.split(" ")[1];
-        resource = resource.split("\\?")[0].substring(1);
+        String resource = path.split("\\?")[0].substring(1);
         return resource;
     }
 
     public String parseUsernameParam() {
-        String resource = path.split(" ")[1];
+        String resource = path;
         resource = resource.split("\\?")[1];
         String[] params =  resource.split("&");
         for(String param: params) {
