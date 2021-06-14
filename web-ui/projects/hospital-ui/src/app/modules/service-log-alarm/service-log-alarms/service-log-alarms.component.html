@@ -8,25 +8,30 @@
       </h1>
     </div>
   </ng-template>
-
-  <ng-template pTemplate="footer">
-    <p-table [value]="serviceLogAlarms" [style]="{'width': '80%'}">
-      <ng-template pTemplate="header">
-        <tr>
-          <th>Time</th>
-          <th>Severity</th>
-          <th>Message</th>
-          <th>Type</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-alarm>
-        <tr>
-          <td>{{ alarm.time }}</td>
-          <td>{{ alarm.severity }}</td>
-          <td>{{ alarm.message }}</td>
-          <td>{{ alarm.type }}</td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </ng-template>
+  <div class="center">
+    <div class="p-col-12 p-md-6">
+      <p-card class="p-col-12 p-md-12">
+        <div class="p-grid p-fluid">
+          <p-table [value]="serviceLogAlarms" [style]="{'width': '80%'}">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Time</th>
+                <th>Severity</th>
+                <th>Message</th>
+                <th>Type</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-alarm>
+              <tr>
+                <td>{{ alarm.time }}</td>
+                <td>{{ alarm.severity }}</td>
+                <td>{{ alarm.message }}</td>
+                <td>{{ alarm.type }}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </p-card>
+    </div>
+  </div>
 </p-card>

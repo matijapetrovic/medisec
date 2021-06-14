@@ -1,0 +1,16 @@
+td {
+  word-break:break-all;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.divider {
+  border-top: 3px;
+}
+.margin {
+  margin-left: auto;
+  margin-right: 0
+}
