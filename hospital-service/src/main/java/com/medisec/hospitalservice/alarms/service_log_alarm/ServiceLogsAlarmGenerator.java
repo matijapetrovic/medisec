@@ -20,7 +20,7 @@ public class ServiceLogsAlarmGenerator {
         // TODO: ako je login vise od 100 u 60 sekundi
         // TODO: pogledati sta cemo sa akauntima na koje se nije logovao vise od 90 dana, kako njih obezbediti (za sad imam samo neku random listu)
         kSession.insert(logs);
-        kSession.setGlobal("service", serviceLogAlarmService);
+        kSession.setGlobal("logAlarmService", serviceLogAlarmService);
 
         for(ServiceLog log: logs.getLogs()) {
             kSession.insert(log);

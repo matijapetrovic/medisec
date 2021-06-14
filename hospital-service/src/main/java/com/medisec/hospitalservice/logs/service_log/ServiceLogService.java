@@ -1,9 +1,14 @@
 package com.medisec.hospitalservice.logs.service_log;
 
 import com.medisec.hospitalservice.alarms.service_log_alarm.LogType;
+import com.medisec.hospitalservice.alarms.service_log_alarm.ServiceLogsAlarmGenerator;
+import com.medisec.hospitalservice.logs.LogReader;
+import com.medisec.hospitalservice.logs.LogSource;
+import com.medisec.hospitalservice.logs.LogSourceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;

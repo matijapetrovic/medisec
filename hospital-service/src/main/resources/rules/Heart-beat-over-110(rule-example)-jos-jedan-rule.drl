@@ -1,6 +1,6 @@
 import com.medisec.hospitalservice.logs.medical_record_log.MedicalRecordLog;
 import com.medisec.hospitalservice.logs.medical_record_log.Severity;
-import com.medisec.hospitalservice.logs.medical_record_log.MedicalRecordAlarm;
+import com.medisec.hospitalservice.alarms.medical_record_alarm.MedicalRecordAlarm;
 
 rule "Heart beat over 110(rule example) jos jedan rule"
     when

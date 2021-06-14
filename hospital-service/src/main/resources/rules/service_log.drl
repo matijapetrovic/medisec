@@ -9,7 +9,7 @@ import com.medisec.hospitalservice.logs.medical_record_log.Severity;
 import java.util.UUID;
 import java.util.Date;
 
-global ServiceLogAlarmService service;
+global ServiceLogAlarmService logAlarmService;
 
 rule "More than one failed login attempt with the same username"
     when
@@ -104,5 +104,5 @@ rule "Insert alaram to service log db"
         modify(log) {
             setPersisted(true)
         };
-        service.save(log);
+        logAlarmService.save(log);
 end
