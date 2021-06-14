@@ -25,6 +25,21 @@ export class HeaderComponent implements OnInit {
       label: 'Patients',
       icon: 'pi pi-user',
      routerLink: ['patients']
+    },
+    {
+      label: 'Patient messages',
+      icon: 'pi pi-chart-bar',
+      routerLink: ['medical-record-log']
+    },
+    {
+      label: 'Patient messages alarms',
+      icon: 'pi pi-bell',
+      routerLink: ['medical-record-alarms']
+    },
+    {
+      label: 'Create rule',
+      icon: 'pi pi-exclamation-triangle',
+      routerLink: ['rule/add-rule']
     }
   ];
 
@@ -37,6 +52,21 @@ export class HeaderComponent implements OnInit {
     {
       label: 'Log Sources',
       routerLink: ['logs/sources']
+    },
+    {
+      label: 'Service logs',
+      icon: 'pi pi-list',
+      routerLink: ['service-log/search']
+    },
+    {
+      label: 'Service-log alarms',
+      icon: 'pi pi-bell',
+      routerLink: ['service-log-alarm']
+    },
+    {
+      label: 'Create rule',
+      icon: 'pi pi-exclamation-triangle',
+      routerLink: ['rule/add-rule']
     }
   ];
 

@@ -2,6 +2,7 @@ import com.medisec.hospitalservice.logs.service_log.ServiceLog;
 import com.medisec.hospitalservice.alarms.service_log_alarm.LogHandler;
 import com.medisec.hospitalservice.alarms.service_log_alarm.LogType;
 import java.util.Arrays;
+import java.util.List;
 import com.medisec.hospitalservice.alarms.service_log_alarm.ServiceLogAlarmService;
 import com.medisec.hospitalservice.alarms.service_log_alarm.ServiceLogAlarm;
 import com.medisec.hospitalservice.logs.medical_record_log.Severity;
@@ -11,25 +12,40 @@ import java.util.Date;
 
 global ServiceLogAlarmService logAlarmService;
 
+declare ServiceLog
+    @role(event)
+    @timestamp(time)
+end
+
 rule "More than one failed login attempt with the same username"
+    no-loop
     when
         $logs : LogHandler(hasMultipleFailedLoginAttempts())
     then
         System.out.println("More than one failed login attempt with the same username");
+        //        insert(new ServiceLogAlarm(
+        //            time,
+        //            Severity.MEDIUM,
+        //            "Attempt to login to an account that has not been active for 90 days",
+        //            LogType.INACTIVE_ACCOUNT
+        //        ));
 end
 
-//   TODO: Pogledaj
 rule "Attempt to login to an account that has not logged for 90 days"
     when
-        log : ServiceLog(time: time, parsePathResource() == "login", $username: parseUsernameParam())
+        log : ServiceLog(time: time, getType() == LogType.VALID_LOGIN, $username: parseUsernameParam())
         logs: LogHandler(getInactiveAccounts() contains $username)
     then
-        System.out.println("Attempt to login to an account that has not been active for 90 days");
-        insert(new ServiceLogAlarm(
-            time,
-            Severity.LOW,
-            "Attempt to login to an account that has not been active for 90 days"
-        ));
+        System.out.println(String.format("Attempt to login to an account that has not been active for 90 days (user with username:  %s)", $username));
+        modify(logs) {
+            removeInactiveAccount($username)
+        };
+//        insert(new ServiceLogAlarm(
+//            time,
+//            Severity.LOW,
+//            "Attempt to login to an account that has not been active for 90 days",
+//            LogType.INACTIVE_ACCOUNT
+//        ));
 end
 
 rule "Log type ERROR"
@@ -37,20 +53,12 @@ rule "Log type ERROR"
         log : ServiceLog(getType() == LogType.ERROR)
     then
         System.out.println("Log type ERROR");
-end
-
-rule "Log type DOS"
-    when
-        log : ServiceLog(getType() == LogType.DOS_ATTACK)
-    then
-        System.out.println("Log type DOS attack");
-end
-
-rule "Brute force attack"
-    when
-        log : ServiceLog(getType() == LogType.BRUTE_FORCE_ATTACK)
-    then
-        System.out.println("Brute force attack");
+        //        insert(new ServiceLogAlarm(
+        //            time,
+         //           Severity.MAJOR,
+        //            "Attempt to login to an account that has not been active for 90 days",
+        //            LogType.INACTIVE_ACCOUNT
+        //        ));
 end
 
 rule "Login or attempt to login from an IP address that is on the list of malicious IP addresses"
@@ -59,6 +67,12 @@ rule "Login or attempt to login from an IP address that is on the list of malici
         logs: LogHandler(getMaliciousIps() contains $sourceIp)
     then
         System.out.println("Login or attempt to login from an IP address that is on the list of malicious IP addresses");
+        //        insert(new ServiceLogAlarm(
+        //            time,
+        //            Severity.HIGH,
+        //            "Attempt to login to an account that has not been active for 90 days",
+        //            LogType.INACTIVE_ACCOUNT
+        //        ));
 end
 
 rule "Appearance of a log containing an source IP address from the list of malicious IP addresses"
@@ -67,34 +81,57 @@ rule "Appearance of a log containing an source IP address from the list of malic
          logs: LogHandler(getMaliciousIps() contains $sourceIp)
     then
         System.out.println("Appearance of a log containing an IP address from the list of malicious IP addresses");
-end
-
-rule "Appearance of a log containing an destination IP address from the list of malicious IP addresses"
-    when
-         log : ServiceLog($destIp: getDestIp())
-         logs: LogHandler(getMaliciousIps() contains $destIp)
-    then
-        System.out.println("Appearance of a log containing an IP address from the list of malicious IP addresses");
+        //        insert(new ServiceLogAlarm(
+        //            time,
+        //            Severity.CRITICAL,
+        //            "Attempt to login to an account that has not been active for 90 days",
+        //            LogType.INACTIVE_ACCOUNT
+        //        ));
 end
 
 rule "30 or more unsuccessful login attempts are registered from the same IP address within 24 hours - add that IP address to the list of malicious IP addresses"
+    no-loop
     when
-        log : LogHandler(are30LoginAttemptsFailedIn24HoursFromTheSameIpAddress())
+        log : ServiceLog($sourceIp: getSourceIp())
+        logs : LogHandler(are30LoginAttemptsFromTheSameIpAddressFailedIn24Hours())
     then
-        System.out.println("30 or more unsuccessful login attempts are registered from the same IP address within 24 hours!");
+        System.out.println("30 or more unsuccessful login attempts are registered from the same IP address within 24 hours - add that IP address to the list of malicious IP addresses");
+        modify(logs){
+            updateMaliciousIps($sourceIp)
+        };
+        //        insert(new ServiceLogAlarm(
+        //            time,
+        //            Severity.HIGH,
+        //            "Attempt to login to an account that has not been active for 90 days",
+        //            LogType.INACTIVE_ACCOUNT
+        //        ));
 end
 
-//rule "Detection of overly frequent requests (more than 50 within 60 seconds)"
-//    when
-//        logs: Logs();
-//        Number(intValue >= 0) from accumulate(
-//                 $log : ServiceLog(
-//                    parsePathResource() == "login",
-//                    status == 400),
-//                 count( $log ))
-//    then
-//        System.out.println("Failed login!");
-//end
+rule "Detection of overly frequent requests (more than 50 within 60 seconds) - FAILED LOGINS"
+    when
+        log : LogHandler(are50LoginAttemptsFailedInLastMinuteOccurred())
+    then
+        System.out.println("Detection of overly frequent requests (more than 50 within 60 seconds) - BRUTE FORCE ALARM");
+        //        insert(new ServiceLogAlarm(
+        //            time,
+        //            Severity.HIGH,
+        //            "Attempt to login to an account that has not been active for 90 days",
+        //            LogType.INACTIVE_ACCOUNT
+        //        ));
+end
+
+rule "Detection of overly frequent requests (more than 50 within 60 seconds)"
+    when
+            log : LogHandler(are50RequestsInLastMinuteOccurred())
+        then
+            System.out.println("Detection of overly frequent requests (more than 50 within 60 seconds) - DOS ATTACK");
+            //        insert(new ServiceLogAlarm(
+            //            time,
+            //            Severity.HIGH,
+            //            "Attempt to login to an account that has not been active for 90 days",
+            //            LogType.INACTIVE_ACCOUNT
+            //        ));
+end
 
 
 rule "Insert alaram to service log db"

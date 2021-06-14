@@ -37,19 +37,24 @@ public class ServiceLogAlarm {
     @Field("message")
     String message;
 
+    @Field("type")
+    LogType type;
+
     @Transient
     boolean persisted;
 
     public ServiceLogAlarm(
         Date time,
         Severity severity,
-        String message
+        String message,
+        LogType type
     ) {
         this.id = UUID.randomUUID().toString();
         this.time = time;
         this.severity = severity;
         this.message = message;
         this.persisted = false;
+        this.type = type;
     }
 }
 

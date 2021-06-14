@@ -1,15 +1,23 @@
-<p-card header="Write new rule">
-
-
-  <div ace-editor
-        id="editor-id"
-        [(text)]="ruleData.content"
-        #editor style="height:350px;"
-        [options]="options"
-  ></div>
-
+<p-card [style]="{'text-align':'center'}">
+  <ng-template pTemplate="header">
+    <div class="p-grid p-justify-center">
+      <h1>
+        <strong>
+          Create new alarm
+        </strong>
+      </h1>
+    </div>
+  </ng-template>
+  <div class="center">
+    <div class="p-col-12 p-md-8">
+      <div ace-editor id="editor-id" [(text)]="ruleData.content" #editor style="height:350px;" [options]="options">
+      </div>
+    </div>
+  </div>
   <ng-template pTemplate="footer">
-    <button pButton color="primary"  class="p-button-rounded" label="Get rule template" (click)="getTemplate($event)"></button>
-    <button [disabled]="ruleData.content==''" id="send-csr" type="primary" class="p-button-rounded" label="Send" pButton (click)="onSubmit()"></button>
+    <button pButton color="primary" class="p-button-rounded" label="Get rule template"
+      (click)="getTemplate($event)"></button>
+    <button [disabled]="ruleData.content==''" id="send-csr" type="primary" class="p-button-rounded" label="Send" pButton
+      (click)="onSubmit()"></button>
   </ng-template>
 </p-card>
