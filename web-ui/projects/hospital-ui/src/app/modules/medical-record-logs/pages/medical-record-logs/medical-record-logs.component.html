@@ -1,28 +1,48 @@
-<p-table [value]="medicalRecordLogs">
+<p-card [style]="{'text-align':'center'}">
   <ng-template pTemplate="header">
-    <tr>
-      <th>Age</th>
-      <th>Time</th>
-      <th>Heart beat</th>
-      <th>Average heart beat</th>
-      <th>Blood pressure</th>
-      <th>Average blood pressure</th>
-      <th>Body Temperature</th>
-      <th>Vaccinated</th>
-      <th>Surgery</th>
-    </tr>
+    <div class="p-grid p-justify-center">
+      <h1>
+        <strong>
+          Patient messages
+        </strong>
+      </h1>
+    </div>
   </ng-template>
-  <ng-template pTemplate="body" let-log>
-    <tr>
-      <td>{{ log.age}}</td>
-      <td>{{ log.time | date: 'medium'}}</td>
-      <td>{{ log.heartBeat}}</td>
-      <td>{{ log.averageHeartBeat}}</td>
-      <td>{{ log.bloodPressure}}</td>
-      <td>{{ log.averageBloodPressure}}</td>
-      <td>{{ log.bodyTemperature}}</td>
-      <td>{{ log.vaccinated}}</td>
-      <td>{{ log.surgery}}</td>
-    </tr>
-  </ng-template>
-</p-table>
+  <div class="center">
+    <div class="p-col-12 p-md-9">
+      <p-card class="p-col-12 p-md-12">
+        <div class="p-grid p-fluid">
+          <p-table [value]="medicalRecordLogs">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Age</th>
+                <th>Time</th>
+                <th>Heart beat</th>
+                <th>Average heart beat</th>
+                <th>Blood pressure</th>
+                <th>Average blood pressure</th>
+                <th>Body Temperature</th>
+                <th>Vaccinated</th>
+                <th>Surgery</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-log>
+              <tr>
+                <td>{{ log.age}}</td>
+                <td>{{ log.time | date: 'medium'}}</td>
+                <td>{{ log.heartBeat}}</td>
+                <td>{{ log.averageHeartBeat}}</td>
+                <td>{{ log.bloodPressure}}</td>
+                <td>{{ log.averageBloodPressure}}</td>
+                <td>{{ log.bodyTemperature}}</td>
+                <td>{{ log.vaccinated}}</td>
+                <td>{{ log.surgery}}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </p-card>
+    </div>
+  </div>
+</p-card>
+

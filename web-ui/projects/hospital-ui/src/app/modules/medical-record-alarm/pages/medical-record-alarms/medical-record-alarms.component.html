@@ -1,24 +1,44 @@
-<p-table [value]="medicalRecordAlarms">
+<p-card [style]="{'text-align':'center'}">
   <ng-template pTemplate="header">
-    <tr>
-      <th>Event id</th>
-      <th>Time</th>
-      <th>Severity</th>
-      <th>Event source</th>
-      <th>Event code</th>
-      <th>Message</th>
-      <th>Alarm code</th>
-    </tr>
+    <div class="p-grid p-justify-center">
+      <h1>
+        <strong>
+          Patient alarms
+        </strong>
+      </h1>
+    </div>
   </ng-template>
-  <ng-template pTemplate="body" let-alarm>
-    <tr>
-      <td>{{ alarm.eventId}}</td>
-      <td>{{ alarm.time | date:'medium'}}</td>
-      <td>{{ alarm.severity}}</td>
-      <td>{{ alarm.eventSource}}</td>
-      <td>{{ alarm.eventCode}}</td>
-      <td>{{ alarm.message}}</td>
-      <td>{{ alarm.alarmCode}}</td>
-    </tr>
-  </ng-template>
-</p-table>
+  <div class="center">
+    <div class="p-col-12 p-md-9">
+      <p-card class="p-col-12 p-md-12">
+        <div class="p-grid p-fluid">
+          <p-table [value]="medicalRecordAlarms">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Event id</th>
+                <th>Time</th>
+                <th>Severity</th>
+                <th>Event source</th>
+                <th>Event code</th>
+                <th>Message</th>
+                <th>Alarm code</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-alarm>
+              <tr>
+                <td>{{ alarm.eventId}}</td>
+                <td>{{ alarm.time | date:'medium'}}</td>
+                <td>{{ alarm.severity}}</td>
+                <td>{{ alarm.eventSource}}</td>
+                <td>{{ alarm.eventCode}}</td>
+                <td>{{ alarm.message}}</td>
+                <td>{{ alarm.alarmCode}}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+
+        </div>
+      </p-card>
+    </div>
+  </div>
+</p-card>
