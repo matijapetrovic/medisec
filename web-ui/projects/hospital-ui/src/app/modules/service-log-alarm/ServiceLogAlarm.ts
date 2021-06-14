@@ -2,5 +2,6 @@ export interface ServiceLogAlarm {
   id: Number,
   time: Date,
   severity: String, 
-  message: String
+  message: String,
+  type: String
 }

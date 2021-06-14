@@ -1,4 +1,4 @@
-<p-card [style]="{'text-align':'center'}">
+<p-card [style]="{'text-align':'center'}" >
   <ng-template pTemplate="header">
     <div class="p-grid p-justify-center">
       <h1>
@@ -8,65 +8,89 @@
       </h1>
     </div>
   </ng-template>
-  <form id="form" [formGroup]="form" (ngSubmit)="search()" >
-    <div class="p-grid p-mt-1 p-justify-center centered-grid">
-      <div class="p-col p-card-content centered-grid">
-        <label for="sourceIp" class="center p-justify-left p-col-2">Source IP</label>
-        <input id="sourceIp" type="text" autocomplete="off" pInputText formControlName="sourceIp" class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && f.sourceIp.errors }" />
-      </div>
-      <div class="p-col p-mt-1 p-card-content centered-grid">
-        <label for="destIp" class="center p-justify-left p-col-2">Destination IP</label>
-        <input id="destIp" type="text" autocomplete="off" pInputText formControlName="destIp" class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && f.destIp.errors }" />
-      </div>
-      <div class="p-col p-mt-1 p-card-content centered-grid">
-        <label for="path" class="center p-justify-left p-col-2">Path</label>
-        <input id="path" type="text" autocomplete="off" pInputText formControlName="path" class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && f.path.errors }" />
-      </div>
-      <div class="p-col p-mt-1 p-card-content centered-grid">
-        <label for="protocol" class="center p-justify-left p-col-2">Protocol</label>
-        <input id="protocol" type="text" autocomplete="off" pInputText formControlName="protocol" class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && f.protocol.errors }" />
-      </div>
-      <div class="p-col p-mt-1 p-card-content centered-grid">
-        <label for="status" class="center p-justify-left p-col-2">Status</label>
-        <input (keypress)="numberOnly($event)" type="number"  id="status" autocomplete="off" pInputText formControlName="status" class="form-control"
-        [ngClass]="{ 'is-invalid': submitted && f.status.errors }" />
-      </div>
+  <div class="center">
+    
+  </div>
+  <form class="p-grid p-fluid" [formGroup]="form" (ngSubmit)="search()" class="center">
+    <div class="p-col-12 p-md-8">
+      <p-card class="p-col-12 p-md-12">
+        <div class="form-group p-grid p-fluid">
+          <div class="p-float-label p-col-12 p-md-2"></div>
+          <div class="p-float-label p-col-12 p-md-2">
+            <input id="destIp" type="text" autocomplete="off" pInputText formControlName="sourceIp" class="form-control"
+              placeholder="Source IP" [ngClass]="{ 'is-invalid': submitted && f.destIp.errors }" />
+          </div>
+          <div class="p-float-label p-col-12 p-md-1"></div>
+          <div class="p-float-label p-col-12 p-md-2">
+            <input id="destIp" type="text" autocomplete="off" pInputText formControlName="destIp" class="form-control"
+              placeholder="Destination IP" [ngClass]="{ 'is-invalid': submitted && f.destIp.errors }" />
+          </div>
+          <div class="p-float-label p-col-12 p-md-1"></div>
+          <div class="p-float-label p-col-12 p-md-2">
+            <input id="path" type="text" autocomplete="off" pInputText formControlName="path" class="form-control"
+              placeholder="Path" [ngClass]="{ 'is-invalid': submitted && f.path.errors }" />
+          </div>
+          <div class="p-float-label p-col-12 p-md-2"></div>
+          <div class="p-float-label p-col-12 p-md-2"></div>
+          <div class="p-float-label p-col-12 p-md-2">
+            <input id="protocol" type="text" autocomplete="off" pInputText formControlName="protocol" class="form-control"
+              placeholder="Protocol" [ngClass]="{ 'is-invalid': submitted && f.protocol.errors }" />
+          </div>
+          <div class="p-float-label p-col-12 p-md-1"></div>
+          <div class="p-float-label p-col-12 p-md-2">
+            <input (keypress)="numberOnly($event)" type="number" id="status" autocomplete="off" pInputText
+              formControlName="status" placeholder="Status" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.status.errors }" />
+          </div>
+          <div class="p-float-label p-col-12 p-md-1"></div>
+          <div class="p-float-label p-col-12 p-md-2">
+            <p-calendar formControlName="time" class="form-control" placeholder="Time"></p-calendar>
+          </div>
+        </div>
+        <div class="p-float-label p-col-12 p-md-12"></div>
+        <div class="form-group p-grid p-fluid">
+          <div class="p-float-label p-col-12 p-md-8"></div>
+          <div class="p-float-label p-col-12 p-md-1">
+            <button id="search" type="submit" class="p-button-rounded" label="Search" pButton></button>
+          </div>
+          <div class="p-float-label p-col-12 p-md-1">
+            <button id="search" class="p-button-rounded p-button-danger" label="Reset" pButton
+              (click)="removeFormInputs()"></button>
+          </div>
+        </div>
+      </p-card>
     </div>
-    <p-calendar formControlName="time" class="form-control" placeholder="Time"></p-calendar>
-
-    <button id="search" type="submit" class="p-button-rounded" label="Search" pButton></button>
-    <button id="search" class="p-button-rounded p-button-danger" label="Reset" pButton (click)="removeFormInputs()"></button>
   </form>
- 
-  <ng-template pTemplate="footer">
-
-    <p-table [value]="serviceLogs" [style]="{'width': '80%'}">
-      <ng-template pTemplate="header">
-        <tr>
-          <th>Source IP</th>
-          <th>Destination IP</th>
-          <th>Path</th>
-          <th>Protocol</th>
-          <th>Status</th>
-          <th>Packet size</th>
-          <th>Type</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-log>
-        <tr>
-          <td>{{ log.sourceIp}}</td>
-          <td>{{ log.destIp}}</td>
-          <td>{{ log.path}}</td>
-          <td>{{ log.protocol}}</td>
-          <td>{{ log.status}}</td>
-          <td>{{ log.packetSize}} bytes</td>
-          <td>{{ log.type}}</td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </ng-template>
+  <div class="center">
+    <div class="p-col-12 p-md-9">
+      <p-card class="p-col-12 p-md-12">
+        <div class="p-grid p-fluid">
+          <p-table [value]="serviceLogs">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Source IP</th>
+                <th>Destination IP</th>
+                <th>Path</th>
+                <th>Protocol</th>
+                <th>Status</th>
+                <th>Packet size</th>
+                <th>Type</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-log>
+              <tr>
+                <td>{{ log.sourceIp}}</td>
+                <td>{{ log.destIp}}</td>
+                <td>{{ log.path}}</td>
+                <td>{{ log.protocol}}</td>
+                <td>{{ log.status}}</td>
+                <td>{{ log.packetSize}} bytes</td>
+                <td>{{ log.type}}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </p-card>
+    </div>
+  </div>
 </p-card>

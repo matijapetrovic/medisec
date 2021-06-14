@@ -37,6 +37,9 @@ public class ServiceLogAlarm {
     @Field("message")
     String message;
 
+    @Field("type")
+    LogType type;
+
     @Transient
     boolean persisted;
 
