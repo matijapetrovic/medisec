@@ -28,6 +28,7 @@ public class LogReader implements Runnable {
                 if (line != null) {
                     System.out.println("FOUND NEW LOG");
                     ServiceLog log = LogParser.parseLog(line, logSource.getFilter());
+                    if (log == null) continue;
                     serviceLogRepository.save(log);
                     serviceLogsAlarmGenerator.run();
                 }

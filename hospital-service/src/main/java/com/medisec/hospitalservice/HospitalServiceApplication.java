@@ -11,6 +11,9 @@ import com.medisec.hospitalservice.logs.service_log.ServiceLogRepository;
 import com.medisec.hospitalservice.patient.Patient;
 import com.medisec.hospitalservice.patient.PatientDetails;
 import com.medisec.hospitalservice.patient.PatientRepository;
+import io.krakens.grok.api.Grok;
+import io.krakens.grok.api.GrokCompiler;
+import io.krakens.grok.api.Match;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -64,5 +67,6 @@ public class HospitalServiceApplication {
 			t.start();
 		}
 	}
+
 }
 

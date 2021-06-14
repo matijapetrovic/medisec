@@ -14,7 +14,6 @@ import java.util.Date;
 @Document(collection = "service_log")
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class ServiceLog {
     @Id
     @Field("id")
@@ -60,6 +59,19 @@ public class ServiceLog {
                 return param.split("=")[1];
         }
         return resource;
+    }
+
+
+    public ServiceLog() {
+        id = "";
+        sourceIp = "";
+        destIp = "";
+        path = "";
+        protocol = "";
+        status = 0;
+        time = new Date();
+        packetSize = 0;
+        type = LogType.NORMAL;
     }
 
 }
