@@ -52,7 +52,7 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/service-log/**").hasAuthority("admin")
                 .antMatchers(HttpMethod.GET, "/api/service-log-alarm/**").hasAuthority("admin")
                 .antMatchers(HttpMethod.GET, "/api/medical-record-log/**").hasAuthority("doctor")
-                .antMatchers(HttpMethod.POST, "/api/medical-record-log/**").hasAuthority("doctor")
+                .antMatchers(HttpMethod.POST, "/api/medical-record-log/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/certificates").hasAuthority("admin")
                 .antMatchers(HttpMethod.POST, "/api/certificates/**").hasAuthority("admin")
                 .antMatchers(HttpMethod.GET, "/api/medical-record-alarm/**").hasAuthority("doctor")

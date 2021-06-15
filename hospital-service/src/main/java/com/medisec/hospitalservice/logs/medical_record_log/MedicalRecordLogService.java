@@ -35,7 +35,7 @@ public class MedicalRecordLogService {
                         request.getSurgery()
                         );
 
-        kSession.setGlobal("deviceAlaramService", medicalRecordAlarmService);
+        kSession.setGlobal("deviceAlarmService", medicalRecordAlarmService);
         kSession.insert(medicalRecord);
         kSession.fireAllRules();
         kSession.delete(kSession.getFactHandle(medicalRecord));

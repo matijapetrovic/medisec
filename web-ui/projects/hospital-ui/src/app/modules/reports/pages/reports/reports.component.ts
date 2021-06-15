@@ -31,38 +31,28 @@ export class ReportsComponent implements OnInit {
 
   constructor(private service: ReportService) {
     this.data = {
-  //     datasets: [{
-  //         data: [
-  //             11,
-  //             16,
-  //             7,
-  //             3,
-  //             14
-  //         ],
-  //         backgroundColor: [
-  //             "#FF6384",
-  //             "#4BC0C0",
-  //             "#FFCE56",
-  //             "#E7E9ED",
-  //             "#36A2EB"
-  //         ],
-  //         label: 'My dataset'
-  //     }],
-  //     labels: [
-  //         "Red",
-  //         "Green",
-  //         "Yellow",
-  //         "Grey",
-  //         "Blue"
-  //     ]
+      datasets: [{
+          data: [
+          ],
+          backgroundColor: [
+              "#FF6384",
+              "#4BC0C0",
+              "#FFCE56",
+              "#E7E9ED",
+              "#36A2EB"
+          ],
+          label: 'My dataset'
+      }],
+      labels: [
+      ]
      }
    }
 
   ngOnInit(): void {
     this.applyLightTheme();
     this.service.getReport().subscribe((res) => {
-      // this.data.labels = res.polarArea.logTypes;
-      // this.data.dataset[0].data = res.polarArea.countEachType;
+      this.data.labels = res.polarArea.logTypes;
+      this.data.datasets[0].data = res.polarArea.countEachType;
     });
     this.service.getChartData().subscribe(basicData => this.basicData = basicData);
   }

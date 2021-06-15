@@ -28,7 +28,7 @@
             </ng-template>
             <ng-template pTemplate="body" let-alarm>
               <tr>
-                <td>{{ alarm.time }}</td>
+                <td>{{ alarm.time | date }}</td>
                 <td>{{ alarm.severity }}</td>
                 <td>{{ alarm.message }}</td>
                 <td>{{ alarm.type }}</td>

@@ -11,6 +11,7 @@ import { ToastModule } from 'primeng/toast';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { KeycloakService } from 'keycloak-angular';
 import { initializer } from './keycloak/init';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { initializer } from './keycloak/init';
       useFactory: initializer,
       multi: true,
       deps: [KeycloakService]
-    }
+    },
+    MessageService
   ],
   bootstrap: [AppComponent]
 })
