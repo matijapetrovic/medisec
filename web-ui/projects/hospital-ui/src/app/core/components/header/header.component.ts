@@ -72,6 +72,10 @@ export class HeaderComponent implements OnInit {
       label: 'Create rule',
       icon: 'pi pi-exclamation-triangle',
       routerLink: ['rule/add-rule']
+    },
+    {
+      label: 'Reports',
+      routerLink: ['reports']
     }
   ];
 
