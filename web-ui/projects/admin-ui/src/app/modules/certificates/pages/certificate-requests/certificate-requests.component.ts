@@ -21,7 +21,7 @@ export class CertificateRequestsComponent implements OnInit {
     this.certificateService.getCertificateRequests().subscribe((certificateRequests) => this.certificateRequests = certificateRequests);
   }
 
-  issueCertificate(csrId: number): void {
+  issueCertificate(csrId: string): void {
     this.router.navigate(['certificates', 'requests', csrId, 'issue']);
   }
 

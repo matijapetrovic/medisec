@@ -8,6 +8,7 @@ import com.medisec.adminservice.domain.crypto.pki.keystores.KeyStoreWriter;
 import com.medisec.adminservice.domain.certificate_request.CertificateSigningRequest;
 import com.medisec.adminservice.domain.certificate_request.CertificateRequestExtractor;
 import com.medisec.adminservice.domain.certificate_request.CertificateRequestRepository;
+import com.medisec.adminservice.email.EmailService;
 import com.medisec.adminservice.exception.AliasNotValidException;
 import com.medisec.adminservice.exception.CSRNotVerifiedException;
 import com.medisec.adminservice.exception.MissingPrivateKeyException;
@@ -22,6 +23,7 @@ import org.bouncycastle.operator.OperatorCreationException;
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import javax.persistence.EntityNotFoundException;
 import java.io.*;
 
@@ -43,6 +45,7 @@ public class CertificateService {
     private final KeyStoreReader keyStoreReader;
 
     private final CertificateRequestRepository certificateRequestRepository;
+    private final EmailService emailService;
 
     public void issueCertificate(IssueCertificateRequest request) throws
             NoSuchAlgorithmException,
@@ -51,7 +54,7 @@ public class CertificateService {
             KeyStoreException,
             IOException,
             UnrecoverableKeyException,
-            InvalidKeyException, NoSuchProviderException {
+            InvalidKeyException, NoSuchProviderException, MessagingException {
         Certificate[] issuerChain = keyStoreReader.readCertificateChain(request.getIssuerAlias());
         if (issuerChain == null)
             throw new AliasNotValidException();
@@ -74,13 +77,14 @@ public class CertificateService {
         X509Certificate cert = CertificateGenerator.generateCertificate(subjectData, issuerData, (X509Certificate)issuerChain[0], request.getExtensions());
         List<Certificate> newChain = new LinkedList<>(Arrays.asList(issuerChain));
         newChain.add(0, cert);
-        if (cert.getBasicConstraints() != -1) {
-            initRevocationList(cert.getSerialNumber().toString(16), request.getSubjectData().getEmail());
-        }
         keyStoreWriter.write(request.getSubjectData().getEmail(), issuerPrivateKey, newChain.toArray(new Certificate[0]));
+        if (cert.getBasicConstraints() != -1) {
+            initRevocationList("1", request.getSubjectData().getEmail());
+        }
+        emailService.sendCertificate(request.getSubjectData().getEmail(), cert);
     }
 
-    private PublicKey getSubjectPublicKey(Long csrId) throws NoSuchProviderException, NoSuchAlgorithmException, IOException, InvalidKeyException {
+    private PublicKey getSubjectPublicKey(String csrId) throws NoSuchProviderException, NoSuchAlgorithmException, IOException, InvalidKeyException {
         if (csrId == null) {
             return generateKeyPair().getPublic();
         }

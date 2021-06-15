@@ -1,5 +1,5 @@
 export interface CertificateRequest {
-  id: number,
+  id: string,
 
   commonName: string,
   surname: string,

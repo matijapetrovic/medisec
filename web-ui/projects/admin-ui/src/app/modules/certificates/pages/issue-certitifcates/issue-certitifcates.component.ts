@@ -11,7 +11,7 @@ import { IssueCertificateData } from '../certificates/certificate';
 })
 export class IssueCertitifcatesComponent implements OnInit {
 
-  csrId: number = null;
+  csrId: string = null;
 
   constructor(
     private route: ActivatedRoute) {
@@ -20,7 +20,7 @@ export class IssueCertitifcatesComponent implements OnInit {
   ngOnInit(): void {
     if (!this.route.snapshot.params.csrId)
       return;
-    this.csrId = +this.route.snapshot.params.csrId;
+    this.csrId = this.route.snapshot.params.csrId;
   }
 
 }

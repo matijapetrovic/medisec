@@ -24,7 +24,7 @@ public class CertificateRequestController {
     }
 
     @PostMapping("/verify/{id}")
-    public ResponseEntity<Void> verifyCertificateRequest(@PathVariable Long id) {
+    public ResponseEntity<Void> verifyCertificateRequest(@PathVariable String id) {
         certificateRequestService.veriftCertificateRequest(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
@@ -35,7 +35,7 @@ public class CertificateRequestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CertificateSigningRequest> findById(@PathVariable Long id) {
+    public ResponseEntity<CertificateSigningRequest> findById(@PathVariable String id) {
         return ResponseEntity.ok(certificateRequestService.findById(id));
     }
 }

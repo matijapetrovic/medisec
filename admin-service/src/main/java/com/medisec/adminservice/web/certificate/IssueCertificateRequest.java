@@ -13,8 +13,8 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 public class IssueCertificateRequest {
-    @Positive
-    private Long csrId;
+    @NotBlank
+    private String csrId;
 
     @NotBlank
     private String issuerAlias;

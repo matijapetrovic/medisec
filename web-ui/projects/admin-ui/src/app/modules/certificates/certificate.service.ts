@@ -17,7 +17,7 @@ export class CertificateService {
     return this.http.get<CertificateRequest[]>(` ${environment.apiUrl}/api/certificate-requests`);
   }
 
-  getCsr(id: number) {
+  getCsr(id: string) {
     return this.http.get<CertificateRequest>(`${environment.apiUrl}/api/certificate-requests/${id}`);
   }
 

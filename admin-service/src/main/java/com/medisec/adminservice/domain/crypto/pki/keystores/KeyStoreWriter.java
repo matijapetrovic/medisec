@@ -21,6 +21,9 @@ public class KeyStoreWriter {
     @Value("${keystore.storepass}")
     private String storePass;
 
+    @Value("${keystore.keypass}")
+    private String keyPass;
+
     public KeyStoreWriter() throws NoSuchProviderException, KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException {
         keyStore = KeyStore.getInstance("JKS", "SUN");
     }
@@ -36,7 +39,7 @@ public class KeyStoreWriter {
 
     public void write(String alias, PrivateKey privateKey, Certificate[] certificateChain) throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException {
         loadKeyStore();
-        keyStore.setKeyEntry(alias, privateKey, storePass.toCharArray(), certificateChain);
+        keyStore.setKeyEntry(alias, privateKey, keyPass.toCharArray(), certificateChain);
         keyStore.store(new FileOutputStream(keyStoreFile), storePass.toCharArray());
     }
 }

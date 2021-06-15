@@ -2,6 +2,7 @@ package com.medisec.hospitalservice.csr;
 
 import com.medisec.hospitalservice.client.AdminClient;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.FileUtils;
 import org.bouncycastle.operator.ContentSigner;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import javax.security.auth.x500.X500Principal;
 import javax.xml.bind.DatatypeConverter;
+import java.io.File;
 import java.io.IOException;
 import java.security.*;
 import java.util.HashMap;
@@ -35,6 +37,7 @@ public class CSRService {
         PKCS10CertificationRequestHolder csr = buildCSRHolder(mapAsString, keyPair);
 
         //TODO save private key
+        FileUtils.writeByteArrayToFile(new File("../hospital-service/src/main/resources/priv.key"), keyPair.getPrivate().getEncoded());
         //System.out.println("Private key: " + Base64.getEncoder().encodeToString(pair.getPrivate().getEncoded()));
 
         StringBuilder builder = encodeStringCSR(csr);

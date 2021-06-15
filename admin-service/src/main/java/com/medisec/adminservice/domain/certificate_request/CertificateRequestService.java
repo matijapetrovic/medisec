@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class CertificateRequestService {
         PKCS10CertificationRequest request = CertificateRequestExtractor.extractCsr(csr);
         X500Name name = request.getSubject();
         CertificateSigningRequest saved = certificateRequestRepository.save(
-                new CertificateSigningRequest(null,
+                new CertificateSigningRequest(UUID.randomUUID().toString(),
                         CertificateRequestExtractor.getField(name, BCStyle.CN),
                         CertificateRequestExtractor.getField(name, BCStyle.SURNAME),
                         CertificateRequestExtractor.getField(name, BCStyle.GIVENNAME),
@@ -34,22 +35,22 @@ public class CertificateRequestService {
         emailService.sendEmail(saved.getEmail(), "CSR Verification", buildText(saved.getId()));
     }
 
-    private String buildText(Long csrId){
+    private String buildText(String csrId){
         return "Please click the following link to verify your email in order to have your certificate signed: " +
-                "http://localhost:8080/api/csr/verify/" + csrId + ".";
+                "https://localhost:8480/api/csr/verify/" + csrId + ".";
     }
 
     public List<CertificateSigningRequest> getCsrs() {
         return certificateRequestRepository.findAll();
     }
 
-    public void veriftCertificateRequest(Long id) {
+    public void veriftCertificateRequest(String id) {
         CertificateSigningRequest certificateSigningRequest = certificateRequestRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("CSR Id invalid"));
         certificateSigningRequest.verify();
         certificateRequestRepository.save(certificateSigningRequest);
     }
 
-    public CertificateSigningRequest findById(Long id) {
+    public CertificateSigningRequest findById(String id) {
         return certificateRequestRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 

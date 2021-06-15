@@ -4,45 +4,44 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.*;
 
-@Entity
+@Document(collection = "csr")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name="csr")
 public class CertificateSigningRequest {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
-    @Column(name="common_name")
+    @Field(name="common_name")
     private String commonName;
 
-    @Column(name="surname")
+    @Field(name="surname")
     private String surname;
 
-    @Column(name="given_name")
+    @Field(name="given_name")
     private String givenName;
 
-    @Column(name="organization")
+    @Field(name="organization")
     private String organization;
 
-    @Column(name="organization_unit")
+    @Field(name="organization_unit")
     private String organizationUnit;
 
-    @Column(name="country_code")
+    @Field(name="country_code")
     private String countryCode;
 
-    @Column(name="email")
+    @Field(name="email")
     private String email;
 
-    @Column(name="verified")
+    @Field(name="verified")
     private boolean verified;
 
-    @Lob
-    @Column(name="raw_csr", columnDefinition = "BLOB")
+    @Field(name="raw_csr")
     private byte[] rawCsr;
 
     public void verify() {

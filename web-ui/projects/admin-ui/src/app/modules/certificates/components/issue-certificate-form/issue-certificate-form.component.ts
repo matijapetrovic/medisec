@@ -12,7 +12,7 @@ import { BasicConstraints, Extensions, IssueCertificateData, KeyUsage, Template 
 export class IssueCertificateFormComponent implements OnInit {
 
   @Input()
-  private csrId: number;
+  private csrId: string;
 
   form: FormGroup;
 
