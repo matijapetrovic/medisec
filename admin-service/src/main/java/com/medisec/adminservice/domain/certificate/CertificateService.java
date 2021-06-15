@@ -74,7 +74,9 @@ public class CertificateService {
         X509Certificate cert = CertificateGenerator.generateCertificate(subjectData, issuerData, (X509Certificate)issuerChain[0], request.getExtensions());
         List<Certificate> newChain = new LinkedList<>(Arrays.asList(issuerChain));
         newChain.add(0, cert);
-
+        if (cert.getBasicConstraints() != -1) {
+            initRevocationList(cert.getSerialNumber().toString(16), request.getSubjectData().getEmail());
+        }
         keyStoreWriter.write(request.getSubjectData().getEmail(), issuerPrivateKey, newChain.toArray(new Certificate[0]));
     }
 
@@ -138,7 +140,9 @@ public class CertificateService {
 
 
     public void revokeCertificate(String serialNumber, Integer reason, String alias) throws IOException, UnrecoverableKeyException, CertificateException, NoSuchAlgorithmException, KeyStoreException, OperatorCreationException {
-        File crlFile = new File("src/main/resources/revocationList.crl");
+
+        String issuerAlias = getIssuerAlias(serialNumber);
+        File crlFile = new File("src/main/resources/crl/" + issuerAlias + ".crl");
         byte[] fileContent = Files.readAllBytes(crlFile.toPath());
 
         X509CRLHolder hold = new X509CRLHolder(fileContent);
@@ -147,13 +151,13 @@ public class CertificateService {
         // Enum CRLReason
         crlBuilder.addCRLEntry(new BigInteger(serialNumber, 16), new Date(), reason);
 
-        IssuerData issuerData = keyStoreReader.readIssuerFromStore(alias);
+        IssuerData issuerData = keyStoreReader.readIssuerFromStore(issuerAlias);
         JcaContentSignerBuilder contentSignerBuilder = new JcaContentSignerBuilder("SHA256WithRSAEncryption");
 
         X509CRLHolder x509CRLHolder = crlBuilder.build(contentSignerBuilder.setProvider("BC")
                                                                             .build(issuerData.getPrivateKey()));
 
-        OutputStream os = new FileOutputStream("src/main/resources/revocationList.crl");
+        OutputStream os = new FileOutputStream("src/main/resources/crl/" + issuerAlias + ".crl");
         os.write(x509CRLHolder.getEncoded());
         os.close();
     }
@@ -168,7 +172,10 @@ public class CertificateService {
     }
 
     private boolean isRevoked(Certificate certificate) throws IOException, CertificateException, CRLException {
-        File crlFile = new File("src/main/resources/revocationList.crl");
+        JcaX509CertificateHolder certHolder = new JcaX509CertificateHolder((X509Certificate) certificate);
+        X500Name issuer = certHolder.getIssuer();
+        String issuerAlias = CertificateRequestExtractor.getField(issuer, BCStyle.E);
+        File crlFile = new File("src/main/resources/crl/" + issuerAlias + ".crl");
         byte[] fileContent = Files.readAllBytes(crlFile.toPath());
 
         CertificateFactory cf = CertificateFactory.getInstance("X.509");
@@ -202,24 +209,24 @@ public class CertificateService {
         return issuerAlias;
     }
 
-//    public void initRevocationList(String serialNumber, String alias) throws UnrecoverableKeyException, CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException, OperatorCreationException {
-//        IssuerData issuerData = keyStoreReader.readIssuerFromStore(alias);
-//        X500Name issuer = issuerData.getX500name();
-//        Date now = new Date();
-//        X509v2CRLBuilder builder = new X509v2CRLBuilder(issuer, now);
-//        builder.addCRLEntry(new BigInteger(serialNumber), now, CRLReason.cACompromise);
-//
-//        JcaContentSignerBuilder contentSignerBuilder =
-//                new JcaContentSignerBuilder("SHA256WithRSAEncryption");
-//
-//        contentSignerBuilder.setProvider("BC");
-//        PrivateKey privateKey = issuerData.getPrivateKey();
-//        X509CRLHolder cRLHolder =
-//                builder.build(contentSignerBuilder.build(privateKey));
-//
-//        OutputStream os = new FileOutputStream("src/main/resources/revocationList.crl");
-//        os.write(cRLHolder.getEncoded());
-//        os.close();
-//
-//    }
+    public void initRevocationList(String serialNumber, String alias) throws UnrecoverableKeyException, CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException, OperatorCreationException {
+        IssuerData issuerData = keyStoreReader.readIssuerFromStore(alias);
+        X500Name issuer = issuerData.getX500name();
+        Date now = new Date();
+        X509v2CRLBuilder builder = new X509v2CRLBuilder(issuer, now);
+        builder.addCRLEntry(new BigInteger(serialNumber), now, 1);
+
+        JcaContentSignerBuilder contentSignerBuilder =
+                new JcaContentSignerBuilder("SHA256WithRSAEncryption");
+
+        contentSignerBuilder.setProvider("BC");
+        PrivateKey privateKey = issuerData.getPrivateKey();
+        X509CRLHolder cRLHolder =
+                builder.build(contentSignerBuilder.build(privateKey));
+
+        OutputStream os = new FileOutputStream("src/main/resources/crl/" + alias +  ".crl");
+        os.write(cRLHolder.getEncoded());
+        os.close();
+
+    }
 }

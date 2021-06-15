@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from '../../core/guards/auth.guard';
 import { CertificatesComponent } from './pages/certificates/certificates.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: CertificatesComponent
+    component: CertificatesComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['admin']}
   },
 ];
 

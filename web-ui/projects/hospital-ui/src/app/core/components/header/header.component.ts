@@ -44,10 +44,15 @@ export class HeaderComponent implements OnInit {
   ];
 
   adminItems: MenuItem[] = [
+
     {
       label: 'Send Certificate Request',
       icon: 'pi pi-map',
      routerLink: ['']
+    },
+    {
+      label: 'Certificates',
+      routerLink: ['certificates']
     },
     {
       label: 'Log Sources',
