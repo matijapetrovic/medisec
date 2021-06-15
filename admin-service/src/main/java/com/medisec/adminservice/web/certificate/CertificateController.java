@@ -45,10 +45,10 @@ public class CertificateController {
     }
 
     @PostMapping("/{sn}/pending-revoke")
-    public ResponseEntity<Void> pendingRevocation(@RequestBody byte[] revokeRequest, @PathVariable String sn) throws CertificateException, UnrecoverableKeyException, NoSuchAlgorithmException, IOException, KeyStoreException, OperatorCreationException {
-        String request = new String(revokeRequest);
-        String[] params = request.split("="); //alias=myAlias
-        certificateService.revokeCertificate(sn, 1, params[1]);
+    public ResponseEntity<Void> pendingRevocation(@RequestBody String alias, @PathVariable String sn) throws CertificateException, UnrecoverableKeyException, NoSuchAlgorithmException, IOException, KeyStoreException, OperatorCreationException {
+//        String request = new String(revokeRequest);
+//        String[] params = request.split("="); //alias=myAlias
+        certificateService.revokeCertificate(sn, 1, alias);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

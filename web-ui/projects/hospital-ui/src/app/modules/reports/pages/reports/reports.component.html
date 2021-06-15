@@ -1,0 +1,21 @@
+
+<div class="p-grid p-fluid">
+  <div class="p-col-6 p-md-6">
+    <p-card header="Service Logs Report">
+      <h3>Total logs:</h3>
+      <h3>Total logs last month:</h3>
+    </p-card>
+  </div>
+
+  <div class="p-col-6 p-md-6">
+    <p-chart type="polarArea" [data]="data" width="350px" height="350px"></p-chart>
+  </div>
+
+  <div class="p-col-6 p-md-10">
+    <p-card header="Alarms per day (Service log alarm)">
+      <h5>Basic</h5>
+      <p-chart type="line" [data]="basicData" [options]="basicOptions"></p-chart>
+    </p-card>
+  </div>
+
+</div>

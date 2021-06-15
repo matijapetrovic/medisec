@@ -11,7 +11,13 @@
   <div class="center">
       <p-card class="p-col-12 p-md-12">
         <div class="p-grid p-fluid">
-          <p-table [value]="serviceLogAlarms">
+          <p-table
+            [value]="serviceLogAlarms"
+            [paginator]="true"
+            [rows]="10"
+            [rowsPerPageOptions]="[5, 10, 15, 20]"
+            totalRecords="totalRecords"
+            pageLinks="3">
             <ng-template pTemplate="header">
               <tr>
                 <th>Time</th>

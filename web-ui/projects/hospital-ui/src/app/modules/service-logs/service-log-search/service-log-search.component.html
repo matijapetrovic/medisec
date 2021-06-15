@@ -47,10 +47,10 @@
         <div class="p-float-label p-col-12 p-md-12"></div>
         <div class="form-group p-grid p-fluid">
           <div class="p-float-label p-col-12 p-md-8"></div>
-          <div class="p-float-label p-col-12 p-md-1">
+          <div class="p-float-label p-col-12 p-md-2">
             <button id="search" type="submit" class="p-button-rounded" label="Search" pButton></button>
           </div>
-          <div class="p-float-label p-col-12 p-md-1">
+          <div class="p-float-label p-col-12 p-md-2">
             <button id="search" class="p-button-rounded p-button-danger" label="Reset" pButton
               (click)="removeFormInputs()"></button>
           </div>
@@ -62,7 +62,14 @@
     <div class="p-col-12 p-md-9">
       <p-card class="p-col-12 p-md-12">
         <div class="p-grid p-fluid">
-          <p-table [value]="serviceLogs">
+          <p-table
+            [value]="serviceLogs"
+            [paginator]="true"
+            [rows]="10"
+            [rowsPerPageOptions]="[5, 10, 15, 20]"
+            totalRecords="totalRecords"
+            pageLinks="3"
+            >
             <ng-template pTemplate="header">
               <tr>
                 <th>Source IP</th>

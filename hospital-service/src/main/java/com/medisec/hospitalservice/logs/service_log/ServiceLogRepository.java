@@ -25,4 +25,6 @@ public interface ServiceLogRepository extends MongoRepository<ServiceLog, String
                             int status,
                             Date time
                             );
+
+    List<ServiceLog> findAllByTimeAfter(Date date);
 }

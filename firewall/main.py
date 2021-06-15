@@ -6,5 +6,5 @@ def run(iterations=10):
 
 
 if __name__ == '__main__':
-    run(iterations=20)
+    run(iterations=3)
 

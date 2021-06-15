@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { LogSource } from '../../log-source';
 import { LogsService } from '../../logs.service';
@@ -14,7 +15,10 @@ import { LogSourceFormComponent } from '../log-source-form/log-source-form.compo
 export class LogSourcesListComponent implements OnInit {
   logSources: LogSource[];
 
-  constructor(private logService: LogsService, private dialogService: DialogService) {
+  constructor(
+    private logService: LogsService,
+    private dialogService: DialogService,
+    private messageService: MessageService) {
   }
 
   ngOnInit(): void {
@@ -48,7 +52,13 @@ export class LogSourcesListComponent implements OnInit {
         return;
       }
     }
-    this.logService.updateLogSources(this.logSources).subscribe(() => this.getLogSources());
+    this.logService.updateLogSources(this.logSources).subscribe(() =>
+    {
+      this.getLogSources();
+      this.messageService.add({
+        severity: 'success', summary: 'Save log source', detail: 'Log source saved successfully!'
+      });
+    });
   }
 
 }

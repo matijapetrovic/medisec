@@ -10,6 +10,7 @@ import { CoreModule } from './core/core.module';
 import { ToastModule } from 'primeng/toast';
 import { initializer } from './keycloak/init';
 import { KeycloakService } from 'keycloak-angular';
+import { MessageService  } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { KeycloakService } from 'keycloak-angular';
       useFactory: initializer,
       multi: true,
       deps: [KeycloakService]
-    }
+    },
+    MessageService
   ],
   bootstrap: [AppComponent]
 })

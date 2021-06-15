@@ -6,7 +6,7 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./modules/csr/csr.module').then(m => m.CsrModule),
   },
-  
+
   {
     path: 'service-log',
     loadChildren: () => import('./modules/service-logs/service-log.module').then(m => m.ServiceLogModule)
@@ -38,6 +38,10 @@ const routes: Routes = [
   {
     path: 'logs',
     loadChildren: () => import('./modules/logs/logs.module').then(m => m.LogsModule)
+  },
+  {
+    path: 'reports',
+    loadChildren: () => import('./modules/reports/reports.module').then(m => m.ReportsModule)
   }
 ];
 
