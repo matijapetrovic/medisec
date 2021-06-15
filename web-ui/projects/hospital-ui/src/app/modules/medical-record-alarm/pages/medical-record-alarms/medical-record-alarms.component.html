@@ -12,7 +12,13 @@
     <div class="p-col-12 p-md-9">
       <p-card class="p-col-12 p-md-12">
         <div class="p-grid p-fluid">
-          <p-table [value]="medicalRecordAlarms">
+          <p-table
+            [value]="medicalRecordAlarms"
+            [paginator]="true"
+            [rows]="10"
+            [rowsPerPageOptions]="[5, 10, 15, 20]"
+            totalRecords="totalRecords"
+            pageLinks="3">
             <ng-template pTemplate="header">
               <tr>
                 <th>Event id</th>

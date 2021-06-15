@@ -11,7 +11,7 @@ public interface AdminClient {
     void createCertificateRequest(byte[] csr);
 
     @RequestMapping(method = RequestMethod.POST, value = "/certificates/{sn}/pending-revoke")
-    void revokeCertificate(byte[] csr, @PathVariable(value = "sn") String sn);
+    void revokeCertificate(String alias, @PathVariable(value = "sn") String sn);
 
     @RequestMapping(method=RequestMethod.POST, value = "/certificates/is-revoked")
     boolean isCertificateRevoked(byte[] certificate);

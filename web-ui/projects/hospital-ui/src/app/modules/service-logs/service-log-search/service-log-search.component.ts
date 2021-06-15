@@ -5,6 +5,7 @@ import { ServiceLog } from '../ServiceLog';
 import { InputTextModule } from 'primeng/inputtext'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-service-log-search',
@@ -16,13 +17,14 @@ export class ServiceLogSearchComponent implements OnInit {
   serviceLogs: ServiceLog[];
   form: FormGroup;
   submitted = false;
-  
+
 
   constructor(
     private serviceLogService: ServiceLogService,
     private formBuilder: FormBuilder,
-    private datePipe: DatePipe
-  ) { 
+    private datePipe: DatePipe,
+    private messageService: MessageService
+  ) {
 
     this.form = this.formBuilder.group({
       sourceIp: ['', Validators.required],
@@ -52,6 +54,7 @@ export class ServiceLogSearchComponent implements OnInit {
   }
 
   search(): void {
+
     const params = {
       sourceIp: this.f.sourceIp.value,
       destIp: this.f.destIp.value,
@@ -60,7 +63,7 @@ export class ServiceLogSearchComponent implements OnInit {
       status: this.f.status.value,
       time: this.f.time.value? this.datePipe.transform(this.f.time.value, "yyyy-MM-ddThh:mm:ssZZZZZ"): this.f.time.value
     };
-    this.serviceLogService.search(params).subscribe((serviceLogs) => 
+    this.serviceLogService.search(params).subscribe((serviceLogs) =>
     {
       this.serviceLogs = serviceLogs;
       this.submitted = true;
@@ -83,7 +86,7 @@ export class ServiceLogSearchComponent implements OnInit {
     return true;
   }
 
-  isStatusValid(): boolean {    
+  isStatusValid(): boolean {
     if (!this.f.status.value || this.f.status.value < 100 || this.f.status.value > 599){
       return false;
     }

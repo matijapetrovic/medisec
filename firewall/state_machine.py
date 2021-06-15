@@ -42,7 +42,8 @@ class Context:
     def __init__(self, iterations):
         self.state = NormalState()
         self.iterations = iterations - 1
-        self.path = LOG_PATH + random.choice(LOG_FILES)
+        self.path = LOG_PATH + "sim3.log"
+        #self.path = LOG_PATH + random.choice(LOG_FILES)
 
     def run(self):
         self.state.run(self)

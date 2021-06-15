@@ -60,7 +60,7 @@ public class CertificateService     {
         String revokeData = String.format("alias=%s",alias);
         StringBuilder builder = new StringBuilder(revokeData);
 
-        adminClient.revokeCertificate(builder.toString().getBytes(), serialNumber);
+        adminClient.revokeCertificate(alias, serialNumber);
     }
 
     private boolean isRevoked(Certificate certificate) throws IOException, CertificateException, CRLException, ClassNotFoundException {

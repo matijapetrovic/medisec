@@ -167,7 +167,7 @@ public class CertificateService {
         return !isRevoked(certificate);
     }
 
-    private boolean isRevoked(Certificate certificate) throws IOException, CertificateException, CRLException {
+    public boolean isRevoked(Certificate certificate) throws IOException, CertificateException, CRLException {
         File crlFile = new File("src/main/resources/revocationList.crl");
         byte[] fileContent = Files.readAllBytes(crlFile.toPath());
 

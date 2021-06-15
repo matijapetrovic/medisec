@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { CsrService } from '../../csr.service';
 import { CSR } from '../../csr';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-send-csr-form',
@@ -16,7 +17,8 @@ export class SendCsrFormComponent implements OnInit {
   constructor(
     private csrService: CsrService,
     private formBuilder: FormBuilder,
-  ) { 
+    private messageService: MessageService
+  ) {
     this.form = this.formBuilder.group({
       commonName: ['', Validators.required],
       givenName: ['', Validators.required],
@@ -34,15 +36,18 @@ export class SendCsrFormComponent implements OnInit {
 
   onSubmit(): void {
     this.submitted = false;
-    // if (this.invalidFormInputs()) {
-    //   this.removeFormInputs();
-    //   return;
-    // }
+    if (this.invalidFormInputs()) {
+      this.removeFormInputs();
+      this.messageService.add({
+        severity: 'error', summary: 'CSR send', detail: 'Field cannot be empty!'
+      });
+      return;
+    }
     this.sendCSR();
   }
 
   sendCSR(): void {
-    const csr: CSR = { 
+    const csr: CSR = {
       commonName: this.f.commonName.value,
       givenName: this.f.givenName.value,
       surname: this.f.surname.value,
@@ -57,6 +62,9 @@ export class SendCsrFormComponent implements OnInit {
         () => {
           this.submitted = true;
           this.removeFormInputs();
+          this.messageService.add({
+            severity: 'success', summary: 'CSR send', detail: 'Certificate signing request sent successfully!'
+          });
         });
   }
 

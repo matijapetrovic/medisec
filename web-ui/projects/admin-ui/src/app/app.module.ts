@@ -7,6 +7,7 @@ import { CoreModule } from './core/core.module';
 
 import {HttpClientModule} from '@angular/common/http';
 
+import { ToastModule } from 'primeng/toast';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { KeycloakService } from 'keycloak-angular';
 import { initializer } from './keycloak/init';
@@ -20,7 +21,8 @@ import { initializer } from './keycloak/init';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    CoreModule
+    CoreModule,
+    ToastModule
   ],
   providers: [
     {
